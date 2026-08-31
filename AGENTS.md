@@ -1,3 +1,11 @@
+## Design System
+
+Before making any UI, styling, or component changes, read the canonical design system:
+
+- [docs/design-system.md](./docs/design-system.md)
+
+This document is the source of truth for colors, typography, spacing, components, interactions, and tone of voice. Do not deviate from it without explicit instruction.
+
 ## Development
 
 When starting the dev server, use background mode:
