@@ -1,47 +1,107 @@
 ---
 ---
 
-<header class="navbar">
+<header class="navbar" id="navbar">
   <div class="navbar-container">
-    <a href="#hero" class="brand">
+    <a href="#" class="brand">
       rjaks<span class="brand-dot">.</span>
     </a>
-    <nav class="nav-links">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#experience" class="nav-link">Experience</a>
-      <a href="#tech-stack" class="nav-link">Tech Stack</a>
-      <a href="#education" class="nav-link">Education</a>
-      <a href="#contact" class="nav-link">Contact</a>
-    </nav>
+    <div class="nav-right">
+      <nav class="nav-links">
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <button 
+        id="theme-toggle" 
+        class="theme-toggle" 
+        aria-label="Toggle theme" 
+        type="button"
+      >
+        <span class="theme-icon light-icon">🌙</span>
+        <span class="theme-icon dark-icon">☀️</span>
+      </button>
+    </div>
   </div>
 </header>
+
+<script>
+  const toggleBtn = document.getElementById('theme-toggle');
+  const navbar = document.getElementById('navbar');
+
+  function updateToggleState() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const lightIcon = toggleBtn?.querySelector('.light-icon') as HTMLElement | null;
+    const darkIcon = toggleBtn?.querySelector('.dark-icon') as HTMLElement | null;
+    if (lightIcon && darkIcon) {
+      if (isDark) {
+        lightIcon.style.display = 'none';
+        darkIcon.style.display = 'inline-block';
+      } else {
+        lightIcon.style.display = 'inline-block';
+        darkIcon.style.display = 'none';
+      }
+    }
+  }
+
+  toggleBtn?.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    updateToggleState();
+  });
+
+  // Handle scroll shadow
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+  });
+
+  // Initial state setup
+  updateToggleState();
+</script>
 
 <style>
   .navbar {
     position: sticky;
     top: 0;
     z-index: 50;
-    background-color: var(--color-surface);
+    background-color: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
-    backdrop-filter: blur(12px);
     width: 100%;
+    transition: box-shadow var(--transition-normal), background-color var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .navbar.scrolled {
+    box-shadow: var(--shadow-sm);
   }
 
   .navbar-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-md) var(--container-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   .brand {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-normal);
     color: var(--color-text-primary);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
+    text-decoration: none;
     transition: color var(--transition-fast);
   }
 
@@ -53,6 +113,12 @@
     color: var(--color-accent);
   }
 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
   .nav-links {
     display: flex;
     gap: var(--space-lg);
@@ -60,14 +126,46 @@
   }
 
   .nav-link {
+    font-family: var(--font-family-base);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
+    text-decoration: none;
     transition: color var(--transition-fast);
   }
 
   .nav-link:hover {
     color: var(--color-accent);
+  }
+
+  .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-hover);
+    transform: scale(1.05);
+  }
+
+  .theme-icon {
+    line-height: 1;
+    user-select: none;
+  }
+
+  .dark-icon {
+    display: none;
   }
 
   @media (max-width: 768px) {

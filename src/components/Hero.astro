@@ -2,62 +2,39 @@
 ---
 
 <section id="hero" class="hero-section">
-  <div class="hero-glow"></div>
   <div class="hero-content">
-    <span class="hero-label">Hello, I'm</span>
+    <span class="hero-label">#full-stack-developer</span>
     <h1 class="hero-name">
-      Adrian Leonidas Reforsado
-      <span class="hero-alias">/ rjaks</span>
+      rjaks<span class="brand-dot">.</span>
     </h1>
     <p class="hero-tagline">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.
+      Loyal to clean code &amp; sharp design.
     </p>
-    <a href="#projects" class="hero-cta">
-      View My Work
-    </a>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">
+        See My Work
+      </a>
+      <a href="#contact" class="btn btn-secondary">
+        Get In Touch
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
   .hero-section {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 73px);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: var(--space-4xl) var(--space-lg);
-    overflow: hidden;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: var(--gradient-glow);
-    border-radius: var(--radius-full);
-    pointer-events: none;
-    animation: pulse 8s ease-in-out infinite alternate;
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: translate(-50%, -50%) scale(0.8);
-      opacity: 0.5;
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1.2);
-      opacity: 0.9;
-    }
+    padding: var(--space-4xl) var(--container-padding);
+    background-color: var(--color-bg);
   }
 
   .hero-content {
-    position: relative;
-    z-index: 10;
-    max-width: 800px;
+    max-width: 750px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,55 +42,96 @@
   }
 
   .hero-label {
+    font-family: var(--font-family-mono);
     font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-normal);
     color: var(--color-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: -0.03em;
   }
 
   .hero-name {
-    font-size: clamp(var(--font-size-3xl), 6vw, var(--font-size-display));
-    font-weight: var(--font-weight-extrabold);
-    line-height: var(--line-height-tight);
-    letter-spacing: -0.04em;
+    font-family: var(--font-family-heading);
+    font-size: clamp(var(--font-size-4xl), 8vw, var(--font-size-display));
+    font-weight: var(--font-weight-normal);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
     color: var(--color-text-primary);
   }
 
-  .hero-alias {
-    display: block;
+  .brand-dot {
     color: var(--color-accent);
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
-    margin-top: var(--space-xs);
   }
 
   .hero-tagline {
-    font-size: var(--font-size-lg);
+    font-family: var(--font-family-base);
+    font-size: clamp(var(--font-size-lg), 2.5vw, var(--font-size-xl));
     color: var(--color-text-secondary);
     max-width: 550px;
-    line-height: var(--line-height-relaxed);
+    line-height: 1.5;
     margin-top: var(--space-xs);
   }
 
-  .hero-cta {
+  .hero-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: var(--space-lg);
-    padding: var(--space-md) var(--space-xl);
-    background-color: var(--color-accent);
-    color: var(--color-bg);
+    padding: var(--space-sm) var(--space-xl);
+    font-family: var(--font-family-base);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-semibold);
     border-radius: var(--radius-full);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    text-decoration: none;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal), background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal);
   }
 
-  .hero-cta:hover {
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+    box-shadow: var(--shadow-accent);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background-color: var(--color-surface-hover);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: calc(100vh - 65px);
+      padding: var(--space-2xl) var(--container-padding);
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .btn {
+      width: 100%;
+    }
   }
 </style>

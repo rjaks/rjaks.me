@@ -1,46 +1,54 @@
 ---
+interface ExperienceItem {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+}
+
+const experiences: ExperienceItem[] = [
+  {
+    company: "Acme Innovations Corp.",
+    role: "Full Stack Developer",
+    period: "2024 — Present",
+    description: "Architected modular micro-frontend components, improved core web vitals by 38%, and led migration of internal API microservices to high-throughput endpoints."
+  },
+  {
+    company: "Nexus Digital Labs",
+    role: "Frontend Engineer Intern",
+    period: "2023 — 2024",
+    description: "Built responsive client portals with modern TypeScript frameworks, integrated real-time websocket updates, and contributed to canonical design system components."
+  },
+  {
+    company: "Freelance & Open Source",
+    role: "Independent Software Consultant",
+    period: "2022 — 2023",
+    description: "Delivered customized web applications for local businesses and contributed to developer tooling packages within the open-source ecosystem."
+  }
+];
 ---
 
 <section id="experience" class="experience-section">
   <div class="container-custom">
     <div class="section-header">
       <h2 class="section-title">Experience</h2>
-      <p class="section-subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <p class="section-subtitle">Career timeline and professional engineering background.</p>
     </div>
 
     <div class="timeline">
-      <!-- Item 1 -->
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-header">
-            <h3 class="role-title">Software Developer Intern</h3>
-            <span class="date-badge">2024 - Present</span>
+      {experiences.map((exp) => (
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-meta">
+              <span class="company-name">{exp.company}</span>
+              <span class="date-range">{exp.period}</span>
+            </div>
+            <h3 class="role-title">{exp.role}</h3>
+            <p class="role-desc">{exp.description}</p>
           </div>
-          <h4 class="company-name">Acme Innovations Corp.</h4>
-          <ul class="role-bullets">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</li>
-            <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</li>
-            <li>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</li>
-          </ul>
         </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-header">
-            <h3 class="role-title">Junior Web Developer</h3>
-            <span class="date-badge">2023 - 2024</span>
-          </div>
-          <h4 class="company-name">Nexus Digital Solutions</h4>
-          <ul class="role-bullets">
-            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</li>
-            <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</li>
-          </ul>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
@@ -48,36 +56,40 @@
 <style>
   .experience-section {
     padding: var(--space-4xl) 0;
-    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg);
   }
 
   .section-header {
     text-align: center;
-    margin-bottom: var(--space-3xl);
+    max-width: 650px;
+    margin: 0 auto var(--space-3xl) auto;
   }
 
   .section-title {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-normal);
     color: var(--color-text-primary);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
 
   .section-subtitle {
+    font-family: var(--font-family-base);
     font-size: var(--font-size-base);
     color: var(--color-text-secondary);
     margin-top: var(--space-xs);
+    line-height: 1.5;
   }
 
   .timeline {
     position: relative;
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
     padding-left: var(--space-xl);
     border-left: 2px solid var(--color-border);
     display: flex;
     flex-direction: column;
-    gap: var(--space-3xl);
+    gap: var(--space-2xl);
   }
 
   .timeline-item {
@@ -92,20 +104,28 @@
     height: 10px;
     border-radius: var(--radius-full);
     background-color: var(--color-accent);
-    box-shadow: 0 0 10px var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-bg);
   }
 
   .timeline-content {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-2xl);
     padding: var(--space-xl);
+    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
+    transition: transform var(--transition-normal), background-color var(--transition-normal), box-shadow var(--transition-normal);
   }
 
-  .timeline-header {
+  .timeline-content:hover {
+    background-color: var(--color-surface-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .timeline-meta {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -113,36 +133,57 @@
     gap: var(--space-xs);
   }
 
-  .role-title {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
+  .company-name {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-extrabold);
     color: var(--color-text-primary);
   }
 
-  .date-badge {
+  .date-range {
+    font-family: var(--font-family-mono);
     font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-accent);
-  }
-
-  .company-name {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
+    letter-spacing: -0.03em;
     color: var(--color-text-secondary);
   }
 
-  .role-bullets {
-    margin-top: var(--space-xs);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    list-style-type: disc;
-    padding-left: var(--space-lg);
+  .role-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-accent);
+    letter-spacing: -0.02em;
+    margin: var(--space-2xs) 0;
   }
 
-  .role-bullets li {
+  .role-desc {
+    font-family: var(--font-family-base);
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
-    line-height: var(--line-height-normal);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .experience-section {
+      padding: var(--space-3xl) 0;
+    }
+
+    .timeline {
+      padding-left: var(--space-lg);
+      gap: var(--space-xl);
+    }
+
+    .timeline-dot {
+      left: calc(-1 * var(--space-lg) - 6px);
+    }
+
+    .timeline-content {
+      padding: var(--space-lg);
+    }
+
+    .timeline-meta {
+      flex-direction: column;
+      gap: var(--space-2xs);
+    }
   }
 </style>

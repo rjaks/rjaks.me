@@ -1,0 +1,135 @@
+---
+interface SkillCategory {
+  name: string;
+  skills: string[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    name: "Frontend",
+    skills: ["TypeScript", "JavaScript (ES6+)", "Astro", "React", "Next.js", "TailwindCSS", "HTML5/CSS3", "WebGL"]
+  },
+  {
+    name: "Backend",
+    skills: ["Node.js", "Go", "Python", "FastAPI", "PostgreSQL", "Redis", "REST APIs", "GraphQL"]
+  },
+  {
+    name: "Tools & DevOps",
+    skills: ["Git", "GitHub Actions", "Docker", "Linux", "Vite", "Turborepo", "Vercel", "Bash Scripting"]
+  },
+  {
+    name: "Design & UX",
+    skills: ["Figma", "Design Systems", "Typography", "Responsive Layouts", "Accessibility (a11y)", "Micro-interactions"]
+  }
+];
+---
+
+<section id="skills" class="skills-section">
+  <div class="container-custom">
+    <div class="section-header">
+      <h2 class="section-title">Skills</h2>
+      <p class="section-subtitle">Technologies, frameworks, and tools in my regular development workflow.</p>
+    </div>
+
+    <div class="skills-wrapper">
+      {skillCategories.map((cat) => (
+        <div class="skill-category">
+          <h3 class="category-label">{cat.name}</h3>
+          <div class="badges-wrap">
+            {cat.skills.map((skill) => (
+              <span class="skill-badge">{skill}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    padding: var(--space-4xl) 0;
+    background-color: var(--color-bg);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto var(--space-3xl) auto;
+  }
+
+  .section-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    line-height: 1.5;
+  }
+
+  .skills-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .skill-category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .category-label {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .badges-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .skill-badge {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: -0.03em;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-border);
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-full);
+    cursor: default;
+    user-select: none;
+    line-height: 1.4;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .skill-badge:hover {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .skills-section {
+      padding: var(--space-3xl) 0;
+    }
+
+    .skills-wrapper {
+      gap: var(--space-xl);
+    }
+  }
+</style>
