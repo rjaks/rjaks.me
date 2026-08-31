@@ -1,0 +1,119 @@
+---
+---
+
+<section id="hero" class="hero-section">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <span class="hero-label">Hello, I'm</span>
+    <h1 class="hero-name">
+      Adrian Leonidas Reforsado
+      <span class="hero-alias">/ rjaks</span>
+    </h1>
+    <p class="hero-tagline">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.
+    </p>
+    <a href="#projects" class="hero-cta">
+      View My Work
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-4xl) var(--space-lg);
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: var(--gradient-glow);
+    border-radius: var(--radius-full);
+    pointer-events: none;
+    animation: pulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.9;
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .hero-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-name {
+    font-size: clamp(var(--font-size-3xl), 6vw, var(--font-size-display));
+    font-weight: var(--font-weight-extrabold);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.04em;
+    color: var(--color-text-primary);
+  }
+
+  .hero-alias {
+    display: block;
+    color: var(--color-accent);
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
+    margin-top: var(--space-xs);
+  }
+
+  .hero-tagline {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 550px;
+    line-height: var(--line-height-relaxed);
+    margin-top: var(--space-xs);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-lg);
+    padding: var(--space-md) var(--space-xl);
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+  }
+</style>

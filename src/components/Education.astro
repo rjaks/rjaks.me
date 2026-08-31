@@ -1,0 +1,116 @@
+---
+---
+
+<section id="education" class="education-section">
+  <div class="container-custom">
+    <div class="section-header">
+      <h2 class="section-title">Education</h2>
+      <p class="section-subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    </div>
+
+    <div class="education-grid">
+      <!-- Card 1 -->
+      <div class="education-card">
+        <span class="edu-year">2023 - 2027</span>
+        <h3 class="edu-institution">Ateneo de Naga University</h3>
+        <p class="edu-degree">BS Computer Science</p>
+        <span class="edu-honor">Cum Laude Candidate</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="education-card">
+        <span class="edu-year">2017 - 2023</span>
+        <h3 class="edu-institution">Camarines Sur National High School</h3>
+        <p class="edu-degree">TVL - Programming</p>
+        <span class="edu-honor">With High Honors</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="education-card">
+        <span class="edu-year">2011 - 2017</span>
+        <h3 class="edu-institution">Minds That Matter School</h3>
+        <p class="edu-degree">Elementary Education</p>
+        <span class="edu-honor">Most Outstanding Student</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .education-section {
+    padding: var(--space-4xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .education-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .education-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .education-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+  }
+
+  .edu-year {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+
+  .edu-institution {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  .edu-degree {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .edu-honor {
+    margin-top: auto;
+    padding-top: var(--space-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-secondary);
+  }
+
+  @media (max-width: 860px) {
+    .education-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

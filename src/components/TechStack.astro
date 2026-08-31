@@ -1,0 +1,133 @@
+---
+---
+
+<section id="tech-stack" class="tech-section">
+  <div class="container-custom">
+    <div class="section-header">
+      <h2 class="section-title">Tech Stack</h2>
+      <p class="section-subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    </div>
+
+    <div class="tech-grid">
+      <!-- Item 1 -->
+      <div class="tech-card">
+        <div class="icon-box">C++</div>
+        <span class="tech-name">C++</span>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="tech-card">
+        <div class="icon-box">JV</div>
+        <span class="tech-name">Java</span>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="tech-card">
+        <div class="icon-box">PY</div>
+        <span class="tech-name">Python</span>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="tech-card">
+        <div class="icon-box">C#</div>
+        <span class="tech-name">C#</span>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="tech-card">
+        <div class="icon-box">TS</div>
+        <span class="tech-name">TypeScript</span>
+      </div>
+
+      <!-- Item 6 -->
+      <div class="tech-card">
+        <div class="icon-box">AS</div>
+        <span class="tech-name">Astro</span>
+      </div>
+
+      <!-- Item 7 -->
+      <div class="tech-card">
+        <div class="icon-box">TW</div>
+        <span class="tech-name">Tailwind</span>
+      </div>
+
+      <!-- Item 8 -->
+      <div class="tech-card">
+        <div class="icon-box">GIT</div>
+        <span class="tech-name">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-section {
+    padding: var(--space-4xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-lg);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .tech-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 120px;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .tech-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2);
+  }
+
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--gradient-accent);
+    color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .tech-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+</style>

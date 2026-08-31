@@ -1,0 +1,148 @@
+---
+---
+
+<section id="experience" class="experience-section">
+  <div class="container-custom">
+    <div class="section-header">
+      <h2 class="section-title">Experience</h2>
+      <p class="section-subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    </div>
+
+    <div class="timeline">
+      <!-- Item 1 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <h3 class="role-title">Software Developer Intern</h3>
+            <span class="date-badge">2024 - Present</span>
+          </div>
+          <h4 class="company-name">Acme Innovations Corp.</h4>
+          <ul class="role-bullets">
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</li>
+            <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</li>
+            <li>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <h3 class="role-title">Junior Web Developer</h3>
+            <span class="date-badge">2023 - 2024</span>
+          </div>
+          <h4 class="company-name">Nexus Digital Solutions</h4>
+          <ul class="role-bullets">
+            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</li>
+            <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience-section {
+    padding: var(--space-4xl) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-left: var(--space-xl);
+    border-left: 2px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .timeline-item {
+    position: relative;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: var(--space-xs);
+    left: calc(-1 * var(--space-xl) - 6px);
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+  }
+
+  .timeline-content {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .role-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  .date-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+  }
+
+  .company-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+
+  .role-bullets {
+    margin-top: var(--space-xs);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    list-style-type: disc;
+    padding-left: var(--space-lg);
+  }
+
+  .role-bullets li {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+</style>
