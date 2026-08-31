@@ -1,5 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'JUST Sans';
+  src: url('/fonts/JUST Sans Regular.woff2') format('woff2'),
+       url('/fonts/JUST Sans Regular.woff') format('woff'),
+       url('/fonts/JUST Sans Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JUST Sans';
+  src: url('/fonts/JUST Sans ExBold.woff2') format('woff2'),
+       url('/fonts/JUST Sans ExBold.woff') format('woff'),
+       url('/fonts/JUST Sans ExBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('/fonts/Recoleta-RegularDEMO.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   --color-bg: #0b0f19;
@@ -10,7 +38,9 @@
   --color-text-secondary: #9ca3af;
   --color-accent: #06b6d4;
   --color-accent-secondary: #6366f1;
-  --font-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Recoleta', Georgia, serif;
+  --font-sans: 'JUST Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
 :root {
@@ -28,7 +58,10 @@
   --gradient-glow: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(11, 15, 25, 0) 70%);
 
   /* Typography */
-  --font-family-base: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-heading: 'Recoleta', Georgia, serif;
+  --font-family-base: 'JUST Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'Space Mono', monospace;
+
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -84,6 +117,30 @@ body {
   font-family: var(--font-family-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings use Recoleta */
+h1, h2, h3, h4, h5, h6,
+.hero-name,
+.section-title,
+.role-title,
+.company-name,
+.card-title,
+.edu-institution {
+  font-family: var(--font-family-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Subtext, metadata, tags, and dates use Space Mono */
+.hero-label,
+.date-badge,
+.tag,
+.edu-year,
+.edu-honor,
+.icon-box,
+.btn-link,
+.hero-alias {
+  font-family: var(--font-family-mono);
 }
 
 /* Custom Container Utility */
