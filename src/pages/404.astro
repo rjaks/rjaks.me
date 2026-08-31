@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout 
+  title="404 — Page Not Found | rjaks" 
+  description="Looks like this page wandered off. Let's head back home."
+>
+  <Navbar />
+  <main class="error-page">
+    <div class="container-custom error-container">
+      <span class="error-badge">#404</span>
+      <h1 class="error-title">Looks like this page wandered off.</h1>
+      <p class="error-subtext">Let's head back home.</p>
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">
+          Go Home
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .error-page {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-4xl) var(--container-padding);
+    background-color: var(--color-bg);
+  }
+
+  .error-container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .error-badge {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent);
+    letter-spacing: -0.03em;
+  }
+
+  .error-title {
+    font-family: var(--font-family-heading);
+    font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-4xl));
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .error-subtext {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+  }
+
+  .error-actions {
+    margin-top: var(--space-md);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-xl);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal), background-color var(--transition-normal);
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border: 1px solid var(--color-accent);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-accent);
+  }
+</style>

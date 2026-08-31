@@ -1,0 +1,182 @@
+---
+---
+
+<div id="mascot-widget" class="mascot-container" aria-label="Golden Retriever Companion">
+  <div id="mascot-bubble" class="speech-bubble">Need anything?</div>
+  
+  <button id="mascot-btn" class="mascot-btn" type="button" aria-label="Interact with mascot">
+    <svg 
+      class="mascot-svg" 
+      viewBox="0 0 100 100" 
+      fill="currentColor" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <!-- Golden Retriever Silhouette -->
+      <!-- Fluffy Floppy Ears -->
+      <path class="ear left-ear" d="M 28 32 C 22 34 16 46 22 56 C 26 62 34 54 32 44 Z" />
+      <path class="ear right-ear" d="M 72 32 C 78 34 84 46 78 56 C 74 62 66 54 68 44 Z" />
+      
+      <!-- Head -->
+      <path d="M 30 38 C 30 20 70 20 70 38 C 72 48 68 60 50 60 C 32 60 28 48 30 38 Z" />
+      <!-- Snout / Muzzle -->
+      <ellipse cx="50" cy="48" rx="12" ry="9" fill="var(--color-surface, #F5EFE0)" opacity="0.25" />
+      <path d="M 46 44 Q 50 42 54 44 Q 50 49 46 44 Z" fill="var(--color-bg, #FAF7F2)" />
+      
+      <!-- Body (Sitting pose) -->
+      <path d="M 34 56 C 28 66 22 82 24 92 C 32 94 44 94 46 88 C 48 82 46 64 46 60 Z" />
+      <path d="M 66 56 C 72 66 78 82 76 92 C 68 94 56 94 54 88 C 52 82 54 64 54 60 Z" />
+      <!-- Front Chest -->
+      <path d="M 40 58 C 42 70 42 86 44 92 C 47 93 53 93 56 92 C 58 86 58 70 60 58 Z" />
+
+      <!-- Tail -->
+      <path class="dog-tail" d="M 24 84 C 14 80 8 68 14 62 C 16 66 18 72 26 78 Z" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  const mascotBtn = document.getElementById('mascot-btn');
+  const bubble = document.getElementById('mascot-bubble');
+  let timeoutId: number | undefined;
+
+  function showBubble() {
+    if (!bubble) return;
+    bubble.classList.add('visible');
+    
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    
+    timeoutId = window.setTimeout(() => {
+      bubble.classList.remove('visible');
+    }, 2500);
+  }
+
+  mascotBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (bubble?.classList.contains('visible')) {
+      bubble.classList.remove('visible');
+      if (timeoutId) clearTimeout(timeoutId);
+    } else {
+      showBubble();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!mascotBtn?.contains(e.target as Node)) {
+      bubble?.classList.remove('visible');
+    }
+  });
+</script>
+
+<style>
+  .mascot-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mascot-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-spring);
+    outline: none;
+  }
+
+  .mascot-svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center;
+    animation: breathing 3s ease-in-out infinite;
+  }
+
+  /* Idle Breathing */
+  @keyframes breathing {
+    0%, 100% {
+      transform: scale(0.97);
+    }
+    50% {
+      transform: scale(1.03);
+    }
+  }
+
+  /* Hover States */
+  .mascot-btn:hover {
+    transform: scale(1.08);
+  }
+
+  .mascot-btn:hover .mascot-svg {
+    animation-play-state: paused;
+  }
+
+  .mascot-btn:hover .dog-tail {
+    animation: tailWag 0.3s ease-in-out infinite alternate;
+    transform-origin: 24px 84px;
+  }
+
+  @keyframes tailWag {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-22deg);
+    }
+  }
+
+  /* Speech Bubble */
+  .speech-bubble {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 50%;
+    transform: translateX(50%) translateY(6px) scale(0.9);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    padding: var(--space-2xs) var(--space-sm);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), transform var(--transition-normal), visibility var(--transition-normal);
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-surface) transparent transparent transparent;
+  }
+
+  .speech-bubble.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(50%) translateY(0) scale(1);
+  }
+
+  @media (max-width: 768px) {
+    .mascot-container {
+      display: none;
+    }
+  }
+</style>

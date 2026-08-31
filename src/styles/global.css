@@ -178,3 +178,40 @@ h1, h2, h3, h4, h5, h6,
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
 }
+
+/* Global Interactive Spring Physics */
+.project-card,
+.timeline-content,
+.btn,
+.btn-primary,
+.skill-badge {
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Paw Click Stamp Animation */
+.paw-stamp {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0.8;
+  animation: pawFade 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  color: var(--color-accent);
+}
+
+@keyframes pawFade {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5) rotate(var(--rot, 0deg));
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(var(--rot, 0deg));
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) translateY(-10px) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+}

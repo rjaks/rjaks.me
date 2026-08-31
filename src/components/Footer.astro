@@ -2,23 +2,61 @@
 ---
 
 <footer class="footer">
-  <div class="container-custom">
-    <p class="footer-text">
-      © 2025 rjaks. All rights reserved.
+  <div class="container-custom footer-inner">
+    <p class="footer-copy">
+      &copy; 2025 rjaks. All rights reserved.
     </p>
+    <div class="footer-links">
+      <a href="https://github.com/rjaks" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+    </div>
   </div>
 </footer>
 
 <style>
   .footer {
-    background-color: var(--color-surface);
+    background-color: var(--color-bg);
     border-top: 1px solid var(--color-border);
     padding: var(--space-xl) 0;
-    text-align: center;
   }
 
-  .footer-text {
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .footer-copy {
+    font-family: var(--font-family-base);
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .footer-link {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+      justify-content: center;
+    }
   }
 </style>
