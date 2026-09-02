@@ -1,27 +1,10 @@
 ---
-interface SkillCategory {
-  name: string;
-  skills: string[];
-}
+import { skillCategories } from '../data/skills';
 
-const skillCategories: SkillCategory[] = [
-  {
-    name: "Frontend",
-    skills: ["TypeScript", "JavaScript (ES6+)", "Astro", "React", "Next.js", "TailwindCSS", "HTML5/CSS3", "WebGL"]
-  },
-  {
-    name: "Backend",
-    skills: ["Node.js", "Go", "Python", "FastAPI", "PostgreSQL", "Redis", "REST APIs", "GraphQL"]
-  },
-  {
-    name: "Tools & DevOps",
-    skills: ["Git", "GitHub Actions", "Docker", "Linux", "Vite", "Turborepo", "Vercel", "Bash Scripting"]
-  },
-  {
-    name: "Design & UX",
-    skills: ["Figma", "Design Systems", "Typography", "Responsive Layouts", "Accessibility (a11y)", "Micro-interactions"]
-  }
-];
+const trimmedSkillCategories = skillCategories.map((cat) => ({
+  ...cat,
+  skills: cat.skills.slice(0, 5)
+}));
 ---
 
 <section id="skills" class="skills-section">
@@ -32,7 +15,7 @@ const skillCategories: SkillCategory[] = [
     </div>
 
     <div class="skills-wrapper">
-      {skillCategories.map((cat) => (
+      {trimmedSkillCategories.map((cat) => (
         <div class="skill-category">
           <h3 class="category-label">{cat.name}</h3>
           <div class="badges-wrap">
@@ -42,6 +25,12 @@ const skillCategories: SkillCategory[] = [
           </div>
         </div>
       ))}
+    </div>
+
+    <div class="section-cta-wrapper">
+      <a href="/skills" class="btn-secondary">
+        [PLACEHOLDER: CTA label]
+      </a>
     </div>
   </div>
 </section>
@@ -120,6 +109,35 @@ const skillCategories: SkillCategory[] = [
   .skill-badge:hover {
     background-color: var(--color-accent);
     color: var(--color-bg);
+    transform: translateY(-2px);
+  }
+
+  .section-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border-radius: var(--radius-full);
+    padding: var(--space-xs) var(--space-xl);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-spring);
+  }
+
+  .btn-secondary:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-hover);
     transform: translateY(-2px);
   }
 

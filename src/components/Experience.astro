@@ -1,31 +1,7 @@
 ---
-interface ExperienceItem {
-  company: string;
-  role: string;
-  period: string;
-  description: string;
-}
+import { experiences } from '../data/experience';
 
-const experiences: ExperienceItem[] = [
-  {
-    company: "Acme Innovations Corp.",
-    role: "Full Stack Developer",
-    period: "2024 — Present",
-    description: "Architected modular micro-frontend components, improved core web vitals by 38%, and led migration of internal API microservices to high-throughput endpoints."
-  },
-  {
-    company: "Nexus Digital Labs",
-    role: "Frontend Engineer Intern",
-    period: "2023 — 2024",
-    description: "Built responsive client portals with modern TypeScript frameworks, integrated real-time websocket updates, and contributed to canonical design system components."
-  },
-  {
-    company: "Freelance & Open Source",
-    role: "Independent Software Consultant",
-    period: "2022 — 2023",
-    description: "Delivered customized web applications for local businesses and contributed to developer tooling packages within the open-source ecosystem."
-  }
-];
+const recentExperiences = experiences.slice(0, 5);
 ---
 
 <section id="experience" class="experience-section">
@@ -36,7 +12,7 @@ const experiences: ExperienceItem[] = [
     </div>
 
     <div class="timeline">
-      {experiences.map((exp) => (
+      {recentExperiences.map((exp) => (
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
@@ -49,6 +25,12 @@ const experiences: ExperienceItem[] = [
           </div>
         </div>
       ))}
+    </div>
+
+    <div class="section-cta-wrapper">
+      <a href="/experience" class="btn-secondary">
+        [PLACEHOLDER: CTA label]
+      </a>
     </div>
   </div>
 </section>
@@ -161,6 +143,35 @@ const experiences: ExperienceItem[] = [
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
     line-height: 1.6;
+  }
+
+  .section-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border-radius: var(--radius-full);
+    padding: var(--space-xs) var(--space-xl);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-spring);
+  }
+
+  .btn-secondary:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-hover);
+    transform: translateY(-2px);
   }
 
   @media (max-width: 768px) {

@@ -1,56 +1,7 @@
 ---
-interface Project {
-  title: string;
-  description: string;
-  tags: string[];
-  link?: string;
-  github?: string;
-}
+import { projects } from '../data/projects';
 
-const projects: Project[] = [
-  {
-    title: "Apex Workflow",
-    description: "A fast, privacy-focused task management system engineered with minimal footprint, intuitive keyboard shortcuts, and real-time offline sync.",
-    tags: ["Astro", "TypeScript", "TailwindCSS"],
-    link: "#",
-    github: "#"
-  },
-  {
-    title: "Lumina Engine",
-    description: "High-performance vector rendering canvas library designed for generative algorithmic art and dynamic interactive visualizations.",
-    tags: ["React", "WebGL", "TypeScript"],
-    link: "#",
-    github: "#"
-  },
-  {
-    title: "Kona Cache",
-    description: "Lightweight, in-memory distributed key-value store crafted for low-latency edge computing workloads and event streams.",
-    tags: ["Go", "gRPC", "Docker"],
-    link: "#",
-    github: "#"
-  },
-  {
-    title: "Echo Metrics",
-    description: "Telemetry and observability dashboard providing real-time log ingestion, alert dispatching, and custom health query visualizers.",
-    tags: ["Node.js", "PostgreSQL", "Next.js"],
-    link: "#",
-    github: "#"
-  },
-  {
-    title: "Solace Audio",
-    description: "Ambient audio synthesizer web workstation featuring modular DSP patch nodes and customized waveform automation curves.",
-    tags: ["Web Audio API", "Svelte", "Vite"],
-    link: "#",
-    github: "#"
-  },
-  {
-    title: "Velox CLI",
-    description: "Modern command-line developer suite providing project scaffolding, automated git worktree switching, and env orchestration.",
-    tags: ["Rust", "Clap", "Linux"],
-    link: "#",
-    github: "#"
-  }
-];
+const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
 ---
 
 <section id="projects" class="projects-section">
@@ -61,7 +12,7 @@ const projects: Project[] = [
     </div>
 
     <div class="projects-grid">
-      {projects.map((project) => (
+      {featuredProjects.map((project) => (
         <article class="project-card">
           <div class="card-top">
             <h3 class="card-title">{project.title}</h3>
@@ -82,6 +33,12 @@ const projects: Project[] = [
           </div>
         </article>
       ))}
+    </div>
+
+    <div class="section-cta-wrapper">
+      <a href="/projects" class="btn-primary">
+        [PLACEHOLDER: CTA label]
+      </a>
     </div>
   </div>
 </section>
@@ -206,6 +163,33 @@ const projects: Project[] = [
 
   .view-link:hover {
     color: var(--color-accent-hover);
+  }
+
+  .section-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-radius: var(--radius-full);
+    padding: var(--space-xs) var(--space-xl);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: background-color var(--transition-fast), transform var(--transition-spring), box-shadow var(--transition-normal);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-accent);
   }
 
   @media (max-width: 1024px) {
