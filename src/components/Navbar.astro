@@ -57,7 +57,7 @@
           </a>
         </li>
         <li>
-          <a href="#projects" class="nav-item" data-section="projects" aria-label="Go to Projects section">
+          <a href="/projects" class="nav-item" data-section="projects" aria-label="Go to Projects section">
             <span class="nav-label">Projects</span>
             <div class="dot-wrapper">
               <span class="dot-indicator"></span>
@@ -65,7 +65,7 @@
           </a>
         </li>
         <li>
-          <a href="#experience" class="nav-item" data-section="experience" aria-label="Go to Experience section">
+          <a href="/experience" class="nav-item" data-section="experience" aria-label="Go to Experience section">
             <span class="nav-label">Experience</span>
             <div class="dot-wrapper">
               <span class="dot-indicator"></span>
@@ -73,7 +73,7 @@
           </a>
         </li>
         <li>
-          <a href="#skills" class="nav-item" data-section="skills" aria-label="Go to Skills section">
+          <a href="/skills" class="nav-item" data-section="skills" aria-label="Go to Skills section">
             <span class="nav-label">Skills</span>
             <div class="dot-wrapper">
               <span class="dot-indicator"></span>
@@ -89,7 +89,7 @@
           </a>
         </li>
         <li>
-          <a href="#contact" class="nav-item" data-section="contact" aria-label="Go to Contact section">
+          <a href="/contact" class="nav-item" data-section="contact" aria-label="Go to Contact section">
             <span class="nav-label">Contact</span>
             <div class="dot-wrapper">
               <span class="dot-indicator"></span>
@@ -307,6 +307,10 @@
   // Smooth click scroll handler for desktop nav
   navItems.forEach(item => {
     item.addEventListener('click', (e) => {
+      const href = item.getAttribute('href');
+      if (href && !href.startsWith('#')) {
+        return; // Allow natural navigation to dedicated pages
+      }
       e.preventDefault();
       const targetId = item.getAttribute('data-section');
       if (!targetId) return;

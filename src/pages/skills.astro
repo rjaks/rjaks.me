@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { skillCategories } from '../data/skills';
+---
+
+<BaseLayout 
+  title="Skills — [PLACEHOLDER: site name]" 
+  description="[PLACEHOLDER: meta description]"
+>
+  <Navbar />
+  <main class="skills-page">
+    <div class="container-custom">
+      <!-- Back Navigation Link -->
+      <div class="back-nav">
+        <a href="/" class="btn-ghost">
+          <span class="back-arrow">←</span> Back to Home
+        </a>
+      </div>
+
+      <!-- Page Hero -->
+      <header class="page-hero">
+        <h1 class="hero-title">[PLACEHOLDER: page headline]</h1>
+        <p class="hero-subtitle">[PLACEHOLDER: page subtitle]</p>
+      </header>
+
+      <!-- All Skills Wrapper -->
+      <div class="skills-wrapper">
+        {skillCategories.map((cat) => (
+          <div class="skill-category">
+            <h2 class="category-label">{cat.name}</h2>
+            <div class="badges-wrap">
+              {cat.skills.map((skill) => (
+                <span class="skill-badge">{skill}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .skills-page {
+    padding: var(--space-3xl) 0 var(--space-4xl) 0;
+    min-height: 80vh;
+    background-color: var(--color-bg);
+  }
+
+  .back-nav {
+    margin-bottom: var(--space-xl);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .btn-ghost:hover .back-arrow {
+    transform: translateX(-4px);
+  }
+
+  .back-arrow {
+    transition: transform var(--transition-fast);
+  }
+
+  .page-hero {
+    text-align: left;
+    max-width: 750px;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-sm);
+    line-height: 1.5;
+  }
+
+  .skills-wrapper {
+    max-width: 800px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .skill-category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .category-label {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .badges-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .skill-badge {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: -0.03em;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-border);
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-full);
+    cursor: default;
+    user-select: none;
+    line-height: 1.4;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .skill-badge:hover {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .skills-page {
+      padding: var(--space-2xl) 0 var(--space-3xl) 0;
+    }
+
+    .hero-title {
+      font-size: var(--font-size-4xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .skills-wrapper {
+      gap: var(--space-xl);
+    }
+  }
+</style>

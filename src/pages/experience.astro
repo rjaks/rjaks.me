@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { experiences } from '../data/experience';
+---
+
+<BaseLayout 
+  title="Experience — [PLACEHOLDER: site name]" 
+  description="[PLACEHOLDER: meta description]"
+>
+  <Navbar />
+  <main class="experience-page">
+    <div class="container-custom">
+      <!-- Back Navigation Link -->
+      <div class="back-nav">
+        <a href="/" class="btn-ghost">
+          <span class="back-arrow">←</span> Back to Home
+        </a>
+      </div>
+
+      <!-- Page Hero -->
+      <header class="page-hero">
+        <h1 class="hero-title">[PLACEHOLDER: page headline]</h1>
+        <p class="hero-subtitle">[PLACEHOLDER: page subtitle]</p>
+      </header>
+
+      <!-- All Experience Timeline -->
+      <div class="timeline">
+        {experiences.map((exp) => (
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="company-name">{exp.company}</span>
+                <span class="date-range">{exp.period}</span>
+              </div>
+              <h2 class="role-title">{exp.role}</h2>
+              <p class="role-desc">{exp.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .experience-page {
+    padding: var(--space-3xl) 0 var(--space-4xl) 0;
+    min-height: 80vh;
+    background-color: var(--color-bg);
+  }
+
+  .back-nav {
+    margin-bottom: var(--space-xl);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .btn-ghost:hover .back-arrow {
+    transform: translateX(-4px);
+  }
+
+  .back-arrow {
+    transition: transform var(--transition-fast);
+  }
+
+  .page-hero {
+    text-align: left;
+    max-width: 750px;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-sm);
+    line-height: 1.5;
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-left: var(--space-xl);
+    border-left: 2px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .timeline-item {
+    position: relative;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: var(--space-xs);
+    left: calc(-1 * var(--space-xl) - 6px);
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-bg);
+  }
+
+  .timeline-content {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    transition: transform var(--transition-normal), background-color var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .timeline-content:hover {
+    background-color: var(--color-surface-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .timeline-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .company-name {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+  }
+
+  .date-range {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: -0.03em;
+    color: var(--color-text-secondary);
+  }
+
+  .role-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-accent);
+    letter-spacing: -0.02em;
+    margin: var(--space-2xs) 0;
+  }
+
+  .role-desc {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .experience-page {
+      padding: var(--space-2xl) 0 var(--space-3xl) 0;
+    }
+
+    .hero-title {
+      font-size: var(--font-size-4xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-base);
+    }
+
+    .timeline {
+      padding-left: var(--space-lg);
+      gap: var(--space-xl);
+    }
+
+    .timeline-dot {
+      left: calc(-1 * var(--space-lg) - 6px);
+    }
+
+    .timeline-content {
+      padding: var(--space-lg);
+    }
+
+    .timeline-meta {
+      flex-direction: column;
+      gap: var(--space-2xs);
+    }
+  }
+</style>
