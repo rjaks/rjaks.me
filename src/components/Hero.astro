@@ -2,26 +2,21 @@
 ---
 
 <section id="hero" class="hero-section">
-  <div class="hero-grid">
-    <div class="hero-content">
-      <span class="hero-label">#full-stack-developer</span>
-      <h1 class="hero-name">
-        rjaks<span class="brand-dot">.</span>
-      </h1>
-      <p class="hero-tagline">
-        Loyal to clean code &amp; sharp design.
-      </p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">
-          See My Work
-        </a>
-        <a href="#contact" class="btn btn-secondary">
-          Get In Touch
-        </a>
-      </div>
-    </div>
-    <div class="hero-mascot-col" id="mascot-col">
-      <!-- Phase 3 will place the SVG here -->
+  <div class="hero-content">
+    <span class="hero-label">#full-stack-developer</span>
+    <h1 class="hero-name">
+      rjaks
+    </h1>
+    <p class="hero-tagline">
+      Loyal to clean code &amp; sharp design.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">
+        See My Work
+      </a>
+      <a href="#contact" class="btn btn-secondary">
+        Get In Touch
+      </a>
     </div>
   </div>
 </section>
@@ -29,35 +24,21 @@
 <style>
   .hero-section {
     position: relative;
-    min-height: calc(100vh - 73px);
-    display: block;
-    padding: 0 var(--container-padding);
-    background-color: var(--color-bg);
-  }
-
-  .hero-grid {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    min-height: calc(100vh - 73px);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: var(--space-3xl);
-  }
-
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .hero-mascot-col {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    text-align: center;
+    padding: var(--space-4xl) var(--container-padding);
+    background-color: var(--color-bg);
+  }
+
+  .hero-content {
+    max-width: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
   }
 
   .hero-label {
@@ -95,6 +76,7 @@
     gap: var(--space-md);
     margin-top: var(--space-lg);
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .btn {
@@ -140,23 +122,6 @@
     .hero-section {
       min-height: calc(100vh - 65px);
       padding: var(--space-2xl) var(--container-padding);
-    }
-
-    .hero-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-xl);
-      min-height: auto;
-    }
-
-    .hero-content {
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero-mascot-col {
-      order: -1;
-      max-height: 280px;
-      overflow: hidden;
     }
 
     .hero-actions {

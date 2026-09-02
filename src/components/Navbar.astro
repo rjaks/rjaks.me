@@ -1,52 +1,169 @@
 ---
 ---
 
-<header class="navbar" id="navbar">
-  <div class="navbar-container">
-    <a href="#" class="brand">
-      rjaks<span class="brand-dot">.</span>
-    </a>
-    <div class="nav-right">
-      <nav class="nav-links">
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-      <button 
-        id="theme-toggle" 
-        class="theme-toggle" 
-        aria-label="Toggle theme" 
-        type="button"
-      >
-        <span class="theme-icon light-icon">🌙</span>
-        <span class="theme-icon dark-icon">☀️</span>
-      </button>
+<!-- Desktop Right-Side Floating Navigation -->
+<nav class="right-nav" id="right-nav" aria-label="Page Navigation">
+  <div class="nav-rail">
+    <!-- Theme Toggle with clean SVG icons -->
+    <button 
+      id="rail-theme-toggle" 
+      class="rail-theme-btn" 
+      aria-label="Toggle theme" 
+      type="button"
+      title="Toggle day/night theme"
+    >
+      <!-- Moon Icon (shown in Light mode) -->
+      <svg class="theme-svg light-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+      </svg>
+      <!-- Sun Icon (shown in Dark mode) -->
+      <svg class="theme-svg dark-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+    </button>
+
+    <!-- Navigation container with continuous vertical progress track -->
+    <div class="nav-track-container" id="nav-track-container">
+      <!-- Background track line -->
+      <div class="nav-progress-track">
+        <!-- Dynamic golden filled bar -->
+        <div class="nav-progress-bar" id="nav-progress-bar"></div>
+      </div>
+
+      <!-- Section navigation items with persistent visible labels -->
+      <ul class="nav-items" role="list">
+        <li>
+          <a href="#hero" class="nav-item active" data-section="hero" aria-label="Go to Home section">
+            <span class="nav-label">Home</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#about" class="nav-item" data-section="about" aria-label="Go to About section">
+            <span class="nav-label">About</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#projects" class="nav-item" data-section="projects" aria-label="Go to Projects section">
+            <span class="nav-label">Projects</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#experience" class="nav-item" data-section="experience" aria-label="Go to Experience section">
+            <span class="nav-label">Experience</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#skills" class="nav-item" data-section="skills" aria-label="Go to Skills section">
+            <span class="nav-label">Skills</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#education" class="nav-item" data-section="education" aria-label="Go to Education section">
+            <span class="nav-label">Education</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" class="nav-item" data-section="contact" aria-label="Go to Contact section">
+            <span class="nav-label">Contact</span>
+            <div class="dot-wrapper">
+              <span class="dot-indicator"></span>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
+
+<!-- Mobile Top Navigation Header with Scroll Progress Bar -->
+<header class="mobile-top-bar" id="mobile-top-bar" aria-label="Mobile Navigation">
+  <div class="mobile-top-inner">
+    <a href="#hero" class="mobile-brand">rjaks</a>
+
+    <!-- Mobile theme toggle -->
+    <button 
+      id="mobile-theme-toggle" 
+      class="mobile-theme-btn" 
+      aria-label="Toggle theme" 
+      type="button"
+      title="Toggle day/night theme"
+    >
+      <!-- Moon Icon (shown in Light mode) -->
+      <svg class="theme-svg light-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
+      </svg>
+      <!-- Sun Icon (shown in Dark mode) -->
+      <svg class="theme-svg dark-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Horizontal Scroll Progress Bar -->
+  <div class="mobile-progress-track">
+    <div class="mobile-progress-bar" id="mobile-progress-bar"></div>
   </div>
 </header>
 
 <script>
-  const toggleBtn = document.getElementById('theme-toggle');
-  const navbar = document.getElementById('navbar');
+  // Theme Toggle Logic
+  const desktopToggle = document.getElementById('rail-theme-toggle');
+  const mobileToggle = document.getElementById('mobile-theme-toggle');
 
   function updateToggleState() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const lightIcon = toggleBtn?.querySelector('.light-icon') as HTMLElement | null;
-    const darkIcon = toggleBtn?.querySelector('.dark-icon') as HTMLElement | null;
-    if (lightIcon && darkIcon) {
-      if (isDark) {
-        lightIcon.style.display = 'none';
-        darkIcon.style.display = 'inline-block';
-      } else {
-        lightIcon.style.display = 'inline-block';
-        darkIcon.style.display = 'none';
+    
+    [desktopToggle, mobileToggle].forEach(btn => {
+      if (!btn) return;
+      const lightIcon = btn.querySelector('.light-icon') as HTMLElement | null;
+      const darkIcon = btn.querySelector('.dark-icon') as HTMLElement | null;
+      if (lightIcon && darkIcon) {
+        if (isDark) {
+          lightIcon.style.display = 'none';
+          darkIcon.style.display = 'block';
+        } else {
+          lightIcon.style.display = 'block';
+          darkIcon.style.display = 'none';
+        }
       }
-    }
+    });
   }
 
-  toggleBtn?.addEventListener('click', () => {
+  function toggleTheme() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (isDark) {
       document.documentElement.removeAttribute('data-theme');
@@ -56,111 +173,218 @@
       localStorage.setItem('theme', 'dark');
     }
     updateToggleState();
-  });
+  }
 
-  // Handle scroll shadow
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 10) {
-      navbar?.classList.add('scrolled');
-    } else {
-      navbar?.classList.remove('scrolled');
+  desktopToggle?.addEventListener('click', toggleTheme);
+  mobileToggle?.addEventListener('click', toggleTheme);
+  updateToggleState();
+
+  // Scroll Sync & Progress Engine using requestAnimationFrame
+  const navItems = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-item'));
+  const progressBar = document.getElementById('nav-progress-bar');
+  const mobileProgressBar = document.getElementById('mobile-progress-bar');
+  const trackContainer = document.getElementById('nav-track-container');
+
+  interface SectionMeta {
+    id: string;
+    el: HTMLElement;
+    navItem: HTMLAnchorElement;
+  }
+
+  const sectionMetas: SectionMeta[] = [];
+  navItems.forEach(item => {
+    const sectionId = item.getAttribute('data-section');
+    if (!sectionId) return;
+    const el = document.getElementById(sectionId);
+    if (el) {
+      sectionMetas.push({ id: sectionId, el, navItem: item });
     }
   });
 
-  // Initial state setup
-  updateToggleState();
+  let activeSectionId = '';
+
+  function setActive(id: string) {
+    if (activeSectionId === id) return;
+    activeSectionId = id;
+    
+    // Update Desktop Nav Items
+    sectionMetas.forEach(meta => {
+      if (meta.id === id) {
+        meta.navItem.classList.add('active');
+      } else {
+        meta.navItem.classList.remove('active');
+      }
+    });
+  }
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight - viewportHeight;
+    const overallProgress = docHeight > 0 ? Math.min(Math.max((scrollY / docHeight) * 100, 0), 100) : 0;
+
+    // Update Mobile Top Progress Bar
+    if (mobileProgressBar) {
+      mobileProgressBar.style.width = `${overallProgress}%`;
+    }
+
+    // Update Desktop Vertical Progress Bar
+    if (progressBar && trackContainer) {
+      const activeMeta = sectionMetas.find(m => m.id === activeSectionId);
+      if (activeMeta) {
+        const dotWrapper = activeMeta.navItem.querySelector('.dot-wrapper') as HTMLElement | null;
+        if (dotWrapper) {
+          const trackRect = trackContainer.getBoundingClientRect();
+          const dotRect = dotWrapper.getBoundingClientRect();
+          const dotCenterY = dotRect.top + dotRect.height / 2 - trackRect.top;
+          
+          const secRect = activeMeta.el.getBoundingClientRect();
+          const secHeight = secRect.height || 1;
+          const secProgress = Math.min(Math.max(-secRect.top / secHeight, 0), 1);
+          
+          const currentIndex = sectionMetas.findIndex(m => m.id === activeSectionId);
+          let targetPixelHeight = dotCenterY;
+
+          if (currentIndex < sectionMetas.length - 1 && secProgress > 0) {
+            const nextDotWrapper = sectionMetas[currentIndex + 1].navItem.querySelector('.dot-wrapper') as HTMLElement | null;
+            if (nextDotWrapper) {
+              const nextDotRect = nextDotWrapper.getBoundingClientRect();
+              const nextDotCenterY = nextDotRect.top + nextDotRect.height / 2 - trackRect.top;
+              targetPixelHeight = dotCenterY + (nextDotCenterY - dotCenterY) * secProgress;
+            }
+          }
+
+          if (docHeight > 0 && scrollY >= docHeight - 15) {
+            progressBar.style.height = '100%';
+          } else {
+            progressBar.style.height = `${Math.max(0, targetPixelHeight)}px`;
+          }
+        }
+      } else {
+        progressBar.style.height = `${overallProgress}%`;
+      }
+    }
+
+    // Precise Section Detection
+    if (scrollY < 100) {
+      if (sectionMetas.length > 0) setActive(sectionMetas[0].id);
+      return;
+    }
+
+    if (docHeight > 0 && scrollY >= docHeight - 60) {
+      if (sectionMetas.length > 0) setActive(sectionMetas[sectionMetas.length - 1].id);
+      return;
+    }
+
+    const scanLine = viewportHeight * 0.38;
+    let currentBest: SectionMeta | null = null;
+
+    for (let i = 0; i < sectionMetas.length; i++) {
+      const rect = sectionMetas[i].el.getBoundingClientRect();
+      if (rect.top <= scanLine && rect.bottom > scanLine) {
+        currentBest = sectionMetas[i];
+        break;
+      }
+    }
+
+    if (!currentBest) {
+      let minDistance = Infinity;
+      sectionMetas.forEach(meta => {
+        const rect = meta.el.getBoundingClientRect();
+        const dist = Math.abs(rect.top - scanLine);
+        if (dist < minDistance) {
+          minDistance = dist;
+          currentBest = meta;
+        }
+      });
+    }
+
+    if (currentBest) {
+      setActive(currentBest.id);
+    }
+  }
+
+  // Smooth click scroll handler for desktop nav
+  navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = item.getAttribute('data-section');
+      if (!targetId) return;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+        setActive(targetId);
+      }
+    });
+  });
+
+  // RAF throttled scroll handler for 60fps responsiveness
+  let ticking = false;
+  function requestTick() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        onScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestTick, { passive: true });
+  window.addEventListener('resize', requestTick, { passive: true });
+  
+  // Initial run
+  onScroll();
 </script>
 
 <style>
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
-    width: 100%;
-    transition: box-shadow var(--transition-normal), background-color var(--transition-normal), border-color var(--transition-normal);
+  /* =========================================
+     DESKTOP RIGHT-SIDE NAVIGATION
+     ========================================= */
+  .right-nav {
+    position: fixed;
+    right: 2.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 90;
+    pointer-events: none;
   }
 
-  .navbar.scrolled {
-    box-shadow: var(--shadow-sm);
-  }
-
-  .navbar-container {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: var(--space-md) var(--container-padding);
+  .nav-rail {
+    pointer-events: auto;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
-  .brand {
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-normal);
-    color: var(--color-text-primary);
-    letter-spacing: -0.02em;
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  .brand-dot {
-    color: var(--color-accent);
-  }
-
-  .brand:hover {
-    color: var(--color-accent);
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: var(--space-lg);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: var(--space-lg);
-    align-items: center;
-  }
-
-  .nav-link {
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  .nav-link:hover {
-    color: var(--color-accent);
-  }
-
-  .theme-toggle {
+  .rail-theme-btn {
     background: transparent;
     border: 1px solid var(--color-border);
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
     border-radius: var(--radius-full);
-    width: 2.25rem;
-    height: 2.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-primary);
-    transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+    color: var(--color-text-secondary);
+    transition: transform var(--transition-spring), color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    margin-right: -2px;
   }
 
-  .theme-toggle:hover {
+  .rail-theme-btn:hover {
+    color: var(--color-accent);
     border-color: var(--color-accent);
     background-color: var(--color-surface-hover);
-    transform: scale(1.05);
+    transform: scale(1.12);
   }
 
-  .theme-icon {
-    line-height: 1;
+  .theme-svg {
+    display: block;
     user-select: none;
   }
 
@@ -168,9 +392,205 @@
     display: none;
   }
 
+  .nav-track-container {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .nav-progress-track {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background-color: var(--color-border);
+    border-radius: var(--radius-full);
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .nav-progress-bar {
+    width: 100%;
+    height: 0px;
+    background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-hover));
+    border-radius: var(--radius-full);
+    transition: height 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 0 8px rgba(232, 164, 39, 0.45);
+  }
+
+  .nav-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    align-items: flex-end;
+    position: relative;
+    z-index: 2;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    transition: transform var(--transition-spring);
+  }
+
+  .nav-label {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: -0.02em;
+    color: var(--color-text-secondary);
+    opacity: 0.45;
+    transition: opacity var(--transition-normal), color var(--transition-normal), transform var(--transition-normal);
+  }
+
+  .dot-wrapper {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dot-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    transition: width var(--transition-normal), height var(--transition-normal), background-color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .nav-item:hover .nav-label {
+    opacity: 0.9;
+    color: var(--color-text-primary);
+    transform: translateX(-3px);
+  }
+
+  .nav-item:hover .dot-indicator {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+    transform: scale(1.25);
+  }
+
+  .nav-item.active .nav-label {
+    opacity: 1;
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    transform: translateX(-5px);
+  }
+
+  .nav-item.active .dot-indicator {
+    width: 8px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-accent);
+  }
+
+  /* =========================================
+     MOBILE TOP NAVIGATION & PROGRESS BAR
+     ========================================= */
+  .mobile-top-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 95;
+    background: #FAF7F2;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  :global([data-theme="dark"]) .mobile-top-bar {
+    background: #1C1917 !important;
+    border-bottom: 1px solid #3D3229 !important;
+  }
+
+  .mobile-top-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .mobile-brand {
+    font-family: var(--font-family-heading);
+    font-size: 1.35rem;
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    transition: color var(--transition-fast);
+  }
+
+  :global([data-theme="dark"]) .mobile-brand {
+    color: #FAF7F2 !important;
+  }
+
+  .mobile-brand:hover {
+    color: var(--color-accent);
+  }
+
+  .mobile-theme-btn {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    transition: transform var(--transition-spring), color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  :global([data-theme="dark"]) .mobile-theme-btn {
+    border-color: #3D3229 !important;
+    color: #A89990 !important;
+  }
+
+  .mobile-theme-btn:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-hover);
+  }
+
+  .mobile-progress-track {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+  }
+
+  .mobile-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+    transition: width 80ms ease-out;
+    box-shadow: 0 0 6px rgba(232, 164, 39, 0.4);
+  }
+
+  /* Responsive toggling */
   @media (max-width: 768px) {
-    .nav-links {
+    .right-nav {
       display: none;
+    }
+
+    .mobile-top-bar {
+      display: block;
     }
   }
 </style>

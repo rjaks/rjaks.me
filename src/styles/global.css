@@ -147,11 +147,6 @@ body {
   /* Minimal scattered grass blades - subtle, natural organic field */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M22 38 Q 20 25 15 18 M22 38 Q 24 22 29 14 M22 38 Q 27 27 31 22' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.045' stroke-linecap='round'/%3E%3Cpath d='M118 72 Q 115 62 110 56 M118 72 Q 121 58 126 52' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.04' stroke-linecap='round'/%3E%3Cpath d='M68 128 Q 65 116 60 110 M68 128 Q 70 112 75 106 M68 128 Q 73 118 78 114' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.045' stroke-linecap='round'/%3E%3Cpath d='M142 144 Q 139 135 135 130 M142 144 Q 145 132 148 126' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.035' stroke-linecap='round'/%3E%3C/svg%3E");
   background-size: 160px 160px;
-  cursor: url('/cursor-paw.svg') 16 16, auto;
-}
-
-a, button, [role="button"], label[for], select, input[type="submit"], input[type="button"] {
-  cursor: url('/cursor-paw.svg') 16 16, pointer;
 }
 
 [data-theme="dark"] body {
