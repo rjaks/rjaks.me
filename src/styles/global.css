@@ -30,9 +30,9 @@
 }
 
 @theme {
-  --color-bg: #FAF7F2;
-  --color-surface: #F5EFE0;
-  --color-surface-hover: #EDE4D2;
+  --color-bg: #FBF6EE;
+  --color-surface: #F3EBD8;
+  --color-surface-hover: #EAE0C8;
   --color-border: #E2D9CC;
   --color-text-primary: #2C2520;
   --color-text-secondary: #8A7D74;
@@ -46,9 +46,9 @@
 
 :root {
   /* Design Tokens as CSS Variables - Light Mode (default) */
-  --color-bg: #FAF7F2;
-  --color-surface: #F5EFE0;
-  --color-surface-hover: #EDE4D2;
+  --color-bg: #FBF6EE;
+  --color-surface: #F3EBD8;
+  --color-surface-hover: #EAE0C8;
   --color-border: #E2D9CC;
   --color-text-primary: #2C2520;
   --color-text-secondary: #8A7D74;
@@ -144,13 +144,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  /* Minimal scattered grass blades - subtle, natural organic field */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M22 38 Q 20 25 15 18 M22 38 Q 24 22 29 14 M22 38 Q 27 27 31 22' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.045' stroke-linecap='round'/%3E%3Cpath d='M118 72 Q 115 62 110 56 M118 72 Q 121 58 126 52' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.04' stroke-linecap='round'/%3E%3Cpath d='M68 128 Q 65 116 60 110 M68 128 Q 70 112 75 106 M68 128 Q 73 118 78 114' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.045' stroke-linecap='round'/%3E%3Cpath d='M142 144 Q 139 135 135 130 M142 144 Q 145 132 148 126' fill='none' stroke='%232C2520' stroke-width='1.2' stroke-opacity='0.035' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+  /* Subtle organic grain / noise texture */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.17 0 0 0 0 0.14 0 0 0 0 0.12 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
 }
 
 [data-theme="dark"] body {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M22 38 Q 20 25 15 18 M22 38 Q 24 22 29 14 M22 38 Q 27 27 31 22' fill='none' stroke='%23FAF7F2' stroke-width='1.2' stroke-opacity='0.055' stroke-linecap='round'/%3E%3Cpath d='M118 72 Q 115 62 110 56 M118 72 Q 121 58 126 52' fill='none' stroke='%23FAF7F2' stroke-width='1.2' stroke-opacity='0.05' stroke-linecap='round'/%3E%3Cpath d='M68 128 Q 65 116 60 110 M68 128 Q 70 112 75 106 M68 128 Q 73 118 78 114' fill='none' stroke='%23FAF7F2' stroke-width='1.2' stroke-opacity='0.055' stroke-linecap='round'/%3E%3Cpath d='M142 144 Q 139 135 135 130 M142 144 Q 145 132 148 126' fill='none' stroke='%23FAF7F2' stroke-width='1.2' stroke-opacity='0.045' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilterDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0.98 0 1 0 0 0.97 0 0 1 0 0.95 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilterDark)'/%3E%3C/svg%3E");
 }
 
 /* Ensure sections allow the background pattern to show through */

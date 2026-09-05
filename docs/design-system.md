@@ -7,7 +7,7 @@
 
 ## Brand Direction
 
-This site uses a **light-first** design with a warm, editorial aesthetic subtly influenced by Golden Retriever energy — warm tones, cozy surfaces, and playful micro-interactions that don't announce themselves. The dog theme is **never literal in content**; it lives in texture, interaction, color, and personality.
+This site uses a **light-first** design with a warm, editorial aesthetic subtly influenced by Golden Retriever energy — warm tones, cozy surfaces, and a warm palette and texture that don't announce themselves. The dog theme is **never literal in content**; it lives in texture, interaction, color, and personality.
 
 ---
 
@@ -17,9 +17,9 @@ This site uses a **light-first** design with a warm, editorial aesthetic subtly 
 
 | CSS Variable | Name | Hex | Usage |
 |---|---|---|---|
-| `--color-bg` | Oat White | `#FAF7F2` | Page background |
-| `--color-surface` | Soft Cream | `#F5EFE0` | Cards, panels |
-| `--color-surface-hover` | Warm Cream | `#EDE4D2` | Card/panel hover state |
+| `--color-bg` | Oat White | `#FBF6EE` | Page background |
+| `--color-surface` | Soft Cream | `#F3EBD8` | Cards, panels |
+| `--color-surface-hover` | Warm Cream | `#EAE0C8` | Card/panel hover state |
 | `--color-border` | Muted Warm | `#E2D9CC` | Borders, dividers |
 | `--color-text-primary` | Warm Charcoal | `#2C2520` | Primary text |
 | `--color-text-secondary` | Muted Brown | `#8A7D74` | Secondary/meta text |
@@ -169,20 +169,14 @@ All shadows use warm-tinted values (no cool gray/blue shadows):
 The dog theme is expressed through **behavior and texture**, not content.
 
 ### Cursor
-- Custom cursor with a subtle paw-print stamp effect on click.
-- The paw effect is an overlay layer only — standard pointer behavior is preserved.
+- Standard browser cursor only. No custom cursor or paw-print effect is used.
 
 ### Spring Physics
 - Apply `--transition-spring` to: card hover lift, CTA button press, tag hover scale.
 - Creates an eager, bouncy feel without being cartoonish.
 
 ### Corner Mascot Widget
-- A minimal line-art Golden Retriever SVG fixed to the bottom-right corner.
-- **Idle state:** Sleeping (subtle looping breathing animation).
-- **Hover state:** Eyes open, subtle tail-wag.
-- **Click state:** Stands up, speech bubble appears briefly.
-- Style: SVG, single color (`var(--color-accent)`), ~80px footprint.
-- This is the **only** explicit dog visual on the site.
+- Intentionally omitted. The golden retriever theme is expressed through color, texture, and tone of voice only.
 
 ### Dark Mode Toggle
 - Light label: Day Walk ☀️ / Dark label: Bedtime 🌙
@@ -191,7 +185,7 @@ The dog theme is expressed through **behavior and texture**, not content.
 ### 404 Page
 - Headline: *"Looks like this page wandered off."*
 - Subtext: *"Let's head back home."*
-- Visual: the corner mascot in a confused/sniffing pose.
+- Visual: clean 404 layout in warm palette.
 
 ---
 
@@ -223,7 +217,7 @@ The dog theme is expressed through **behavior and texture**, not content.
 - Professional without stiffness.
 - Subtle wit — never forced.
 - Example taglines:
-  - *"Loyal to clean code & sharp design."*
+  - *"Sharp code, warmer coffee."*
   - *"Chasing ambitious ideas."*
   - *"Always eager to learn new tricks."*
 
