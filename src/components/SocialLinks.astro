@@ -1,0 +1,20 @@
+---
+// src/components/SocialLinks.astro
+import { contactLinks } from '../data/contact';
+---
+
+<div class="flex flex-wrap items-center gap-3 sm:gap-4 font-mono text-xs my-4">
+  {contactLinks.map((link) => (
+    <a
+      href={link.href}
+      target={link.external ? '_blank' : undefined}
+      rel={link.external ? 'noopener noreferrer' : undefined}
+      class="inline-flex items-center gap-1 text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors py-1 group"
+    >
+      <span>{link.label}</span>
+      <span class="ext-arrow text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)]">
+        {link.external ? '↗' : '→'}
+      </span>
+    </a>
+  ))}
+</div>

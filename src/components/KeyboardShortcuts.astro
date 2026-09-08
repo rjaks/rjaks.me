@@ -1,0 +1,187 @@
+---
+// src/components/KeyboardShortcuts.astro
+---
+
+<!-- Keyboard Shortcuts Modal / Cheat Sheet -->
+<div id="shortcuts-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-xs p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="terminal-panel w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-5 sm:p-6 relative text-[var(--color-text-primary)]">
+    <div class="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+        <h3 id="modal-title" class="text-sm sm:text-base font-mono font-bold text-[var(--color-text-primary)]">
+          rjaks:~$ man shortcuts
+        </h3>
+      </div>
+      <button id="close-shortcuts-modal" class="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-mono text-xs cursor-pointer px-2 py-1 border border-[var(--color-border)] rounded-xs hover:border-[var(--color-accent)] transition-colors">
+        ESC [x]
+      </button>
+    </div>
+
+    <div class="mt-4 space-y-3 font-mono text-xs sm:text-sm">
+      <p class="text-[var(--color-text-secondary)] text-xs mb-3">
+        Navigate through the site with single keypresses:
+      </p>
+
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Home</span>
+          <kbd>h</kbd>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Work</span>
+          <kbd>w</kbd>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Projects</span>
+          <kbd>p</kbd>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Writing</span>
+          <kbd>b</kbd>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Toggle Theme</span>
+          <kbd>t</kbd>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Help</span>
+          <kbd>?</kbd>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 pt-3 border-t border-[var(--color-border)] flex items-center justify-between text-[11px] text-[var(--color-text-secondary)] font-mono">
+      <span>Tip: Press ESC or click outside to dismiss</span>
+      <span class="text-[var(--color-accent)]">● live</span>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Terminal Key Action Toast -->
+<div id="terminal-toast" class="fixed bottom-6 right-6 z-40 hidden pointer-events-none transition-all duration-200 opacity-0 translate-y-2">
+  <div class="flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-accent)] font-mono text-xs shadow-lg">
+    <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
+    <span id="toast-message"></span>
+  </div>
+</div>
+
+<script>
+  function setupShortcuts() {
+    const modal = document.getElementById('shortcuts-modal');
+    const closeBtn = document.getElementById('close-shortcuts-modal');
+    const toast = document.getElementById('terminal-toast');
+    const toastMsg = document.getElementById('toast-message');
+    let toastTimeout: number;
+
+    function showToast(text: string) {
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = text;
+      toast.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        toast.classList.remove('opacity-0', 'translate-y-2');
+        toast.classList.add('opacity-100', 'translate-y-0');
+      });
+
+      window.clearTimeout(toastTimeout);
+      toastTimeout = window.setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.classList.add('hidden'), 200);
+      }, 1200);
+    }
+
+    function toggleModal() {
+      if (!modal) return;
+      const isHidden = modal.classList.contains('hidden');
+      if (isHidden) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        showToast('man shortcuts');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    closeBtn?.addEventListener('click', () => {
+      modal?.classList.add('hidden');
+      modal?.classList.remove('flex');
+    });
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    });
+
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      // Don't intercept if user is typing in form controls
+      const target = e.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+         target.tagName === 'TEXTAREA' ||
+         target.tagName === 'SELECT' ||
+         target.isContentEditable)
+      ) {
+        return;
+      }
+
+      // Ignore if modifier keys are held (except Shift for '?')
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      const key = e.key.toLowerCase();
+
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        e.preventDefault();
+        toggleModal();
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        if (modal && !modal.classList.contains('hidden')) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+        return;
+      }
+
+      switch (key) {
+        case 'h':
+          e.preventDefault();
+          showToast('cd ~ (home)');
+          setTimeout(() => window.location.href = '/', 150);
+          break;
+        case 'w':
+          e.preventDefault();
+          showToast('cd ~/work');
+          setTimeout(() => window.location.href = '/work', 150);
+          break;
+        case 'p':
+          e.preventDefault();
+          showToast('cd ~/projects');
+          setTimeout(() => window.location.href = '/projects', 150);
+          break;
+        case 'b':
+          e.preventDefault();
+          showToast('cd ~/writing');
+          setTimeout(() => window.location.href = '/writing', 150);
+          break;
+        case 't': {
+          e.preventDefault();
+          const currentTheme = document.documentElement.getAttribute('data-theme');
+          const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+          showToast(`theme set to ${newTheme}`);
+          break;
+        }
+      }
+    });
+  }
+
+  // Support direct load & view transitions
+  setupShortcuts();
+  document.addEventListener('astro:page-load', setupShortcuts);
+</script>

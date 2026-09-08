@@ -1,0 +1,99 @@
+---
+// src/components/NowSection.astro
+import { nowItems, hobbies } from '../data/now';
+
+const categoryColorMap: Record<string, string> = {
+  building: 'text-[var(--color-accent)]',
+  working: 'text-[var(--color-prompt)]',
+  studying: 'text-[var(--color-accent-secondary)]',
+  reading: 'text-amber-400',
+  watching: 'text-purple-400',
+  listening: 'text-emerald-400'
+};
+---
+
+<section class="my-8 sm:my-12">
+  <div class="flex items-center gap-2 mb-4">
+    <span class="font-mono text-xs text-[var(--color-prompt)] font-bold">rjaks:~$</span>
+    <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
+      Now
+    </h2>
+    <span class="font-mono text-[11px] text-[var(--color-text-secondary)]">(/now)</span>
+  </div>
+
+  <p class="text-xs text-[var(--color-text-secondary)] font-sans mb-4">
+    A snapshot of what I'm actively building, exploring, reading, and tuned into right now.
+  </p>
+
+  <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-3">
+    <ul class="divide-y divide-[var(--color-border-subtle)]">
+      {nowItems.map((item) => (
+        <li class="py-2.5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 text-xs">
+          <span class={`font-mono text-[11px] shrink-0 font-bold ${categoryColorMap[item.category] || 'text-[var(--color-accent)]'}`}>
+            [{item.category}]
+          </span>
+          <div class="flex-1">
+            {item.link ? (
+              <a 
+                href={item.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="editorial-link font-sans font-medium text-[var(--color-text-primary)] hover:text-[var(--color-accent)]"
+              >
+                {item.label}
+                <span class="ext-arrow">↗</span>
+              </a>
+            ) : (
+              <span class="font-sans font-medium text-[var(--color-text-primary)]">
+                {item.label}
+              </span>
+            )}
+            {item.detail && (
+              <span class="block sm:inline text-[var(--color-text-secondary)] sm:ml-2 text-[11px] font-mono">
+                — {item.detail}
+              </span>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Personal & Hobbies Subsection -->
+  <div class="mt-8">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="font-mono text-xs text-[var(--color-accent-secondary)] font-bold">#</span>
+      <h3 class="font-heading text-sm sm:text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
+        Off the Terminal
+      </h3>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {hobbies.map((hobby) => (
+        <div class="terminal-panel p-3.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between">
+          <div>
+            <h4 class="font-heading font-extrabold text-xs text-[var(--color-text-primary)] mb-1">
+              {hobby.title}
+            </h4>
+            <p class="font-sans text-[11px] leading-relaxed text-[var(--color-text-secondary)]">
+              {hobby.description}
+            </p>
+          </div>
+          {hobby.link && (
+            <div class="mt-2.5 pt-2 border-t border-[var(--color-border-subtle)]">
+              <a 
+                href={hobby.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="font-mono text-[11px] text-[var(--color-accent)] hover:underline inline-flex items-center gap-1"
+              >
+                {hobby.linkLabel || 'Explore'}
+                <span class="ext-arrow">↗</span>
+              </a>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
