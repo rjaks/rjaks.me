@@ -1,47 +1,56 @@
 # rjaks.me — Design System
 
-> **Theme:** Modern Minimalist × Subtle Golden Retriever Branding
-> **Personality:** Warm, smart, welcoming — professionally playful.
+> **Theme:** Minimalist Dual-Mode Terminal × Developer Editorial (Inspired by kavin.me)
+> **Identity:** Adrian Reforsado (`rjaks`)
+> **Personality:** Fast, technical, clean, intentional — quiet confidence with terminal charm.
 
 ---
 
 ## Brand Direction
 
-This site uses a **light-first** design with a warm, editorial aesthetic subtly influenced by Golden Retriever energy — warm tones, cozy surfaces, and a warm palette and texture that don't announce themselves. The dog theme is **never literal in content**; it lives in texture, interaction, color, and personality.
+This site merges the ultra-clean, readable editorial structure of developer portfolios (e.g. kavin.me) with a modern terminal/CLI aesthetic. It embraces:
+- Default **dark terminal** mode with an obsidian canvas, paired with a clean **light paper editor** alternate mode.
+- Subtle CLI motifs: shell prompts (`rjaks:~$`), command traces (`> cd ~/work`), `<kbd>` shortcut indicators, and monospaced metadata.
+- Preserved signature **Golden Amber** (`#E8A427`) accent color for highlights, focus rings, and active states.
+- High accessibility, instant load speed, and distraction-free typography.
 
 ---
 
 ## Color Palette
 
-### Light Mode (default)
+### Dark Mode (Default / `:root` / `[data-theme="dark"]`)
 
 | CSS Variable | Name | Hex | Usage |
 |---|---|---|---|
-| `--color-bg` | Oat White | `#FBF6EE` | Page background |
-| `--color-surface` | Soft Cream | `#F3EBD8` | Cards, panels |
-| `--color-surface-hover` | Warm Cream | `#EAE0C8` | Card/panel hover state |
-| `--color-border` | Muted Warm | `#E2D9CC` | Borders, dividers |
-| `--color-text-primary` | Warm Charcoal | `#2C2520` | Primary text |
-| `--color-text-secondary` | Muted Brown | `#8A7D74` | Secondary/meta text |
-| `--color-accent` | Golden Amber | `#E8A427` | Primary accent, CTAs, highlights |
-| `--color-accent-hover` | Deep Amber | `#C98A1A` | Accent hover state |
-| `--color-accent-secondary` | Dusty Sage | `#8FA68E` | Secondary accent, success states |
+| `--color-bg` | Obsidian Terminal | `#0D1117` | Root background |
+| `--color-surface` | Terminal Pane | `#161B22` | Cards, terminal windows, code blocks |
+| `--color-surface-hover` | Lifted Pane | `#1F242C` | Card hover state, active items |
+| `--color-border` | Terminal Border | `#30363D` | Borders, dividers, keycaps |
+| `--color-border-subtle` | Subtle Border | `#21262D` | Inactive tags, table row borders |
+| `--color-text-primary` | Terminal White | `#F0F6FC` | Headings, primary text |
+| `--color-text-secondary` | Muted Silver | `#8B949E` | Secondary/meta text, dates, bio details |
+| `--color-text-muted` | Faded Gray | `#6E7681` | Footers, subtle hints |
+| `--color-accent` | Golden Amber | `#E8A427` | Primary accent, active links, glow |
+| `--color-accent-hover` | Warm Amber | `#F59E0B` | Accent hover state |
+| `--color-accent-secondary` | Terminal Cyan/Blue | `#58A6FF` | Inline links, directory paths |
+| `--color-prompt` | Shell Green | `#3FB950` | Command prompt symbol |
 
-### Dark Mode (`[data-theme="dark"]`)
+### Light Mode (`[data-theme="light"]`)
 
 | CSS Variable | Name | Hex | Usage |
 |---|---|---|---|
-| `--color-bg` | Dark Espresso | `#1C1917` | Page background |
-| `--color-surface` | Rich Charcoal | `#28211E` | Cards, panels |
-| `--color-surface-hover` | Lifted Charcoal | `#342B27` | Card/panel hover state |
-| `--color-border` | Warm Dark Border | `#3D3229` | Borders, dividers |
-| `--color-text-primary` | Oat Cream | `#FAF7F2` | Primary text |
-| `--color-text-secondary` | Warm Gray | `#A89990` | Secondary/meta text |
-| `--color-accent` | Golden Amber | `#E8A427` | Same accent across modes |
-| `--color-accent-hover` | Deep Amber | `#C98A1A` | Same hover across modes |
-| `--color-accent-secondary` | Dusty Sage | `#8FA68E` | Same secondary across modes |
-
-> Dark mode toggle label: ☀️ / 🌙 — no dog theming on the toggle itself.
+| `--color-bg` | Clean Paper | `#F8FAFC` | Root background |
+| `--color-surface` | Pure White | `#FFFFFF` | Cards, panels, inputs |
+| `--color-surface-hover` | Soft Slate | `#F1F5F9` | Hover state |
+| `--color-border` | Slate Border | `#E2E8F0` | Borders, dividers |
+| `--color-border-subtle` | Faint Border | `#EDF2F7` | Subtle dividers |
+| `--color-text-primary` | Deep Slate | `#0F172A` | Primary text |
+| `--color-text-secondary` | Slate Gray | `#64748B` | Secondary/meta text |
+| `--color-text-muted` | Muted Slate | `#94A3B8` | Footers, subtle hints |
+| `--color-accent` | Golden Bronze | `#D97706` | Primary accent |
+| `--color-accent-hover` | Deep Bronze | `#B45309` | Hover state |
+| `--color-accent-secondary` | Code Blue | `#2563EB` | Inline links |
+| `--color-prompt` | Editor Green | `#16A34A` | Command prompt symbol |
 
 ---
 
@@ -51,182 +60,57 @@ This site uses a **light-first** design with a warm, editorial aesthetic subtly 
 
 | Role | Font | Fallback | CSS Variable |
 |---|---|---|---|
-| **Headings** | Recoleta (400) | Georgia, serif | `--font-family-heading` |
-| **Body / UI** | JUST Sans (400, 800) | -apple-system, sans-serif | `--font-family-base` |
-| **Mono / Meta** | Space Mono (400, 700) | monospace | `--font-family-mono` |
+| **Headings** | Geist Mono (700, 800) | Space Mono, monospace | `--font-family-heading` |
+| **Body / UI** | JUST Sans (400, 700, 800) | -apple-system, sans-serif | `--font-family-base` |
+| **Terminal & Meta** | Geist Mono / Space Mono | monospace | `--font-family-mono` |
+| **Serif Accent** | Recoleta (400) | Georgia, serif | `--font-family-serif` |
 
-Both `JUST Sans` and `Recoleta` are loaded as local `@font-face` from `/public/fonts/`. `Space Mono` is loaded from Google Fonts.
-
-### Type Scale
-
-| Token | Value | Usage |
-|---|---|---|
-| `--font-size-display` | `4.5rem` | Hero name |
-| `--font-size-5xl` | `3.5rem` | Hero headings |
-| `--font-size-4xl` | `2.5rem` | Section titles |
-| `--font-size-3xl` | `2rem` | Card/subsection headings |
-| `--font-size-2xl` | `1.5rem` | Large intro text |
-| `--font-size-xl` | `1.25rem` | Emphasized body |
-| `--font-size-base` | `1rem` | Default body |
-| `--font-size-sm` | `0.875rem` | Meta, captions |
-| `--font-size-xs` | `0.75rem` | Tags, badges |
-
-### Letter Spacing
-- **Recoleta headings:** `letter-spacing: -0.02em`
-- **Space Mono:** `letter-spacing: -0.03em`
-- **JUST Sans:** `letter-spacing: 0`
+### Typography Guidelines
+- Headings use tight-spaced `Geist Mono` (`letter-spacing: -0.04em`, `font-weight: 700`) for a modern, high-precision developer aesthetic.
+- Terminal prompts (`rjaks:~$`), badges, keycaps (`<kbd>`), code blocks, dates, and navigation hints use `Geist Mono`.
+- Body paragraphs use `JUST Sans` for clean editorial readability.
 
 ---
 
-## Spacing Scale
+## Layout & Container
 
-| Token | Value |
-|---|---|
-| `--space-2xs` | `0.25rem` (4px) |
-| `--space-xs` | `0.5rem` (8px) |
-| `--space-sm` | `0.75rem` (12px) |
-| `--space-md` | `1rem` (16px) |
-| `--space-lg` | `1.5rem` (24px) |
-| `--space-xl` | `2rem` (32px) |
-| `--space-2xl` | `3rem` (48px) |
-| `--space-3xl` | `4rem` (64px) |
-| `--space-4xl` | `6rem` (96px) |
+- **Focused Editorial Width:** `max-width: 760px` centered with `margin: 0 auto`.
+- Padding: `var(--space-lg)` (24px) horizontal gutter on desktop, `var(--space-md)` (16px) on mobile.
+- Clean vertical rhythm using `1.5rem` to `3rem` section spacing.
 
 ---
 
-## Border Radius
+## Key Components & Patterns
 
-| Token | Value | Usage |
-|---|---|---|
-| `--radius-sm` | `0.375rem` | Inline elements |
-| `--radius-md` | `0.5rem` | Inputs, small components |
-| `--radius-lg` | `0.75rem` | Buttons, tags |
-| `--radius-xl` | `1rem` | Cards (small) |
-| `--radius-2xl` | `1.5rem` | Cards (standard) |
-| `--radius-full` | `9999px` | Pills, badges |
+### 1. Terminal Prompt & Brand
+- Brand in nav: `rjaks:~$` with blinking cursor or prompt dot.
+- Page header prompt: `rjaks:~$ whoami` leading into display name `Adrian Reforsado`.
 
-Cards use `--radius-2xl` (24px) for a soft, pillow-like feel consistent with the warm aesthetic.
+### 2. Editorial Inline Links
+- Links within prose have a subtle underline (`text-decoration-color: var(--color-border)`).
+- On hover, transitions cleanly to `var(--color-accent)`.
+- External links include the subtle diagonal arrow glyph: `↗` (`.ext-arrow`).
 
----
+### 3. Keyboard Shortcuts (`<kbd>`)
+- Keycaps are rendered with `<kbd>`:
+  - `<kbd>h</kbd>` → Home
+  - `<kbd>w</kbd>` → Work
+  - `<kbd>p</kbd>` → Projects
+  - `<kbd>b</kbd>` → Writing (Blog)
+  - `<kbd>t</kbd>` → Toggle theme
+  - `<kbd>?</kbd>` → Shortcuts cheat sheet modal
+- Visible `<kbd>` hint pills appear in navbar links and the footer status bar.
 
-## Shadows
+### 4. GitHub Contribution Heatmap
+- Live contribution grid styled to match the dark/light palette.
+- Displays yearly total badge (`[XXX this year]`) and kavin.me inspired subtext.
 
-All shadows use warm-tinted values (no cool gray/blue shadows):
-
-| Name | Value | Usage |
-|---|---|---|
-| `--shadow-sm` | `0 1px 4px rgba(44, 37, 32, 0.06)` | Subtle lift |
-| `--shadow-md` | `0 4px 16px rgba(44, 37, 32, 0.08)` | Cards |
-| `--shadow-lg` | `0 8px 32px rgba(44, 37, 32, 0.12)` | Elevated panels |
-| `--shadow-accent` | `0 4px 20px rgba(232, 164, 39, 0.25)` | Accent glow on hover |
-
----
-
-## UI Components
-
-### Cards
-- Background: `var(--color-surface)`
-- Border: `1px solid var(--color-border)`
-- Border radius: `var(--radius-2xl)` (24px)
-- Shadow: `var(--shadow-md)`
-- Hover: background shifts to `var(--color-surface-hover)` + `translateY(-3px)` + `var(--shadow-lg)`
-- Transition: `var(--transition-normal)`
-
-### Buttons
-- **Primary:** Background `var(--color-accent)`, text `var(--color-bg)`, `border-radius: var(--radius-full)`
-- **Secondary:** Border `1px solid var(--color-border)`, background transparent, text `var(--color-text-primary)`
-- **Ghost:** Text `var(--color-accent)`, no background or border
-- All buttons: hover uses `var(--color-accent-hover)` or `var(--shadow-accent)`
-
-### Tags / Badges
-- Font: `var(--font-family-mono)`, `var(--font-size-xs)`
-- Shape: `border-radius: var(--radius-full)` (pill)
-- Background: `var(--color-border)`
-- Text: `var(--color-text-secondary)`
-- Padding: `0.25rem 0.75rem`
-
-### Dividers
-- Default: `1px solid var(--color-border)`
-- Decorative option: wavy SVG line in `var(--color-border)` color
-
----
-
-## Transitions
-
-| Token | Value | Usage |
-|---|---|---|
-| `--transition-fast` | `150ms cubic-bezier(0.4, 0, 0.2, 1)` | Micro state changes |
-| `--transition-normal` | `250ms cubic-bezier(0.4, 0, 0.2, 1)` | Standard interactions |
-| `--transition-slow` | `400ms cubic-bezier(0.4, 0, 0.2, 1)` | Page/section transitions |
-| `--transition-spring` | `400ms cubic-bezier(0.34, 1.56, 0.64, 1)` | Bouncy/playful hover elements |
-
-`--transition-spring` uses an overshoot easing curve for a subtle bouncy energy on interactive elements.
-
----
-
-## Micro-Interactions & Dog Branding
-
-The dog theme is expressed through **behavior and texture**, not content.
-
-### Cursor
-- Standard browser cursor only. No custom cursor or paw-print effect is used.
-
-### Spring Physics
-- Apply `--transition-spring` to: card hover lift, CTA button press, tag hover scale.
-- Creates an eager, bouncy feel without being cartoonish.
-
-### Corner Mascot Widget
-- Intentionally omitted. The golden retriever theme is expressed through color, texture, and tone of voice only.
-
-### Dark Mode Toggle
-- Light label: Day Walk ☀️ / Dark label: Bedtime 🌙
-- Transition: full-page warm crossfade (300ms).
-
-### 404 Page
-- Headline: *"Looks like this page wandered off."*
-- Subtext: *"Let's head back home."*
-- Visual: clean 404 layout in warm palette.
-
----
-
-## Page Structure & Layout
-
-### Container
-- `max-width: 1100px`
-- `padding: 0 var(--space-lg)`
-- Centered with `margin: 0 auto`
-
-### Grid
-- Base: 12-column CSS Grid
-- Card grids: 2–3 columns desktop, 1 column mobile
-- Gap: `var(--space-lg)`
-
-### Standard Page Sections
-- Hero
-- Projects
-- Experience
-- Skills
-- About
-- Contact
+### 5. Terminal Panels & Cards
+- Minimalist borders (`1px solid var(--color-border)`), crisp corners (`border-radius: var(--radius-md)`), with subtle amber border glow on hover.
 
 ---
 
 ## Tone of Voice
-
-- Direct, warm, self-aware.
-- Professional without stiffness.
-- Subtle wit — never forced.
-- Example taglines:
-  - *"Sharp code, warmer coffee."*
-  - *"Chasing ambitious ideas."*
-  - *"Always eager to learn new tricks."*
-
----
-
-## What NOT to Do
-
-- Do not use blue, cyan, or indigo as accent colors.
-- Do not use cool-gray shadows — warm-tinted shadows only.
-- Do not name sections with dog puns.
-- Do not use cartoon or clipart dog imagery.
-- Do not add dog imagery to every section — the mascot widget is the single explicit dog visual.
+- Direct, concise, technical, and understated.
+- Avoid corporate fluff and unnecessary decorations.
+- Embrace developer authenticity and craft.

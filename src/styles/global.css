@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -30,44 +30,50 @@
 }
 
 @theme {
-  --color-bg: #FBF6EE;
-  --color-surface: #F3EBD8;
-  --color-surface-hover: #EAE0C8;
-  --color-border: #E2D9CC;
-  --color-text-primary: #2C2520;
-  --color-text-secondary: #8A7D74;
-  --color-accent: #E8A427;
-  --color-accent-hover: #C98A1A;
-  --color-accent-secondary: #8FA68E;
-  --font-heading: 'Recoleta', Georgia, serif;
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-border: var(--color-border);
+  --color-border-subtle: var(--color-border-subtle);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-secondary: var(--color-accent-secondary);
+  --font-heading: 'Geist Mono', monospace;
   --font-sans: 'JUST Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --font-mono: 'Geist Mono', 'Space Mono', monospace;
 }
 
 :root {
-  /* Design Tokens as CSS Variables - Light Mode (default) */
-  --color-bg: #FBF6EE;
-  --color-surface: #F3EBD8;
-  --color-surface-hover: #EAE0C8;
-  --color-border: #E2D9CC;
-  --color-text-primary: #2C2520;
-  --color-text-secondary: #8A7D74;
+  /* Default: Obsidian Dark Terminal */
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-hover: #1f242c;
+  --color-border: #30363d;
+  --color-border-subtle: #21262d;
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #8b949e;
+  --color-text-muted: #6e7681;
   
   --color-accent: #E8A427;
-  --color-accent-hover: #C98A1A;
-  --color-accent-secondary: #8FA68E;
-  --gradient-accent: linear-gradient(135deg, #E8A427 0%, #C98A1A 100%);
+  --color-accent-hover: #f59e0b;
+  --color-accent-secondary: #58a6ff;
+  --color-prompt: #3fb950;
+  --color-code-bg: #161b22;
 
-  /* Shadows (warm-tinted) */
-  --shadow-sm: 0 1px 4px rgba(44, 37, 32, 0.06);
-  --shadow-md: 0 4px 16px rgba(44, 37, 32, 0.08);
-  --shadow-lg: 0 8px 32px rgba(44, 37, 32, 0.12);
-  --shadow-accent: 0 4px 20px rgba(232, 164, 39, 0.25);
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.6);
+  --shadow-accent: 0 0 16px rgba(232, 164, 39, 0.25);
 
   /* Typography */
-  --font-family-heading: 'Recoleta', Georgia, serif;
+  --font-family-heading: 'Geist Mono', monospace;
   --font-family-base: 'JUST Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-mono: 'Space Mono', monospace;
+  --font-family-mono: 'Geist Mono', 'Space Mono', monospace;
+  --font-family-serif: 'Recoleta', Georgia, serif;
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -77,8 +83,7 @@
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 2rem;
   --font-size-4xl: 2.5rem;
-  --font-size-5xl: 3.5rem;
-  --font-size-display: 4.5rem;
+  --font-size-display: 3.5rem;
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -98,43 +103,71 @@
   --space-4xl: 6rem;
 
   /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
   --radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Container */
-  --container-max-width: 1100px;
+  /* Container: Focused editorial width */
+  --container-max-width: 760px;
   --container-padding: var(--space-lg);
 }
 
 [data-theme="dark"] {
-  /* Design Tokens as CSS Variables - Dark Mode */
-  --color-bg: #1C1917;
-  --color-surface: #28211E;
-  --color-surface-hover: #342B27;
-  --color-border: #3D3229;
-  --color-text-primary: #FAF7F2;
-  --color-text-secondary: #A89990;
+  /* Explicit dark mode declaration mirroring default */
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-hover: #1f242c;
+  --color-border: #30363d;
+  --color-border-subtle: #21262d;
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #8b949e;
+  --color-text-muted: #6e7681;
   --color-accent: #E8A427;
-  --color-accent-hover: #C98A1A;
-  --color-accent-secondary: #8FA68E;
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --shadow-accent: 0 4px 20px rgba(232, 164, 39, 0.3);
+  --color-accent-hover: #f59e0b;
+  --color-accent-secondary: #58a6ff;
+  --color-prompt: #3fb950;
+  --color-code-bg: #161b22;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.6);
+  --shadow-accent: 0 0 16px rgba(232, 164, 39, 0.25);
+}
+
+[data-theme="light"] {
+  /* Clean Paper / Editor Light Mode */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-subtle: #edf2f7;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-accent: #d97706;
+  --color-accent-hover: #b45309;
+  --color-accent-secondary: #2563eb;
+  --color-prompt: #16a34a;
+  --color-code-bg: #f1f5f9;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-accent: 0 0 16px rgba(217, 119, 6, 0.2);
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 body {
@@ -144,45 +177,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  /* Subtle organic grain / noise texture */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.17 0 0 0 0 0.14 0 0 0 0 0.12 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-[data-theme="dark"] body {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilterDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0.98 0 1 0 0 0.97 0 0 1 0 0.95 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilterDark)'/%3E%3C/svg%3E");
-}
-
-/* Ensure sections allow the background pattern to show through */
-main section:not(.card) {
-  background-color: transparent !important;
-}
-
-/* Headings use Recoleta */
-h1, h2, h3, h4, h5, h6,
-.hero-name,
-.section-title,
-.role-title,
-.company-name,
-.card-title,
-.edu-institution {
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
-  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  font-weight: 800;
+  letter-spacing: -0.06em;
 }
 
-/* Subtext, metadata, tags, and dates use Space Mono */
-.hero-label,
-.date-badge,
-.tag,
-.edu-year,
-.edu-honor,
-.icon-box,
-.btn-link,
-.hero-alias {
+/* Space Mono for Code, Prompts, Badges, Dates, and Terminal Chrome */
+code, pre, kbd, .font-mono, .terminal-prompt, .badge, .date-badge {
   font-family: var(--font-family-mono);
 }
 
-/* Custom Container Utility */
+/* Container */
 .container-custom {
   width: 100%;
   max-width: var(--container-max-width);
@@ -192,11 +205,98 @@ h1, h2, h3, h4, h5, h6,
   padding-right: var(--container-padding);
 }
 
-/* Global Interactive Spring Physics */
-.project-card,
-.timeline-content,
-.btn,
-.btn-primary,
-.skill-badge {
-  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+/* Editorial Link Style (inspired by kavin.me) */
+.editorial-link {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.editorial-link:hover {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
+
+/* External Link Glyph */
+.ext-arrow {
+  display: inline-block;
+  font-family: var(--font-family-mono);
+  font-size: 0.85em;
+  margin-left: 0.15rem;
+  transition: transform var(--transition-fast);
+}
+
+a:hover .ext-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Keyboard Shortcut Keycap */
+kbd {
+  font-family: var(--font-family-mono);
+  font-size: 0.7rem;
+  padding: 0.12rem 0.35rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  vertical-align: middle;
+  line-height: 1;
+  display: inline-block;
+}
+
+[data-theme="light"] kbd {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Terminal Prompt Utilities */
+.terminal-prompt {
+  font-family: var(--font-family-mono);
+  color: var(--color-prompt);
+}
+
+.terminal-prompt-amber {
+  font-family: var(--font-family-mono);
+  color: var(--color-accent);
+}
+
+/* Blinking Terminal Cursor */
+.terminal-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  background-color: var(--color-accent);
+  vertical-align: text-bottom;
+  margin-left: 3px;
+  animation: cursor-blink 1s step-start infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Terminal Card / Panel */
+.terminal-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.terminal-panel:hover {
+  border-color: var(--color-accent);
+}
+
+/* Terminal Tag / Badge */
+.terminal-badge {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-border-subtle);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
