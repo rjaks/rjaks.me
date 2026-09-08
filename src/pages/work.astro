@@ -1,0 +1,57 @@
+---
+// src/pages/work.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { experiences } from '../data/experience';
+---
+
+<BaseLayout 
+  title="Work & Experience — Adrian Reforsado (rjaks)" 
+  description="Career timeline, roles, engineering contributions, and professional experience of Adrian Reforsado."
+>
+  <div class="space-y-6">
+    <!-- Terminal Prompt Breadcrumb -->
+    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+      <span>rjaks:~$</span>
+      <span class="text-[var(--color-text-primary)]">cd ~/work && ls -la</span>
+    </div>
+
+    <div>
+      <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+        Work & Experience
+      </h1>
+      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+        A chronological history of teams I've built with, roles I've held, and systems I've engineered.
+      </p>
+    </div>
+
+    <!-- Timeline List -->
+    <div class="space-y-6 mt-8 border-l border-[var(--color-border)] pl-4 sm:pl-6 ml-2">
+      {experiences.map((exp) => (
+        <article class="relative group">
+          <!-- Timeline Node -->
+          <div class="absolute -left-[21px] sm:-left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--color-surface)] border-2 border-[var(--color-accent)] group-hover:bg-[var(--color-accent)] transition-colors"></div>
+
+          <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)]">
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
+              <div>
+                <h2 class="font-heading text-sm sm:text-base font-extrabold text-[var(--color-text-primary)]">
+                  {exp.role}
+                </h2>
+                <span class="font-mono text-xs text-[var(--color-accent)] font-semibold">
+                  @{exp.company}
+                </span>
+              </div>
+              <time class="font-mono text-xs text-[var(--color-text-secondary)] shrink-0">
+                {exp.period}
+              </time>
+            </div>
+
+            <p class="font-sans text-xs sm:text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              {exp.description}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,29 +1,140 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Projects from '../components/Projects.astro';
-import Experience from '../components/Experience.astro';
-import Skills from '../components/Skills.astro';
-import Education from '../components/Education.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import GithubHeatmap from '../components/GithubHeatmap.astro';
+import NowSection from '../components/NowSection.astro';
+import { projects } from '../data/projects';
+import { getCollection } from 'astro:content';
+
+const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
 <BaseLayout 
-  title="Adrian Leonidas Reforsado (rjaks) - Portfolio" 
-  description="Personal portfolio website of Adrian Leonidas Reforsado (rjaks) - Computer Science Student & Developer."
+  title="Adrian Reforsado (rjaks) — Software Engineer & Developer" 
+  description="Personal website of Adrian Reforsado (rjaks). Software engineer, CS student, building developer tools and clean web systems."
 >
-  <Navbar />
-  <main>
-    <Hero />
-    <About />
-    <Projects />
-    <Experience />
-    <Skills />
-    <Education />
-    <Contact />
-  </main>
-  <Footer />
+  <!-- Hero / Introduction -->
+  <section class="space-y-4">
+    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+      <span>rjaks:~$</span>
+      <span class="text-[var(--color-text-primary)]">whoami</span>
+    </div>
+
+    <div>
+      <h1 class="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+        Adrian Reforsado
+      </h1>
+      <p class="font-mono text-xs sm:text-sm text-[var(--color-accent)] mt-1">
+        Software Engineer & CS Student
+      </p>
+    </div>
+
+    <!-- Editorial Narrative (inspired by kavin.me) -->
+    <p class="font-sans text-sm sm:text-base leading-relaxed text-[var(--color-text-secondary)]">
+      I'm a Computer Science student and software engineer focused on building robust, high-performance web systems, developer tooling, and thoughtful digital interfaces. I like working with <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">TypeScript</span>, <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Astro</span>, <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Go</span>, and modern web architectures. Outside of code, you'll usually find me exploring new music, books, or tweaking terminal environments.
+    </p>
+
+    <!-- Social & Contact Links -->
+    <SocialLinks />
+  </section>
+
+  <!-- Live GitHub Heatmap -->
+  <GithubHeatmap />
+
+  <!-- Now & Off The Terminal Section -->
+  <NowSection />
+
+  <!-- Featured Projects Highlight -->
+  <section class="my-8 sm:my-12">
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-xs text-[var(--color-accent)] font-bold">~/projects $</span>
+        <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Selected Projects
+        </h2>
+      </div>
+      <a href="/projects" class="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1">
+        <span>View all ({projects.length})</span>
+        <span class="ext-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="space-y-3">
+      {featuredProjects.map((project) => (
+        <article class="terminal-panel p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)]">
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1.5">
+            <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
+              {project.title}
+            </h3>
+            <div class="flex items-center gap-2 font-mono text-[11px]">
+              {project.github && project.github !== '#' && (
+                <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                  code ↗
+                </a>
+              )}
+              {project.link && project.link !== '#' && (
+                <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
+                  demo ↗
+                </a>
+              )}
+            </div>
+          </div>
+          <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
+            {project.description}
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span class="terminal-badge text-[10px]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Recent Writing Highlight -->
+  {recentPosts.length > 0 && (
+    <section class="my-8 sm:my-12">
+      <div class="flex items-center justify-between gap-2 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs text-[var(--color-accent-secondary)] font-bold">~/writing $</span>
+          <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
+            Recent Writings
+          </h2>
+        </div>
+        <a href="/writing" class="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1">
+          <span>All posts ({allPosts.length})</span>
+          <span class="ext-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="divide-y divide-[var(--color-border-subtle)] border border-[var(--color-border)] rounded-md bg-[var(--color-surface)] p-2 sm:p-3">
+        {recentPosts.map((post) => (
+          <a 
+            href={`/writing/${post.id}`} 
+            class="group block p-2.5 rounded-sm hover:bg-[var(--color-border-subtle)] transition-colors"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <h3 class="font-heading text-xs sm:text-sm font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+                {post.data.title}
+              </h3>
+              <time class="font-mono text-[11px] text-[var(--color-text-muted)] shrink-0">
+                {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+              </time>
+            </div>
+            <p class="font-sans text-xs text-[var(--color-text-secondary)] line-clamp-1 mt-1">
+              {post.data.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 </BaseLayout>
+
