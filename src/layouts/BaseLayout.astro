@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import KeyboardShortcuts from '../components/KeyboardShortcuts.astro';
 
 interface Props {
   title: string;
@@ -7,8 +10,8 @@ interface Props {
 }
 
 const { 
-  title, 
-  description = 'Portfolio and personal website of Adrian Leonidas Reforsado (rjaks).' 
+  title = 'Adrian Reforsado (rjaks)', 
+  description = 'Personal website and portfolio of Adrian Reforsado (rjaks) — Software Engineer & CS Student.' 
 } = Astro.props;
 ---
 
@@ -19,16 +22,27 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Inline Theme Script to prevent flash -->
     <script is:inline>
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-      }
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
     </script>
   </head>
-  <body>
-    <slot />
+  <body class="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+    <Navbar />
+    <main class="container-custom flex-1 py-6 sm:py-10">
+      <slot />
+    </main>
+    <Footer />
+    <KeyboardShortcuts />
   </body>
 </html>
+
