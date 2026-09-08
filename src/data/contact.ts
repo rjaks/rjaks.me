@@ -7,12 +7,6 @@ export interface ContactLink {
 
 export const contactLinks: ContactLink[] = [
   {
-    label: "Email",
-    href: "mailto:contact@rjaks.me",
-    icon: "email",
-    external: false
-  },
-  {
     label: "GitHub",
     href: "https://github.com/rjaks",
     icon: "github",
@@ -22,6 +16,18 @@ export const contactLinks: ContactLink[] = [
     label: "LinkedIn",
     href: "https://linkedin.com",
     icon: "linkedin",
+    external: true
+  },
+  {
+    label: "Email",
+    href: "mailto:contact@rjaks.me",
+    icon: "email",
+    external: false
+  },
+  {
+    label: "Résumé",
+    href: "#",
+    icon: "resume",
     external: true
   }
 ];
