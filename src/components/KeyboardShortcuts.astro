@@ -40,6 +40,10 @@
           <kbd>b</kbd>
         </div>
         <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Skills</span>
+          <kbd>s</kbd>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
           <span class="text-[var(--color-text-secondary)]">Toggle Theme</span>
           <kbd>t</kbd>
         </div>
@@ -167,6 +171,11 @@
           e.preventDefault();
           showToast('cd ~/writing');
           setTimeout(() => window.location.href = '/writing', 150);
+          break;
+        case 's':
+          e.preventDefault();
+          showToast('cd ~/skills');
+          setTimeout(() => window.location.href = '/skills', 150);
           break;
         case 't': {
           e.preventDefault();

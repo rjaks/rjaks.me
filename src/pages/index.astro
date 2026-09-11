@@ -4,6 +4,7 @@ import SocialLinks from '../components/SocialLinks.astro';
 import GithubHeatmap from '../components/GithubHeatmap.astro';
 import NowSection from '../components/NowSection.astro';
 import { projects } from '../data/projects';
+import { skillCategories } from '../data/skills';
 import { getCollection } from 'astro:content';
 
 const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
@@ -94,6 +95,39 @@ const recentPosts = allPosts
             ))}
           </div>
         </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Technologies & Tools Highlight -->
+  <section class="my-8 sm:my-12">
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-xs text-[var(--color-prompt)] font-bold">~/stack $</span>
+        <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Technologies & Tools
+        </h2>
+      </div>
+      <a href="/skills" class="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1">
+        <span>Detailed view</span>
+        <span class="ext-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="terminal-panel p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-3">
+      {skillCategories.map((cat) => (
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-3 text-xs">
+          <span class="font-mono text-[11px] text-[var(--color-text-secondary)] font-semibold sm:w-32 shrink-0">
+            {cat.name}:
+          </span>
+          <div class="flex flex-wrap gap-1.5">
+            {cat.skills.map((s) => (
+              <span class="terminal-badge text-[10px]">
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   </section>
