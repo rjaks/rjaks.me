@@ -9,51 +9,23 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Apex Workflow",
-    description: "A fast, privacy-focused task management system engineered with minimal footprint, intuitive keyboard shortcuts, and real-time offline sync.",
-    tags: ["Astro", "TypeScript", "TailwindCSS"],
-    link: "#",
-    github: "#",
+    title: "Business Inventory Management System",
+    description: "Full-stack inventory platform decoupling a React/Vite client from an edge API powered by Cloudflare Workers and Hono. Integrates TanStack for client-side state caching alongside Drizzle ORM querying serverless Cloudflare D1 for low-latency stock tracking.",
+    tags: ["React", "Vite", "TanStack", "Hono", "Cloudflare Workers", "Drizzle", "D1"],
     featured: true
   },
   {
-    title: "Lumina Engine",
-    description: "High-performance vector rendering canvas library designed for generative algorithmic art and dynamic interactive visualizations.",
-    tags: ["React", "WebGL", "TypeScript"],
-    link: "#",
-    github: "#",
+    title: "TradeJaks",
+    description: "Automated market intelligence application integrating Binance API and TwelveData API for real-time crypto and equity market streams, with resilient background polling services.",
+    tags: ["TypeScript", "TwelveData API", "Binance API", "Discloud"],
+    github: "https://github.com/rjaks/tradejaks",
     featured: true
   },
   {
-    title: "Kona Cache",
-    description: "Lightweight, in-memory distributed key-value store crafted for low-latency edge computing workloads and event streams.",
-    tags: ["Go", "gRPC", "Docker"],
-    link: "#",
-    github: "#",
+    title: "AdNUChess",
+    description: "Real-time chess platform for internal university matches using a modern reactive web application stack with instantaneous peer matchmaking and live synchronization loops using reactive query states.",
+    tags: ["Nuxt 4", "Convex", "TailwindCSS"],
+    link: "https://adnuchess.tech",
     featured: true
-  },
-  {
-    title: "Echo Metrics",
-    description: "Telemetry and observability dashboard providing real-time log ingestion, alert dispatching, and custom health query visualizers.",
-    tags: ["Node.js", "PostgreSQL", "Next.js"],
-    link: "#",
-    github: "#",
-    featured: false
-  },
-  {
-    title: "Solace Audio",
-    description: "Ambient audio synthesizer web workstation featuring modular DSP patch nodes and customized waveform automation curves.",
-    tags: ["Web Audio API", "Svelte", "Vite"],
-    link: "#",
-    github: "#",
-    featured: false
-  },
-  {
-    title: "Velox CLI",
-    description: "Modern command-line developer suite providing project scaffolding, automated git worktree switching, and env orchestration.",
-    tags: ["Rust", "Clap", "Linux"],
-    link: "#",
-    github: "#",
-    featured: false
   }
 ];

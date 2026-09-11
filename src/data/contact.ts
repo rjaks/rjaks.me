@@ -14,7 +14,7 @@ export const contactLinks: ContactLink[] = [
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/adrian-reforsado-b15bb5394/",
     icon: "linkedin",
     external: true
   },
@@ -23,11 +23,5 @@ export const contactLinks: ContactLink[] = [
     href: "mailto:contact@rjaks.me",
     icon: "email",
     external: false
-  },
-  {
-    label: "Résumé",
-    href: "#",
-    icon: "resume",
-    external: true
   }
 ];

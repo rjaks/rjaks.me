@@ -5,19 +5,19 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
+    name: "Languages",
+    skills: ["TypeScript", "JavaScript", "SQL", "PHP", "Python", "C++", "C#", "Java"]
+  },
+  {
     name: "Frontend",
-    skills: ["TypeScript", "JavaScript (ES6+)", "Astro", "React", "Next.js", "TailwindCSS", "HTML5/CSS3", "WebGL"]
+    skills: ["Nuxt 4", "Vue.js", "React", "Vite", "TailwindCSS", "TanStack", "Framer Motion", "GSAP", "Capacitor"]
   },
   {
-    name: "Backend",
-    skills: ["Node.js", "Go", "Python", "FastAPI", "PostgreSQL", "Redis", "REST APIs", "GraphQL"]
+    name: "Backend & Cloud",
+    skills: ["Hono", "Cloudflare (Workers, D1, KV)", "Prisma", "Drizzle ORM", "Laravel", "Convex", "MySQL", "Oracle", "MongoDB", "Express"]
   },
   {
-    name: "Tools & DevOps",
-    skills: ["Git", "GitHub Actions", "Docker", "Linux", "Vite", "Turborepo", "Vercel", "Bash Scripting"]
-  },
-  {
-    name: "Design & UX",
-    skills: ["Figma", "Design Systems", "Typography", "Responsive Layouts", "Accessibility (a11y)", "Micro-interactions"]
+    name: "DevOps & Tools",
+    skills: ["Docker", "Coolify", "Discloud", "Git", "GitHub", "GitLab", "Vercel", "ClickUp"]
   }
 ];

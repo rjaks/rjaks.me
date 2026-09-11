@@ -7,21 +7,15 @@ export interface ExperienceItem {
 
 export const experiences: ExperienceItem[] = [
   {
-    company: "Acme Innovations Corp.",
-    role: "Full Stack Developer",
-    period: "2024 — Present",
-    description: "Architected modular micro-frontend components, improved core web vitals by 38%, and led migration of internal API microservices to high-throughput endpoints."
+    company: "AdNU Management Information Systems (MIS)",
+    role: "Junior Applications Programmer",
+    period: "June 2026 — Present",
+    description: "Researched and deployed Coolify on a VPS to establish a self-hosted PaaS, automating build and deployment pipelines. Programmed migration scripts to consolidate ~17,000 legacy records into Oracle DB with a 99% success rate, modeled relational ERDs, and built responsive UI components using Laravel and TailwindCSS."
   },
   {
-    company: "Nexus Digital Labs",
-    role: "Frontend Engineer Intern",
-    period: "2023 — 2024",
-    description: "Built responsive client portals with modern TypeScript frameworks, integrated real-time websocket updates, and contributed to canonical design system components."
-  },
-  {
-    company: "Freelance & Open Source",
-    role: "Independent Software Consultant",
-    period: "2022 — 2023",
-    description: "Delivered customized web applications for local businesses and contributed to developer tooling packages within the open-source ecosystem."
+    company: "ThePILLARS Publication",
+    role: "Senior Web Consultant (formerly Webmaster)",
+    period: "June 2025 — Present",
+    description: "Advise editorial board on platform architecture and tech roadmaps while maintaining production infrastructure serving 4,500+ monthly readers with 100% uptime. Spearheaded full-stack platform rebuilds and modern deployment strategies across university-wide coverage."
   }
 ];
