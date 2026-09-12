@@ -1,7 +1,5 @@
 ---
-// src/components/Navbar.astro
 const pathname = Astro.url.pathname;
-const isHome = pathname === '/' || pathname === '';
 const isWork = pathname.startsWith('/work') || pathname.startsWith('/experience');
 const isProjects = pathname.startsWith('/projects');
 const isWriting = pathname.startsWith('/writing') || pathname.startsWith('/blog');
@@ -180,30 +178,15 @@ const isContact = pathname.startsWith('/contact');
       </button>
     </div>
 
-    <div class="flex items-center justify-between text-[11px] text-[var(--color-text-secondary)] pt-1">
-      <a 
-        href="https://github.com/rjaks" 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-0.5"
-      >
-        <span>GitHub</span>
-        <span class="ext-arrow">↗</span>
-      </a>
-      <a 
-        href="https://linkedin.com" 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-0.5"
-      >
-        <span>LinkedIn</span>
-        <span class="ext-arrow">↗</span>
-      </a>
+    <div class="pt-2 font-mono space-y-0.5">
+      <div class="text-xs text-[var(--color-text-secondary)]">
+        get in touch:
+      </div>
       <a 
         href="mailto:contact@rjaks.me" 
-        class="hover:text-[var(--color-accent)] transition-colors"
+        class="text-sm font-bold text-[var(--color-accent)] hover:underline block truncate"
       >
-        <span>Email</span>
+        contact@rjaks.me
       </a>
     </div>
   </div>
