@@ -114,9 +114,9 @@
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Container: Focused editorial width */
-  --container-max-width: 760px;
-  --container-padding: var(--space-lg);
+  /* Container: Balanced developer editorial canvas */
+  --container-max-width: 1024px;
+  --container-padding: clamp(1rem, 3vw, 2rem);
 }
 
 [data-theme="dark"] {
@@ -203,6 +203,10 @@ code, pre, kbd, .font-mono, .terminal-prompt, .badge, .date-badge {
   margin-right: auto;
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
+}
+
+.prose-container {
+  max-width: 720px;
 }
 
 /* Editorial Link Style (inspired by kavin.me) */

@@ -74,8 +74,9 @@ This site merges the ultra-clean, readable editorial structure of developer port
 
 ## Layout & Container
 
-- **Focused Editorial Width:** `max-width: 760px` centered with `margin: 0 auto`.
-- Padding: `var(--space-lg)` (24px) horizontal gutter on desktop, `var(--space-md)` (16px) on mobile.
+- **Developer Editorial Canvas:** `max-width: 1024px` centered with `margin: 0 auto` (`.container-custom`).
+- **Prose Reading Width:** Long-form narrative paragraphs and article bodies constrained to `max-w-2xl` ~ `max-w-3xl` (~680px–740px) to maintain optimal typographic line-length (~65–75 characters per line).
+- **Padding:** `var(--container-padding)` with `1.5rem` to `2rem` (24px–32px) horizontal gutters on desktop, `1rem` (16px) on mobile.
 - Clean vertical rhythm using `1.5rem` to `3rem` section spacing.
 
 ---

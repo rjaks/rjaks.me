@@ -35,7 +35,7 @@ const recentPosts = allPosts
     </div>
 
     <!-- Editorial Narrative (inspired by kavin.me) -->
-    <p class="font-sans text-sm sm:text-base leading-relaxed text-[var(--color-text-secondary)]">
+    <p class="font-sans text-sm sm:text-base leading-relaxed text-[var(--color-text-secondary)] max-w-3xl">
       I'm a Computer Science student and software engineer focused on building robust, high-performance web systems, developer tooling, and thoughtful digital interfaces. I like working with <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">TypeScript</span>, <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Nuxt</span>, and <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Cloudflare</span> services. Outside of code, you'll usually find me exploring new music, books, or tweaking terminal environments.
     </p>
 
@@ -64,30 +64,32 @@ const recentPosts = allPosts
       </a>
     </div>
 
-    <div class="space-y-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {featuredProjects.map((project) => (
-        <article class="terminal-panel p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)]">
-          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1.5">
-            <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
-              {project.title}
-            </h3>
-            <div class="flex items-center gap-2 font-mono text-[11px]">
-              {project.github && project.github !== '#' && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
-                  code ↗
-                </a>
-              )}
-              {project.link && project.link !== '#' && (
-                <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
-                  demo ↗
-                </a>
-              )}
+        <article class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)] flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
+                {project.title}
+              </h3>
+              <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                {project.github && project.github !== '#' && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                    code ↗
+                  </a>
+                )}
+                {project.link && project.link !== '#' && (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
+                    demo ↗
+                  </a>
+                )}
+              </div>
             </div>
+            <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
+              {project.description}
+            </p>
           </div>
-          <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-3">
-            {project.description}
-          </p>
-          <div class="flex flex-wrap gap-1.5">
+          <div class="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
             {project.tags.map((tag) => (
               <span class="terminal-badge text-[10px]">
                 {tag}
