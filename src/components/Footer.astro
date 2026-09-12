@@ -1,14 +1,13 @@
 ---
 // src/components/Footer.astro
-const currentYear = new Date().getFullYear();
 ---
 
 <footer class="w-full border-t border-[var(--color-border)] bg-[var(--color-bg)] py-6 mt-auto">
   <div class="container-custom flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[var(--color-text-secondary)]">
-    <!-- Left: Copyright & Location -->
+    <!-- Left: Status & Identity -->
     <div class="flex items-center gap-2">
       <span class="w-2 h-2 rounded-full bg-[var(--color-prompt)] animate-pulse"></span>
-      <span>&copy; {currentYear} Adrian Reforsado (<span class="text-[var(--color-accent)]">rjaks</span>)</span>
+      <span>Adrian Reforsado (<span class="text-[var(--color-accent)]">rjaks</span>)</span>
     </div>
 
     <!-- Center: Shortcuts Help Hint -->
