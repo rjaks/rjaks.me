@@ -1,12 +1,18 @@
 ---
 // src/components/Navbar.astro
 const pathname = Astro.url.pathname;
+const isHome = pathname === '/' || pathname === '';
 const isWork = pathname.startsWith('/work') || pathname.startsWith('/experience');
 const isProjects = pathname.startsWith('/projects');
 const isWriting = pathname.startsWith('/writing') || pathname.startsWith('/blog');
+const isSkills = pathname.startsWith('/skills');
+const isContact = pathname.startsWith('/contact');
+
+const currentYear = new Date().getFullYear();
 ---
 
-<header class="w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md sticky top-0 z-40 transition-colors">
+<!-- Mobile Top Header (< lg) -->
+<header class="lg:hidden w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md sticky top-0 z-40 transition-colors">
   <div class="container-custom flex items-center justify-between py-3.5">
     <!-- Brand / Shell Prompt -->
     <a 
@@ -49,14 +55,12 @@ const isWriting = pathname.startsWith('/writing') || pathname.startsWith('/blog'
 
       <div class="h-3.5 w-[1px] bg-[var(--color-border)]"></div>
 
-      <!-- Theme Switcher -->
+      <!-- Theme Switcher Button -->
       <button 
-        id="theme-toggle-btn" 
-        class="flex items-center gap-1 p-1.5 rounded-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer"
+        class="theme-toggle-btn flex items-center gap-1 p-1.5 rounded-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer"
         aria-label="Toggle dark/light theme"
-        title="Toggle Theme (or press 't')"
+        title="Toggle Theme (press 't')"
       >
-        <!-- Sun Icon (shown in dark mode) -->
         <svg class="w-3.5 h-3.5 hidden dark-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="4"></circle>
           <path d="M12 2v2"></path>
@@ -68,7 +72,6 @@ const isWriting = pathname.startsWith('/writing') || pathname.startsWith('/blog'
           <path d="m6.34 17.66-1.41 1.41"></path>
           <path d="m19.07 4.93-1.41 1.41"></path>
         </svg>
-        <!-- Moon Icon (shown in light mode) -->
         <svg class="w-3.5 h-3.5 hidden light-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
         </svg>
@@ -78,38 +81,200 @@ const isWriting = pathname.startsWith('/writing') || pathname.startsWith('/blog'
   </div>
 </header>
 
-<script>
-  function setupThemeToggle() {
-    const btn = document.getElementById('theme-toggle-btn');
-    if (!btn) return;
+<!-- Desktop Terminal Sidebar (>= lg) -->
+<aside 
+  class="hidden lg:flex flex-col justify-between fixed left-0 top-0 h-screen w-60 xl:w-64 py-8 px-6 border-r border-[var(--color-border)] bg-[var(--color-bg)] select-none font-mono text-xs z-30 transition-colors"
+  aria-label="Terminal Sidebar Navigation"
+>
+  <!-- Top: Brand & Navigation -->
+  <div class="space-y-6">
+    <!-- Brand / Shell Prompt -->
+    <a 
+      href="/" 
+      class="group flex items-center gap-1.5 font-mono text-sm tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
+      aria-label="Home"
+    >
+      <span class="text-[var(--color-prompt)] font-bold">rjaks:~$</span>
+      <span class="text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] font-semibold">cd ~</span>
+      <span class="terminal-cursor"></span>
+    </a>
 
-    function updateIcons() {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      const darkIcon = btn?.querySelector('.dark-icon') as HTMLElement | null;
-      const lightIcon = btn?.querySelector('.light-icon') as HTMLElement | null;
-      if (darkIcon && lightIcon) {
-        if (isLight) {
-          darkIcon.classList.add('hidden');
-          lightIcon.classList.remove('hidden');
-        } else {
-          darkIcon.classList.remove('hidden');
-          lightIcon.classList.add('hidden');
-        }
-      }
+    <!-- Directory Navigation -->
+    <nav class="space-y-1" aria-label="Sidebar Navigation">
+      <a 
+        href="/work" 
+        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isWork ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+      >
+        <span>~/work</span>
+        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">w</kbd>
+      </a>
+
+      <a 
+        href="/projects" 
+        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isProjects ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+      >
+        <span>~/projects</span>
+        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">p</kbd>
+      </a>
+
+      <a 
+        href="/writing" 
+        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isWriting ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+      >
+        <span>~/writing</span>
+        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">b</kbd>
+      </a>
+
+      <a 
+        href="/skills" 
+        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isSkills ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+      >
+        <span>~/skills</span>
+        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">s</kbd>
+      </a>
+
+      <a 
+        href="/contact" 
+        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isContact ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+      >
+        <span>~/contact</span>
+        <span class="text-[10px] text-[var(--color-text-muted)]">@</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Bottom: Controls & Quick Links -->
+  <div class="pt-4 border-t border-[var(--color-border-subtle)] space-y-3 text-xs">
+    <div class="flex items-center justify-between gap-2">
+      <button 
+        class="theme-toggle-btn flex-1 flex items-center justify-between px-2 py-1.5 rounded-sm border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer text-[11px]"
+        aria-label="Toggle dark/light theme"
+        title="Toggle Theme (press 't')"
+      >
+        <div class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 hidden dark-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <svg class="w-3.5 h-3.5 hidden light-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+          <span>theme</span>
+        </div>
+        <kbd class="text-[10px]">t</kbd>
+      </button>
+
+      <button 
+        id="sidebar-shortcuts-btn"
+        class="flex items-center gap-1 px-2 py-1.5 rounded-sm border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer text-[11px]"
+        aria-label="View keyboard shortcuts"
+        title="Open keyboard shortcuts cheat sheet"
+      >
+        <span>man</span>
+        <kbd class="text-[10px]">?</kbd>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between text-[11px] text-[var(--color-text-secondary)] pt-1">
+      <a 
+        href="https://github.com/rjaks" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-0.5"
+      >
+        <span>GitHub</span>
+        <span class="ext-arrow">↗</span>
+      </a>
+      <a 
+        href="https://linkedin.com" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-0.5"
+      >
+        <span>LinkedIn</span>
+        <span class="ext-arrow">↗</span>
+      </a>
+      <a 
+        href="mailto:contact@rjaks.me" 
+        class="hover:text-[var(--color-accent)] transition-colors"
+      >
+        <span>Email</span>
+      </a>
+    </div>
+
+    <div class="text-[10px] text-[var(--color-text-muted)] text-center pt-1 border-t border-[var(--color-border-subtle)]">
+      &copy; {currentYear} Adrian Reforsado (<span class="text-[var(--color-accent)]">rjaks</span>)
+    </div>
+  </div>
+</aside>
+
+<script>
+  function setupNavbar() {
+    // Shortcuts button -> modal in KeyboardShortcuts.astro
+    const shortcutsBtn = document.getElementById('sidebar-shortcuts-btn');
+    const modal = document.getElementById('shortcuts-modal');
+    if (shortcutsBtn && modal) {
+      shortcutsBtn.onclick = () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      };
     }
 
-    btn.onclick = () => {
+    // Sync all theme toggle buttons across mobile header and desktop sidebar
+    const toggleBtns = document.querySelectorAll<HTMLButtonElement>('.theme-toggle-btn');
+    
+    function syncThemeIcons() {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      const newTheme = isLight ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateIcons();
-    };
+      toggleBtns.forEach((btn) => {
+        const darkIcon = btn.querySelector('.dark-icon') as HTMLElement | null;
+        const lightIcon = btn.querySelector('.light-icon') as HTMLElement | null;
+        if (darkIcon && lightIcon) {
+          if (isLight) {
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
+          } else {
+            darkIcon.classList.remove('hidden');
+            lightIcon.classList.add('hidden');
+          }
+        }
+      });
+    }
 
-    updateIcons();
+    toggleBtns.forEach((btn) => {
+      btn.onclick = () => {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const newTheme = isLight ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        syncThemeIcons();
+      };
+    });
+
+    syncThemeIcons();
+
+    // Observe theme attribute mutations (e.g. from 't' keyboard shortcut)
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          syncThemeIcons();
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
   }
 
-  setupThemeToggle();
-  document.addEventListener('astro:page-load', setupThemeToggle);
+  setupNavbar();
+  document.addEventListener('astro:page-load', setupNavbar);
 </script>
 
