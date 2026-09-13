@@ -57,17 +57,17 @@
   --color-text-secondary: #8b949e;
   --color-text-muted: #6e7681;
   
-  --color-accent: #E8A427;
-  --color-accent-hover: #f59e0b;
-  --color-accent-secondary: #58a6ff;
-  --color-prompt: #3fb950;
+  --color-accent: #f59e0b;
+  --color-accent-hover: #fbbf24;
+  --color-accent-secondary: #d97706;
+  --color-prompt: #f59e0b;
   --color-code-bg: #161b22;
 
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.6);
-  --shadow-accent: 0 0 16px rgba(232, 164, 39, 0.25);
+  --shadow-accent: 0 0 16px rgba(245, 158, 11, 0.25);
 
   /* Typography */
   --font-family-heading: 'Geist Mono', monospace;
@@ -129,15 +129,15 @@
   --color-text-primary: #f0f6fc;
   --color-text-secondary: #8b949e;
   --color-text-muted: #6e7681;
-  --color-accent: #E8A427;
-  --color-accent-hover: #f59e0b;
-  --color-accent-secondary: #58a6ff;
-  --color-prompt: #3fb950;
+  --color-accent: #f59e0b;
+  --color-accent-hover: #fbbf24;
+  --color-accent-secondary: #d97706;
+  --color-prompt: #f59e0b;
   --color-code-bg: #161b22;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.6);
-  --shadow-accent: 0 0 16px rgba(232, 164, 39, 0.25);
+  --shadow-accent: 0 0 16px rgba(245, 158, 11, 0.25);
 }
 
 [data-theme="light"] {
@@ -152,8 +152,8 @@
   --color-text-muted: #94a3b8;
   --color-accent: #d97706;
   --color-accent-hover: #b45309;
-  --color-accent-secondary: #2563eb;
-  --color-prompt: #16a34a;
+  --color-accent-secondary: #b45309;
+  --color-prompt: #d97706;
   --color-code-bg: #f1f5f9;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);

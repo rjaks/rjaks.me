@@ -1,15 +1,6 @@
 ---
 // src/components/NowSection.astro
 import { nowItems, hobbies } from '../data/now';
-
-const categoryColorMap: Record<string, string> = {
-  building: 'text-[var(--color-accent)]',
-  working: 'text-[var(--color-prompt)]',
-  studying: 'text-[var(--color-accent-secondary)]',
-  reading: 'text-amber-400',
-  watching: 'text-purple-400',
-  listening: 'text-emerald-400'
-};
 ---
 
 <section class="my-8 sm:my-12">
@@ -29,7 +20,7 @@ const categoryColorMap: Record<string, string> = {
     <ul class="divide-y divide-[var(--color-border-subtle)]">
       {nowItems.map((item) => (
         <li class="py-2.5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 text-xs">
-          <span class={`font-mono text-[11px] shrink-0 font-bold ${categoryColorMap[item.category] || 'text-[var(--color-accent)]'}`}>
+          <span class="font-mono text-[11px] shrink-0 font-bold text-[var(--color-accent)]">
             [{item.category}]
           </span>
           <div class="flex-1">
@@ -62,7 +53,7 @@ const categoryColorMap: Record<string, string> = {
   <!-- Personal & Hobbies Subsection -->
   <div class="mt-8">
     <div class="flex items-center gap-2 mb-3">
-      <span class="font-mono text-xs text-[var(--color-accent-secondary)] font-bold">#</span>
+      <span class="font-mono text-xs text-[var(--color-accent)] font-bold">#</span>
       <h3 class="font-heading text-sm sm:text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
         Off the Terminal
       </h3>

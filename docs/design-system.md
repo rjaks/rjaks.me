@@ -11,7 +11,7 @@
 This site merges the ultra-clean, readable editorial structure of developer portfolios (e.g. kavin.me) with a modern terminal/CLI aesthetic. It embraces:
 - Default **dark terminal** mode with an obsidian canvas, paired with a clean **light paper editor** alternate mode.
 - Subtle CLI motifs: shell prompts (`rjaks:~$`), command traces (`> cd ~/work`), `<kbd>` shortcut indicators, and monospaced metadata.
-- Preserved signature **Golden Amber** (`#E8A427`) accent color for highlights, focus rings, and active states.
+- Unified signature **Warm Amber** (`#F59E0B` / `#D97706`) accent color across shell prompts, highlights, tags, focus rings, and active states.
 - High accessibility, instant load speed, and distraction-free typography.
 
 ---
@@ -30,10 +30,10 @@ This site merges the ultra-clean, readable editorial structure of developer port
 | `--color-text-primary` | Terminal White | `#F0F6FC` | Headings, primary text |
 | `--color-text-secondary` | Muted Silver | `#8B949E` | Secondary/meta text, dates, bio details |
 | `--color-text-muted` | Faded Gray | `#6E7681` | Footers, subtle hints |
-| `--color-accent` | Golden Amber | `#E8A427` | Primary accent, active links, glow |
-| `--color-accent-hover` | Warm Amber | `#F59E0B` | Accent hover state |
-| `--color-accent-secondary` | Terminal Cyan/Blue | `#58A6FF` | Inline links, directory paths |
-| `--color-prompt` | Shell Green | `#3FB950` | Command prompt symbol |
+| `--color-accent` | Warm Amber | `#F59E0B` | Primary accent, active links, glow |
+| `--color-accent-hover` | Bright Amber | `#FBBF24` | Accent hover state |
+| `--color-accent-secondary` | Deep Amber | `#D97706` | Secondary accent, subtle badges |
+| `--color-prompt` | Warm Amber Prompt | `#F59E0B` | Command prompt symbol |
 
 ### Light Mode (`[data-theme="light"]`)
 
@@ -49,8 +49,8 @@ This site merges the ultra-clean, readable editorial structure of developer port
 | `--color-text-muted` | Muted Slate | `#94A3B8` | Footers, subtle hints |
 | `--color-accent` | Golden Bronze | `#D97706` | Primary accent |
 | `--color-accent-hover` | Deep Bronze | `#B45309` | Hover state |
-| `--color-accent-secondary` | Code Blue | `#2563EB` | Inline links |
-| `--color-prompt` | Editor Green | `#16A34A` | Command prompt symbol |
+| `--color-accent-secondary` | Amber Bronze | `#B45309` | Secondary accent |
+| `--color-prompt` | Golden Bronze Prompt | `#D97706` | Command prompt symbol |
 
 ---
 
