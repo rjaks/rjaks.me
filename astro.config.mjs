@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://rjaks.me',
   output: 'static',
+  redirects: {
+    '/experience': '/work',
+  },
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,10 +1,12 @@
 ---
 const pathname = Astro.url.pathname;
-const isWork = pathname.startsWith('/work') || pathname.startsWith('/experience');
-const isProjects = pathname.startsWith('/projects');
-const isWriting = pathname.startsWith('/writing') || pathname.startsWith('/blog');
-const isSkills = pathname.startsWith('/skills');
-const isContact = pathname.startsWith('/contact');
+const navItems = [
+  { href: '/work', label: 'Work', path: '~/work', key: 'w', active: pathname.startsWith('/work') || pathname.startsWith('/experience'), mobile: true },
+  { href: '/projects', label: 'Projects', path: '~/projects', key: 'p', active: pathname.startsWith('/projects'), mobile: true },
+  { href: '/writing', label: 'Writing', path: '~/writing', key: 'b', active: pathname.startsWith('/writing') || pathname.startsWith('/blog'), mobile: true },
+  { href: '/skills', label: 'Skills', path: '~/skills', key: 's', active: pathname.startsWith('/skills'), mobile: false },
+  { href: '/contact', label: 'Contact', path: '~/contact', key: '@', active: pathname.startsWith('/contact'), mobile: false },
+];
 ---
 
 <!-- Mobile Top Header (< lg) -->
@@ -24,29 +26,15 @@ const isContact = pathname.startsWith('/contact');
     <!-- Nav Items & Theme Switcher -->
     <div class="flex items-center gap-2 sm:gap-4 font-mono text-xs">
       <nav class="flex items-center gap-1 sm:gap-2" aria-label="Main Navigation">
-        <a 
-          href="/work" 
-          class={`flex items-center gap-1 px-2 py-1 rounded-sm transition-colors ${isWork ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
-        >
-          <span>Work</span>
-          <kbd class="hidden sm:inline-block">w</kbd>
-        </a>
-
-        <a 
-          href="/projects" 
-          class={`flex items-center gap-1 px-2 py-1 rounded-sm transition-colors ${isProjects ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
-        >
-          <span>Projects</span>
-          <kbd class="hidden sm:inline-block">p</kbd>
-        </a>
-
-        <a 
-          href="/writing" 
-          class={`flex items-center gap-1 px-2 py-1 rounded-sm transition-colors ${isWriting ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
-        >
-          <span>Writing</span>
-          <kbd class="hidden sm:inline-block">b</kbd>
-        </a>
+        {navItems.filter((i) => i.mobile).map((item) => (
+          <a 
+            href={item.href} 
+            class={`flex items-center gap-1 px-2 py-1 rounded-sm transition-colors ${item.active ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
+          >
+            <span>{item.label}</span>
+            <kbd class="hidden sm:inline-block">{item.key}</kbd>
+          </a>
+        ))}
       </nav>
 
       <div class="h-3.5 w-[1px] bg-[var(--color-border)]"></div>
@@ -69,7 +57,7 @@ const isContact = pathname.startsWith('/contact');
           <path d="m19.07 4.93-1.41 1.41"></path>
         </svg>
         <svg class="w-3.5 h-3.5 hidden light-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
         </svg>
         <kbd class="hidden sm:inline-block">t</kbd>
       </button>
@@ -97,45 +85,19 @@ const isContact = pathname.startsWith('/contact');
 
     <!-- Directory Navigation -->
     <nav class="space-y-1" aria-label="Sidebar Navigation">
-      <a 
-        href="/work" 
-        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isWork ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
-      >
-        <span>~/work</span>
-        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">w</kbd>
-      </a>
-
-      <a 
-        href="/projects" 
-        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isProjects ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
-      >
-        <span>~/projects</span>
-        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">p</kbd>
-      </a>
-
-      <a 
-        href="/writing" 
-        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isWriting ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
-      >
-        <span>~/writing</span>
-        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">b</kbd>
-      </a>
-
-      <a 
-        href="/skills" 
-        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isSkills ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
-      >
-        <span>~/skills</span>
-        <kbd class="text-[10px] opacity-75 group-hover:opacity-100">s</kbd>
-      </a>
-
-      <a 
-        href="/contact" 
-        class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${isContact ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
-      >
-        <span>~/contact</span>
-        <span class="text-[10px] text-[var(--color-text-muted)]">@</span>
-      </a>
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class={`flex items-center justify-between px-2.5 py-1.5 rounded-sm transition-colors group ${item.active ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+        >
+          <span>{item.path}</span>
+          {item.key === '@' ? (
+            <span class="text-[10px] text-[var(--color-text-muted)]">@</span>
+          ) : (
+            <kbd class="text-[10px] opacity-75 group-hover:opacity-100">{item.key}</kbd>
+          )}
+        </a>
+      ))}
     </nav>
   </div>
 
@@ -196,11 +158,10 @@ const isContact = pathname.startsWith('/contact');
   function setupNavbar() {
     // Shortcuts button -> modal in KeyboardShortcuts.astro
     const shortcutsBtn = document.getElementById('sidebar-shortcuts-btn');
-    const modal = document.getElementById('shortcuts-modal');
+    const modal = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
     if (shortcutsBtn && modal) {
       shortcutsBtn.onclick = () => {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+        modal.showModal();
       };
     }
 

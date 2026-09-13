@@ -185,22 +185,13 @@ const svgHeight = 110;
       </div>
     </div>
   </div>
-
-  <!-- Floating Custom Tooltip -->
-  <div 
-    id="heatmap-tooltip" 
-    class="pointer-events-none fixed z-50 hidden px-2.5 py-1 text-[11px] font-mono rounded bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-text-primary)] shadow-lg"
-    role="tooltip"
-  >
-  </div>
 </section>
 
 <script>
   function setupHeatmap() {
     const container = document.getElementById('heatmap-container');
-    const tooltip = document.getElementById('heatmap-tooltip');
     const statusText = document.getElementById('heatmap-status-text');
-    if (!container || !tooltip || !statusText) return;
+    if (!container || !statusText) return;
 
     const defaultText = statusText.textContent || '';
     const cells = container.querySelectorAll<SVGRectElement>('.contribution-cell');
@@ -208,8 +199,7 @@ const svgHeight = 110;
     function formatDate(dateStr: string) {
       if (!dateStr) return '';
       const [y, m, d] = dateStr.split('-').map(Number);
-      const date = new Date(Date.UTC(y, m - 1, d));
-      return date.toLocaleDateString('en-US', {
+      return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
         timeZone: 'UTC',
         weekday: 'short',
         month: 'short',
@@ -218,49 +208,21 @@ const svgHeight = 110;
       });
     }
 
-    function positionTooltip(e: MouseEvent) {
-      const tooltipWidth = tooltip?.offsetWidth || 150;
-      const x = e.clientX + 12 + tooltipWidth > window.innerWidth
-        ? e.clientX - tooltipWidth - 10
-        : e.clientX + 12;
-      const y = e.clientY - 42 < 10
-        ? e.clientY + 18
-        : e.clientY - 42;
-      if (tooltip) {
-        tooltip.style.left = `${x}px`;
-        tooltip.style.top = `${y}px`;
-      }
-    }
+    const statusEl = statusText;
 
     cells.forEach((cell) => {
-      function show(e: MouseEvent | FocusEvent) {
+      function show() {
         const count = cell.getAttribute('data-count') ?? '0';
         const dateStr = cell.getAttribute('data-date') ?? '';
-        const formatted = formatDate(dateStr);
         const countLabel = count === '1' ? '1 contribution' : `${count} contributions`;
-
-        if (statusText) {
-          statusText.innerHTML = `<span class="text-[var(--color-accent)] font-semibold">${countLabel}</span> on ${formatted}`;
-        }
-
-        if (tooltip && 'clientX' in e && e.clientX > 0) {
-          tooltip.innerHTML = `<div><strong>${countLabel}</strong></div><div class="text-[var(--color-text-secondary)] text-[10px]">${formatted}</div>`;
-          tooltip.classList.remove('hidden');
-          positionTooltip(e);
-        }
+        statusEl.innerHTML = `<span class="text-[var(--color-accent)] font-semibold">${countLabel}</span> on ${formatDate(dateStr)}`;
       }
 
       function hide() {
-        if (statusText) {
-          statusText.textContent = defaultText;
-        }
-        if (tooltip) {
-          tooltip.classList.add('hidden');
-        }
+        statusEl.textContent = defaultText;
       }
 
       cell.addEventListener('mouseenter', show);
-      cell.addEventListener('mousemove', (e) => positionTooltip(e));
       cell.addEventListener('mouseleave', hide);
       cell.addEventListener('focus', show);
       cell.addEventListener('blur', hide);
