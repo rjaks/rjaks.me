@@ -15,7 +15,7 @@ export const projects: Project[] = [
     featured: true
   },
   {
-    title: "TradeJaks",
+    title: "Tradejaks",
     description: "Automated market intelligence application integrating Binance API and TwelveData API for real-time crypto and equity market streams, with resilient background polling services.",
     tags: ["TypeScript", "TwelveData API", "Binance API", "Discloud"],
     github: "https://github.com/rjaks/tradejaks",
