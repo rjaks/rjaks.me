@@ -28,3 +28,8 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## Dependencies & CI Invariants
+
+- **Do not remove `@emnapi/core` or `@emnapi/runtime`** from `devDependencies`. They are required by `@img/sharp-wasm32` / WebAssembly runtime fallbacks and Cloudflare Pages CI (`npm ci`).
+- **Always verify lockfile integrity**: Whenever modifying dependencies or performing cleanup, test with `npm ci` (clean install) and `npm run build` to ensure remote CI pipelines will not break on missing lockfile entries.
