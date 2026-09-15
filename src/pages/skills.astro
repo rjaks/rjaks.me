@@ -2,6 +2,8 @@
 // src/pages/skills.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { skillCategories } from '../data/skills';
+
+const totalSkills = skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0);
 ---
 
 <BaseLayout 
@@ -15,33 +17,54 @@ import { skillCategories } from '../data/skills';
       <span class="text-[var(--color-text-primary)]">neofetch --skills</span>
     </div>
 
-    <div>
-      <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-        Skills & Technologies
-      </h1>
-      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-        Languages, frameworks, databases, and tooling I use across frontend, backend, and DevOps.
-      </p>
+    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[var(--color-border-subtle)] pb-4">
+      <div>
+        <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Skills & Technologies
+        </h1>
+        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+          Languages, frameworks, databases, and tooling I use across frontend, backend, and DevOps.
+        </p>
+      </div>
+      <div class="font-mono text-xs text-[var(--color-text-muted)] shrink-0">
+        [{totalSkills} technologies tracked]
+      </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
       {skillCategories.map((cat) => (
         <div class="terminal-panel p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-3">
-          <div class="flex items-center gap-2">
-            <span class="text-[var(--color-accent)] font-mono text-xs font-bold">&gt;</span>
-            <h2 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
-              {cat.name}
-            </h2>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--color-accent)] font-mono text-xs font-bold">&gt;</span>
+              <h2 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
+                {cat.name}
+              </h2>
+            </div>
+            <span class="font-mono text-[10px] text-[var(--color-text-muted)]">
+              {cat.skills.length} tools
+            </span>
           </div>
           <div class="flex flex-wrap gap-1.5">
             {cat.skills.map((skill) => (
-              <span class="terminal-badge text-[11px]">
+              <span class="terminal-badge text-[11px] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors cursor-default">
                 {skill}
               </span>
             ))}
           </div>
         </div>
       ))}
+    </div>
+
+    <!-- Back to Index link / shortcut hint -->
+    <div class="pt-4 flex items-center justify-between font-mono text-xs text-[var(--color-text-secondary)]">
+      <a href="/" class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-1">
+        <span>← cd ~</span>
+        <span class="text-[var(--color-text-muted)]">(Home)</span>
+      </a>
+      <span class="text-[var(--color-text-muted)] text-[11px]">
+        Press <kbd>h</kbd> for home, <kbd>p</kbd> for projects
+      </span>
     </div>
   </div>
 </BaseLayout>

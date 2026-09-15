@@ -22,13 +22,31 @@ const recentPosts = allPosts
 >
   <!-- Hero / Introduction -->
   <section class="space-y-4">
-    <div class="flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between gap-6">
-      <div class="space-y-4 flex-1">
-        <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-          <span>rjaks:~$</span>
-          <span class="text-[var(--color-text-primary)]">whoami</span>
-        </div>
+    <!-- Shell Prompt Breadcrumb / Command -->
+    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+      <span>rjaks:~$</span>
+      <span class="text-[var(--color-text-primary)]">whoami</span>
+    </div>
 
+    <div class="flex flex-col sm:flex-row items-start gap-6 sm:gap-8">
+      <!-- Avatar with Terminal Frame -->
+      <div class="relative shrink-0 group">
+        <div class="w-36 h-36 sm:w-48 sm:h-48 rounded-xl overflow-hidden border-2 border-[var(--color-border)] group-hover:border-[var(--color-accent)] transition-all shadow-md group-hover:shadow-[var(--shadow-accent)] bg-[var(--color-surface)]">
+          <img 
+            src={avatarUrl} 
+            alt="Adrian Reforsado (rjaks)" 
+            width="192"
+            height="192"
+            class="w-full h-full object-cover object-[center_15%] grayscale contrast-105 group-hover:grayscale-0 transition-all duration-300"
+            loading="eager"
+          />
+        </div>
+        <div class="absolute -bottom-2 -right-2 bg-[var(--color-surface)] border border-[var(--color-border)] group-hover:border-[var(--color-accent)] px-1.5 py-0.5 rounded text-[11px] font-mono text-[var(--color-accent)] shadow-sm">
+          ~/rjaks
+        </div>
+      </div>
+
+      <div class="space-y-4 flex-1 min-w-0">
         <div>
           <h1 class="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
             Adrian Reforsado
@@ -45,23 +63,6 @@ const recentPosts = allPosts
 
         <!-- Social & Contact Links -->
         <SocialLinks />
-      </div>
-
-      <!-- Avatar with Terminal Frame -->
-      <div class="relative shrink-0 group">
-        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden border-2 border-[var(--color-border)] group-hover:border-[var(--color-accent)] transition-all shadow-md group-hover:shadow-[var(--shadow-accent)] bg-[var(--color-surface)]">
-          <img 
-            src={avatarUrl} 
-            alt="Adrian Reforsado (rjaks)" 
-            width="112"
-            height="112"
-            class="w-full h-full object-cover object-[center_15%] grayscale contrast-105 group-hover:grayscale-0 transition-all duration-300"
-            loading="eager"
-          />
-        </div>
-        <div class="absolute -bottom-2 -right-2 bg-[var(--color-surface)] border border-[var(--color-border)] group-hover:border-[var(--color-accent)] px-1.5 py-0.5 rounded text-[10px] font-mono text-[var(--color-accent)] shadow-sm">
-          ~/rjaks
-        </div>
       </div>
     </div>
   </section>
