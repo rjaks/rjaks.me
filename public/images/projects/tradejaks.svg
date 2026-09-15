@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" fill="none">
+  <rect width="640" height="360" fill="#0D1117"/>
+  <defs>
+    <pattern id="gridTrade" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#161B22" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="360" fill="url(#gridTrade)"/>
+
+  <!-- Terminal Frame -->
+  <rect x="24" y="24" width="592" height="312" rx="8" fill="#161B22" stroke="#30363D" stroke-width="1.5"/>
+
+  <!-- Top bar -->
+  <rect x="24" y="24" width="592" height="36" rx="8" fill="#161B22"/>
+  <line x1="24" y1="60" x2="616" y2="60" stroke="#30363D" stroke-width="1"/>
+  <circle cx="44" cy="42" r="4" fill="#EF4444" opacity="0.8"/>
+  <circle cx="56" cy="42" r="4" fill="#F59E0B" opacity="0.8"/>
+  <circle cx="68" cy="42" r="4" fill="#10B981" opacity="0.8"/>
+  <text x="88" y="46" font-family="'Geist Mono', monospace" font-size="11" fill="#8B949E">tradejaks:~$ binance-ws --stream=BTCUSDT</text>
+  <rect x="515" y="34" width="85" height="16" rx="3" fill="#21262D"/>
+  <text x="557" y="46" font-family="'Geist Mono', monospace" font-size="9" fill="#10B981" text-anchor="middle">STREAMING</text>
+
+  <!-- Market Header -->
+  <rect x="44" y="74" width="552" height="42" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  <text x="58" y="99" font-family="'Geist Mono', monospace" font-size="16" font-weight="700" fill="#F0F6FC">BTC/USDT</text>
+  <text x="160" y="99" font-family="'Geist Mono', monospace" font-size="16" font-weight="700" fill="#10B981">$94,320.50</text>
+  <text x="280" y="99" font-family="'Geist Mono', monospace" font-size="11" fill="#10B981">+4.82%</text>
+  <text x="400" y="99" font-family="'Geist Mono', monospace" font-size="11" fill="#8B949E">24h Vol: $48.2B</text>
+  <text x="520" y="99" font-family="'Geist Mono', monospace" font-size="11" fill="#F59E0B">TwelveData OK</text>
+
+  <!-- Candlestick Chart Area -->
+  <rect x="44" y="126" width="370" height="190" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  
+  <!-- Candlesticks -->
+  <!-- Candle 1 (Green) -->
+  <line x1="75" y1="210" x2="75" y2="280" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="70" y="225" width="10" height="40" fill="#10B981" rx="1"/>
+
+  <!-- Candle 2 (Red) -->
+  <line x1="105" y1="220" x2="105" y2="275" stroke="#EF4444" stroke-width="1.5"/>
+  <rect x="100" y="235" width="10" height="30" fill="#EF4444" rx="1"/>
+
+  <!-- Candle 3 (Green) -->
+  <line x1="135" y1="195" x2="135" y2="255" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="130" y="210" width="10" height="35" fill="#10B981" rx="1"/>
+
+  <!-- Candle 4 (Green) -->
+  <line x1="165" y1="180" x2="165" y2="245" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="160" y="195" width="10" height="40" fill="#10B981" rx="1"/>
+
+  <!-- Candle 5 (Red) -->
+  <line x1="195" y1="190" x2="195" y2="250" stroke="#EF4444" stroke-width="1.5"/>
+  <rect x="190" y="200" width="10" height="25" fill="#EF4444" rx="1"/>
+
+  <!-- Candle 6 (Green) -->
+  <line x1="225" y1="160" x2="225" y2="230" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="220" y="175" width="10" height="45" fill="#10B981" rx="1"/>
+
+  <!-- Candle 7 (Green) -->
+  <line x1="255" y1="150" x2="255" y2="210" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="250" y="160" width="10" height="35" fill="#10B981" rx="1"/>
+
+  <!-- Candle 8 (Red) -->
+  <line x1="285" y1="165" x2="285" y2="220" stroke="#EF4444" stroke-width="1.5"/>
+  <rect x="280" y="175" width="10" height="30" fill="#EF4444" rx="1"/>
+
+  <!-- Candle 9 (Green) -->
+  <line x1="315" y1="140" x2="315" y2="200" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="310" y="150" width="10" height="40" fill="#10B981" rx="1"/>
+
+  <!-- Candle 10 (Green breakout) -->
+  <line x1="345" y1="120" x2="345" y2="180" stroke="#F59E0B" stroke-width="1.5"/>
+  <rect x="340" y="130" width="10" height="42" fill="#F59E0B" rx="1"/>
+
+  <!-- Indicator Line (EMA) -->
+  <path d="M 60 250 Q 130 220 200 205 T 350 145 T 390 135" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="3 3"/>
+
+  <text x="56" y="304" font-family="'Geist Mono', monospace" font-size="9" fill="#8B949E">1H INTERVAL • RSI(14): 64.2 • EMA(20/50): BULLISH</text>
+
+  <!-- Live Orderbook Feed -->
+  <rect x="424" y="126" width="172" height="190" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  <text x="436" y="146" font-family="'Geist Mono', monospace" font-size="10" font-weight="700" fill="#8B949E">ORDER BOOK</text>
+  <text x="550" y="146" font-family="'Geist Mono', monospace" font-size="9" fill="#8B949E">DEPTH</text>
+
+  <!-- Asks -->
+  <text x="436" y="166" font-family="'Geist Mono', monospace" font-size="10" fill="#EF4444">94,332.10</text>
+  <text x="550" y="166" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">1.42</text>
+  <text x="436" y="184" font-family="'Geist Mono', monospace" font-size="10" fill="#EF4444">94,328.00</text>
+  <text x="550" y="184" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">0.89</text>
+  <text x="436" y="202" font-family="'Geist Mono', monospace" font-size="10" fill="#EF4444">94,324.50</text>
+  <text x="550" y="202" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">2.15</text>
+
+  <!-- Spread -->
+  <line x1="436" y1="212" x2="584" y2="212" stroke="#21262D" stroke-width="1"/>
+  <text x="436" y="226" font-family="'Geist Mono', monospace" font-size="9" fill="#F59E0B">SPREAD: $4.00</text>
+
+  <!-- Bids -->
+  <text x="436" y="244" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">94,320.50</text>
+  <text x="550" y="244" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">3.05</text>
+  <text x="436" y="262" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">94,318.00</text>
+  <text x="550" y="262" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">1.10</text>
+  <text x="436" y="280" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">94,312.20</text>
+  <text x="550" y="280" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">0.74</text>
+  <text x="436" y="302" font-family="'Geist Mono', monospace" font-size="9" fill="#8B949E">Discloud background bot: OK</text>
+</svg>

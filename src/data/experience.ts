@@ -27,7 +27,7 @@ export const experiences: ExperienceItem[] = [
       {
         title: "Webmaster",
         period: "June 2025 — June 2026",
-        description: "Directed technical strategy and complete structural platform rebuilds, managing 4,500+ monthly readers with 100% uptime during high-traffic events."
+        description: "Directed technical strategy and spearheaded the full-stack edge rebuild using Nuxt, Prisma, and Cloudflare (D1, KV, R2, Pages), managing 4,500+ monthly readers with 100% uptime during high-traffic events."
       },
       {
         title: "Web Developer",

@@ -25,59 +25,87 @@ import { projects } from '../data/projects';
     </div>
 
     <!-- Projects Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
       {projects.map((project) => (
-        <article class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between transition-all hover:border-[var(--color-accent)]">
-          <div>
-            <div class="flex items-start justify-between gap-2 mb-2">
-              <h2 class="font-heading text-sm sm:text-base font-extrabold text-[var(--color-text-primary)]">
-                {project.title}
-              </h2>
+        <article class="terminal-panel bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between transition-all hover:border-[var(--color-accent)] overflow-hidden group">
+          <!-- Terminal Window Header -->
+          <div class="px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px]">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444] opacity-70"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#F59E0B] opacity-70"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#10B981] opacity-70"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--color-text-muted)] text-[11px] truncate">
+                ~/projects/{project.title.toLowerCase().replace(/\s+/g, '-')}
+              </span>
               {project.featured && (
-                <span class="font-mono text-[10px] text-[var(--color-accent)] border border-[var(--color-accent)] px-1.5 py-0.5 rounded-xs">
+                <span class="font-mono text-[10px] text-[var(--color-accent)] border border-[var(--color-accent)] px-1.5 py-0.2 rounded-xs">
                   featured
                 </span>
               )}
             </div>
-
-            <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-              {project.description}
-            </p>
           </div>
 
-          <div class="space-y-3 pt-3 border-t border-[var(--color-border-subtle)]">
-            <div class="flex flex-wrap gap-1.5">
-              {project.tags.map((tag) => (
-                <span class="terminal-badge text-[10px]">
-                  {tag}
-                </span>
-              ))}
+          <!-- Preview Screenshot / Graphic -->
+          {project.image && (
+            <div class="relative aspect-video overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)]">
+              <img 
+                src={project.image} 
+                alt={project.imageAlt || project.title}
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+              />
+            </div>
+          )}
+
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h2 class="font-heading text-base font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+                  {project.title}
+                </h2>
+              </div>
+
+              <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed mb-5">
+                {project.description}
+              </p>
             </div>
 
-            <div class="flex items-center justify-between font-mono text-xs pt-1">
-              {project.github && project.github !== '#' ? (
-                <a 
-                  href={project.github} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-1"
-                >
-                  <span>Source</span>
-                  <span class="ext-arrow">↗</span>
-                </a>
-              ) : <span class="text-[var(--color-text-muted)] text-[11px]">Private / Internal</span>}
+            <div class="space-y-3 pt-3 border-t border-[var(--color-border-subtle)]">
+              <div class="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span class="terminal-badge text-[10px]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
 
-              {project.link && project.link !== '#' && (
-                <a 
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  class="editorial-link font-medium inline-flex items-center gap-1"
-                >
-                  <span>Live Preview</span>
-                  <span class="ext-arrow">↗</span>
-                </a>
-              )}
+              <div class="flex items-center justify-between font-mono text-xs pt-1">
+                {project.github && project.github !== '#' ? (
+                  <a 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>Source</span>
+                    <span class="ext-arrow">↗</span>
+                  </a>
+                ) : <span class="text-[var(--color-text-muted)] text-[11px]">Private / Internal</span>}
+
+                {project.link && project.link !== '#' && (
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="editorial-link font-medium inline-flex items-center gap-1"
+                  >
+                    <span>Live Site</span>
+                    <span class="ext-arrow">↗</span>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </article>

@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" fill="none">
+  <rect width="640" height="360" fill="#0D1117"/>
+  <defs>
+    <pattern id="gridChess" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#161B22" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="360" fill="url(#gridChess)"/>
+
+  <!-- Terminal & UI Frame -->
+  <rect x="24" y="24" width="592" height="312" rx="8" fill="#161B22" stroke="#30363D" stroke-width="1.5"/>
+
+  <!-- Top bar -->
+  <rect x="24" y="24" width="592" height="36" rx="8" fill="#161B22"/>
+  <line x1="24" y1="60" x2="616" y2="60" stroke="#30363D" stroke-width="1"/>
+  <circle cx="44" cy="42" r="4" fill="#EF4444" opacity="0.8"/>
+  <circle cx="56" cy="42" r="4" fill="#F59E0B" opacity="0.8"/>
+  <circle cx="68" cy="42" r="4" fill="#10B981" opacity="0.8"/>
+  <text x="88" y="46" font-family="'Geist Mono', monospace" font-size="11" fill="#8B949E">adnuchess.tech // match #8410 • live</text>
+  <rect x="520" y="34" width="80" height="16" rx="3" fill="#21262D"/>
+  <text x="560" y="46" font-family="'Geist Mono', monospace" font-size="9" fill="#F59E0B" text-anchor="middle">CONVEX SYNC</text>
+
+  <!-- Chess Board on the left (8x8) -->
+  <g transform="translate(44, 76)">
+    <rect width="232" height="232" rx="4" fill="#0D1117" stroke="#30363D" stroke-width="1"/>
+    <!-- 8x8 squares, each 29x29 -->
+    <!-- We can alternate squares between #161B22 and #21262D with amber highlights -->
+    <!-- Row 0 -->
+    <rect x="0" y="0" width="29" height="29" fill="#21262D"/>
+    <rect x="29" y="0" width="29" height="29" fill="#161B22"/>
+    <rect x="58" y="0" width="29" height="29" fill="#21262D"/>
+    <rect x="87" y="0" width="29" height="29" fill="#161B22"/>
+    <rect x="116" y="0" width="29" height="29" fill="#21262D"/>
+    <rect x="145" y="0" width="29" height="29" fill="#161B22"/>
+    <rect x="174" y="0" width="29" height="29" fill="#21262D"/>
+    <rect x="203" y="0" width="29" height="29" fill="#161B22"/>
+    
+    <!-- Row 1 -->
+    <rect x="0" y="29" width="29" height="29" fill="#161B22"/>
+    <rect x="29" y="29" width="29" height="29" fill="#21262D"/>
+    <rect x="58" y="29" width="29" height="29" fill="#161B22"/>
+    <rect x="87" y="29" width="29" height="29" fill="#21262D"/>
+    <rect x="116" y="29" width="29" height="29" fill="#161B22"/>
+    <rect x="145" y="29" width="29" height="29" fill="#21262D"/>
+    <rect x="174" y="29" width="29" height="29" fill="#161B22"/>
+    <rect x="203" y="29" width="29" height="29" fill="#21262D"/>
+
+    <!-- Row 2 -->
+    <rect x="0" y="58" width="29" height="29" fill="#21262D"/>
+    <rect x="29" y="58" width="29" height="29" fill="#161B22"/>
+    <rect x="58" y="58" width="29" height="29" fill="#21262D"/>
+    <rect x="87" y="58" width="29" height="29" fill="#161B22"/>
+    <rect x="116" y="58" width="29" height="29" fill="#21262D"/>
+    <rect x="145" y="58" width="29" height="29" fill="#161B22"/>
+    <rect x="174" y="58" width="29" height="29" fill="#21262D"/>
+    <rect x="203" y="58" width="29" height="29" fill="#161B22"/>
+
+    <!-- Row 3 -->
+    <rect x="0" y="87" width="29" height="29" fill="#161B22"/>
+    <rect x="29" y="87" width="29" height="29" fill="#21262D"/>
+    <rect x="58" y="87" width="29" height="29" fill="#161B22"/>
+    <rect x="87" y="87" width="29" height="29" fill="#21262D"/>
+    <rect x="116" y="87" width="29" height="29" fill="#161B22"/>
+    <rect x="145" y="87" width="29" height="29" fill="#21262D"/>
+    <rect x="174" y="87" width="29" height="29" fill="#161B22"/>
+    <rect x="203" y="87" width="29" height="29" fill="#21262D"/>
+
+    <!-- Row 4 (Amber highlighted move square: e4) -->
+    <rect x="0" y="116" width="29" height="29" fill="#21262D"/>
+    <rect x="29" y="116" width="29" height="29" fill="#161B22"/>
+    <rect x="58" y="116" width="29" height="29" fill="#21262D"/>
+    <rect x="87" y="116" width="29" height="29" fill="#161B22"/>
+    <rect x="116" y="116" width="29" height="29" fill="#D97706" opacity="0.6"/>
+    <rect x="145" y="116" width="29" height="29" fill="#161B22"/>
+    <rect x="174" y="116" width="29" height="29" fill="#21262D"/>
+    <rect x="203" y="116" width="29" height="29" fill="#161B22"/>
+
+    <!-- Row 5 -->
+    <rect x="0" y="145" width="29" height="29" fill="#161B22"/>
+    <rect x="29" y="145" width="29" height="29" fill="#21262D"/>
+    <rect x="58" y="145" width="29" height="29" fill="#161B22"/>
+    <rect x="87" y="145" width="29" height="29" fill="#21262D"/>
+    <rect x="116" y="145" width="29" height="29" fill="#161B22"/>
+    <rect x="145" y="145" width="29" height="29" fill="#21262D"/>
+    <rect x="174" y="145" width="29" height="29" fill="#161B22"/>
+    <rect x="203" y="145" width="29" height="29" fill="#21262D"/>
+
+    <!-- Row 6 -->
+    <rect x="0" y="174" width="29" height="29" fill="#21262D"/>
+    <rect x="29" y="174" width="29" height="29" fill="#161B22"/>
+    <rect x="58" y="174" width="29" height="29" fill="#21262D"/>
+    <rect x="87" y="174" width="29" height="29" fill="#161B22"/>
+    <rect x="116" y="174" width="29" height="29" fill="#F59E0B" opacity="0.8"/>
+    <rect x="145" y="174" width="29" height="29" fill="#161B22"/>
+    <rect x="174" y="174" width="29" height="29" fill="#21262D"/>
+    <rect x="203" y="174" width="29" height="29" fill="#161B22"/>
+
+    <!-- Row 7 -->
+    <rect x="0" y="203" width="29" height="29" fill="#161B22"/>
+    <rect x="29" y="203" width="29" height="29" fill="#21262D"/>
+    <rect x="58" y="203" width="29" height="29" fill="#161B22"/>
+    <rect x="87" y="203" width="29" height="29" fill="#21262D"/>
+    <rect x="116" y="203" width="29" height="29" fill="#161B22"/>
+    <rect x="145" y="203" width="29" height="29" fill="#21262D"/>
+    <rect x="174" y="203" width="29" height="29" fill="#161B22"/>
+    <rect x="203" y="203" width="29" height="29" fill="#21262D"/>
+
+    <!-- Subtle chess icons/pieces preview -->
+    <text x="130" y="136" font-family="'Geist Mono', monospace" font-size="16" fill="#F0F6FC" text-anchor="middle">♙</text>
+    <text x="130" y="22" font-family="'Geist Mono', monospace" font-size="16" fill="#8B949E" text-anchor="middle">♚</text>
+    <text x="130" y="225" font-family="'Geist Mono', monospace" font-size="16" fill="#F0F6FC" text-anchor="middle">♔</text>
+  </g>
+
+  <!-- Match Info & Live Move List on the right -->
+  <rect x="296" y="76" width="300" height="232" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  
+  <!-- Player Top (Black) -->
+  <rect x="310" y="90" width="272" height="34" rx="4" fill="#161B22" stroke="#21262D" stroke-width="1"/>
+  <circle cx="326" cy="107" r="8" fill="#30363D"/>
+  <text x="326" y="111" font-family="'Geist Mono', monospace" font-size="9" fill="#8B949E" text-anchor="middle">B</text>
+  <text x="342" y="111" font-family="'JUST Sans', sans-serif" font-size="11" font-weight="600" fill="#F0F6FC">GrandmasterX (1840)</text>
+  <rect x="520" y="96" width="54" height="22" rx="3" fill="#0D1117"/>
+  <text x="547" y="111" font-family="'Geist Mono', monospace" font-size="11" fill="#8B949E" text-anchor="middle">04:32</text>
+
+  <!-- Move notation log -->
+  <rect x="310" y="132" width="272" height="110" rx="4" fill="#0D1117" stroke="#161B22" stroke-width="1"/>
+  <text x="322" y="150" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">1. e4      e5</text>
+  <text x="322" y="170" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">2. Nf3     Nc6</text>
+  <text x="322" y="190" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">3. Bb5     a6 (Ruy Lopez)</text>
+  <text x="322" y="210" font-family="'Geist Mono', monospace" font-size="10" fill="#F59E0B">4. Ba4     Nf6 [Active]</text>
+  <text x="322" y="230" font-family="'Geist Mono', monospace" font-size="9" fill="#10B981">● Live reactive query: sync 3ms</text>
+
+  <!-- Player Bottom (White) -->
+  <rect x="310" y="250" width="272" height="34" rx="4" fill="#161B22" stroke="#F59E0B" stroke-width="1"/>
+  <circle cx="326" cy="267" r="8" fill="#F59E0B"/>
+  <text x="326" y="271" font-family="'Geist Mono', monospace" font-size="9" fill="#0D1117" text-anchor="middle">W</text>
+  <text x="342" y="271" font-family="'JUST Sans', sans-serif" font-size="11" font-weight="600" fill="#F0F6FC">rjaks (1912)</text>
+  <rect x="520" y="256" width="54" height="22" rx="3" fill="#0D1117"/>
+  <text x="547" y="271" font-family="'Geist Mono', monospace" font-size="11" font-weight="700" fill="#F59E0B" text-anchor="middle">05:18</text>
+</svg>

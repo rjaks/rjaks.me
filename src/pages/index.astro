@@ -7,6 +7,8 @@ import { projects } from '../data/projects';
 import { skillCategories } from '../data/skills';
 import { getCollection } from 'astro:content';
 
+const avatarUrl = '/images/avatar.png';
+
 const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const recentPosts = allPosts
@@ -20,27 +22,48 @@ const recentPosts = allPosts
 >
   <!-- Hero / Introduction -->
   <section class="space-y-4">
-    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-      <span>rjaks:~$</span>
-      <span class="text-[var(--color-text-primary)]">whoami</span>
+    <div class="flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div class="space-y-4 flex-1">
+        <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+          <span>rjaks:~$</span>
+          <span class="text-[var(--color-text-primary)]">whoami</span>
+        </div>
+
+        <div>
+          <h1 class="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+            Adrian Reforsado
+          </h1>
+          <p class="font-mono text-xs sm:text-sm text-[var(--color-accent)] mt-1">
+            Software Engineer & CS Student
+          </p>
+        </div>
+
+        <!-- Editorial Narrative (inspired by kavin.me) -->
+        <p class="font-sans text-sm sm:text-base leading-relaxed text-[var(--color-text-secondary)] max-w-2xl">
+          I'm a Computer Science student and software engineer focused on building robust, high-performance web systems, developer tooling, and thoughtful digital interfaces. I like working with <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">TypeScript</span>, <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Nuxt</span>, and <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Cloudflare</span> services. Outside of code, you'll usually find me exploring new music, books, or tweaking terminal environments.
+        </p>
+
+        <!-- Social & Contact Links -->
+        <SocialLinks />
+      </div>
+
+      <!-- Avatar with Terminal Frame -->
+      <div class="relative shrink-0 group">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden border-2 border-[var(--color-border)] group-hover:border-[var(--color-accent)] transition-all shadow-md group-hover:shadow-[var(--shadow-accent)] bg-[var(--color-surface)]">
+          <img 
+            src={avatarUrl} 
+            alt="Adrian Reforsado (rjaks)" 
+            width="112"
+            height="112"
+            class="w-full h-full object-cover object-[center_15%] grayscale contrast-105 group-hover:grayscale-0 transition-all duration-300"
+            loading="eager"
+          />
+        </div>
+        <div class="absolute -bottom-2 -right-2 bg-[var(--color-surface)] border border-[var(--color-border)] group-hover:border-[var(--color-accent)] px-1.5 py-0.5 rounded text-[10px] font-mono text-[var(--color-accent)] shadow-sm">
+          ~/rjaks
+        </div>
+      </div>
     </div>
-
-    <div>
-      <h1 class="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-        Adrian Reforsado
-      </h1>
-      <p class="font-mono text-xs sm:text-sm text-[var(--color-accent)] mt-1">
-        Software Engineer & CS Student
-      </p>
-    </div>
-
-    <!-- Editorial Narrative (inspired by kavin.me) -->
-    <p class="font-sans text-sm sm:text-base leading-relaxed text-[var(--color-text-secondary)] max-w-3xl">
-      I'm a Computer Science student and software engineer focused on building robust, high-performance web systems, developer tooling, and thoughtful digital interfaces. I like working with <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">TypeScript</span>, <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Nuxt</span>, and <span class="font-mono text-xs text-[var(--color-text-primary)] font-semibold">Cloudflare</span> services. Outside of code, you'll usually find me exploring new music, books, or tweaking terminal environments.
-    </p>
-
-    <!-- Social & Contact Links -->
-    <SocialLinks />
   </section>
 
   <!-- Live GitHub Heatmap -->
@@ -66,35 +89,61 @@ const recentPosts = allPosts
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {featuredProjects.map((project) => (
-        <article class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)] flex flex-col justify-between">
-          <div>
-            <div class="flex items-start justify-between gap-2 mb-2">
-              <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
-                {project.title}
-              </h3>
-              <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                {project.github && project.github !== '#' && (
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
-                    code ↗
-                  </a>
-                )}
-                {project.link && project.link !== '#' && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
-                    demo ↗
-                  </a>
-                )}
-              </div>
+        <article class="terminal-panel bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)] flex flex-col justify-between overflow-hidden group">
+          <!-- Terminal Window Header -->
+          <div class="px-3.5 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px]">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-[#EF4444] opacity-70"></span>
+              <span class="w-2 h-2 rounded-full bg-[#F59E0B] opacity-70"></span>
+              <span class="w-2 h-2 rounded-full bg-[#10B981] opacity-70"></span>
             </div>
-            <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-              {project.description}
-            </p>
+            <span class="text-[var(--color-text-muted)] text-[10px] truncate max-w-[140px]">
+              {project.title.toLowerCase().replace(/\s+/g, '-')}
+            </span>
           </div>
-          <div class="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
-            {project.tags.map((tag) => (
-              <span class="terminal-badge text-[10px]">
-                {tag}
-              </span>
-            ))}
+
+          <!-- Preview Image / Visual -->
+          {project.image && (
+            <div class="relative aspect-video overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)]">
+              <img 
+                src={project.image} 
+                alt={project.imageAlt || project.title}
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+              />
+            </div>
+          )}
+
+          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+                  {project.title}
+                </h3>
+                <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                  {project.github && project.github !== '#' && (
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                      code ↗
+                    </a>
+                  )}
+                  {project.link && project.link !== '#' && (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
+                      live ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+              <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
+                {project.description}
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
+              {project.tags.map((tag) => (
+                <span class="terminal-badge text-[10px]">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </article>
       ))}

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" fill="none">
+  <rect width="640" height="360" fill="#0D1117"/>
+  <!-- Subtle Grid -->
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#161B22" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#grid)"/>
+
+  <!-- Main Dashboard Panel -->
+  <rect x="24" y="24" width="592" height="312" rx="8" fill="#161B22" stroke="#30363D" stroke-width="1.5"/>
+
+  <!-- Top bar inside panel -->
+  <rect x="24" y="24" width="592" height="36" rx="8" fill="#161B22"/>
+  <line x1="24" y1="60" x2="616" y2="60" stroke="#30363D" stroke-width="1"/>
+  <circle cx="44" cy="42" r="4" fill="#EF4444" opacity="0.8"/>
+  <circle cx="56" cy="42" r="4" fill="#F59E0B" opacity="0.8"/>
+  <circle cx="68" cy="42" r="4" fill="#10B981" opacity="0.8"/>
+  <text x="88" y="46" font-family="'Geist Mono', monospace" font-size="11" fill="#8B949E">inventory.app // cloudflare d1 edge</text>
+  <rect x="520" y="34" width="80" height="16" rx="3" fill="#21262D"/>
+  <text x="560" y="46" font-family="'Geist Mono', monospace" font-size="9" fill="#F59E0B" text-anchor="middle">LIVE SYNC</text>
+
+  <!-- Metric Cards -->
+  <rect x="44" y="78" width="164" height="64" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  <text x="56" y="96" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">TOTAL SKU COUNT</text>
+  <text x="56" y="126" font-family="'Geist Mono', monospace" font-size="20" font-weight="700" fill="#F0F6FC">1,482</text>
+  <text x="140" y="126" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">+12.4%</text>
+
+  <rect x="224" y="78" width="164" height="64" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  <text x="236" y="96" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">D1 QUERY LATENCY</text>
+  <text x="236" y="126" font-family="'Geist Mono', monospace" font-size="20" font-weight="700" fill="#F59E0B">14ms</text>
+  <text x="320" y="126" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">global</text>
+
+  <rect x="404" y="78" width="192" height="64" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  <text x="416" y="96" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">STOCK TURNOVER</text>
+  <text x="416" y="126" font-family="'Geist Mono', monospace" font-size="20" font-weight="700" fill="#F0F6FC">98.2%</text>
+  <text x="510" y="126" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">OPTIMAL</text>
+
+  <!-- Inventory Table Preview -->
+  <rect x="44" y="158" width="552" height="158" rx="6" fill="#0D1117" stroke="#21262D" stroke-width="1"/>
+  <!-- Table Header -->
+  <rect x="44" y="158" width="552" height="28" fill="#161B22"/>
+  <text x="60" y="176" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">PRODUCT ITEM</text>
+  <text x="240" y="176" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">CATEGORY</text>
+  <text x="360" y="176" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">STOCK LEVEL</text>
+  <text x="490" y="176" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">STATUS</text>
+
+  <!-- Rows -->
+  <line x1="44" y1="216" x2="596" y2="216" stroke="#161B22" stroke-width="1"/>
+  <text x="60" y="204" font-family="'JUST Sans', sans-serif" font-size="11" font-weight="600" fill="#F0F6FC">Precision CNC Controller Unit</text>
+  <text x="240" y="204" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">Hardware</text>
+  <rect x="360" y="196" width="70" height="10" rx="3" fill="#21262D"/>
+  <rect x="360" y="196" width="56" height="10" rx="3" fill="#F59E0B"/>
+  <text x="490" y="204" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">In Stock</text>
+
+  <line x1="44" y1="246" x2="596" y2="246" stroke="#161B22" stroke-width="1"/>
+  <text x="60" y="234" font-family="'JUST Sans', sans-serif" font-size="11" font-weight="600" fill="#F0F6FC">High-Torque Stepper Motor X9</text>
+  <text x="240" y="234" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">Actuators</text>
+  <rect x="360" y="226" width="70" height="10" rx="3" fill="#21262D"/>
+  <rect x="360" y="226" width="22" height="10" rx="3" fill="#EF4444"/>
+  <text x="490" y="234" font-family="'Geist Mono', monospace" font-size="10" fill="#EF4444">Low Stock</text>
+
+  <line x1="44" y1="276" x2="596" y2="276" stroke="#161B22" stroke-width="1"/>
+  <text x="60" y="264" font-family="'JUST Sans', sans-serif" font-size="11" font-weight="600" fill="#F0F6FC">Optical Sensor Array v2.1</text>
+  <text x="240" y="264" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">Optics</text>
+  <rect x="360" y="256" width="70" height="10" rx="3" fill="#21262D"/>
+  <rect x="360" y="256" width="62" height="10" rx="3" fill="#10B981"/>
+  <text x="490" y="264" font-family="'Geist Mono', monospace" font-size="10" fill="#10B981">In Stock</text>
+
+  <text x="60" y="295" font-family="'Geist Mono', monospace" font-size="10" fill="#F59E0B">TanStack Cache: 100% warm</text>
+  <text x="490" y="295" font-family="'Geist Mono', monospace" font-size="10" fill="#8B949E">Page 1 of 48</text>
+</svg>
