@@ -29,16 +29,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <span>cd ~ (Go Home)</span>
         <kbd>h</kbd>
       </a>
-      <a 
-        href="/play/wordle" 
-        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-colors"
+      <button 
+        class="open-wordle-trigger inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-colors cursor-pointer"
       >
         <span>&gt; play wordle</span>
         <div class="flex items-center gap-0.5">
           <kbd>alt</kbd>
           <kbd>g</kbd>
         </div>
-      </a>
+      </button>
     </div>
   </div>
 </BaseLayout>

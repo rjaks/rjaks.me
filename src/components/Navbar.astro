@@ -35,14 +35,13 @@ const navItems = [
             <kbd class="hidden sm:inline-block">{item.key}</kbd>
           </a>
         ))}
-        <a 
-          href="/play/wordle"
-          class={`flex items-center gap-1 px-2 py-1 rounded-sm transition-colors ${pathname.startsWith('/play/wordle') ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
+        <button 
+          class="open-wordle-trigger flex items-center gap-1 px-2 py-1 rounded-sm transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)] cursor-pointer"
           aria-label="Play Wordle"
           title="Play Wordle (Alt+G)"
         >
           <span>wordle</span>
-        </a>
+        </button>
       </nav>
 
       <div class="h-3.5 w-[1px] bg-[var(--color-border)]"></div>
@@ -111,10 +110,9 @@ const navItems = [
 
   <!-- Bottom: Controls & Quick Links -->
   <div class="pt-4 border-t border-[var(--color-border-subtle)] space-y-3 text-xs">
-    <!-- Mini-game: Wordle -->
-    <a 
-      href="/play/wordle"
-      class={`flex items-center justify-between px-2 py-1.5 rounded-sm border transition-colors group text-[11px] font-mono ${pathname.startsWith('/play/wordle') ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)] border-[var(--color-accent)]' : 'border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
+    <!-- Mini-game: Wordle Trigger -->
+    <button 
+      class="open-wordle-trigger w-full flex items-center justify-between px-2.5 py-1.5 rounded-sm border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)] transition-colors group text-[11px] font-mono cursor-pointer"
       title="Play Wordle (Alt+G)"
     >
       <div class="flex items-center gap-1.5">
@@ -125,7 +123,7 @@ const navItems = [
         <kbd class="text-[9px]">alt</kbd>
         <kbd class="text-[9px]">g</kbd>
       </div>
-    </a>
+    </button>
 
     <div class="flex items-center justify-between gap-2">
       <button 
@@ -188,6 +186,15 @@ const navItems = [
         modal.showModal();
       };
     }
+
+    // Wordle modal triggers
+    const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+    document.querySelectorAll('.open-wordle-trigger').forEach((btn) => {
+      (btn as HTMLElement).onclick = (e) => {
+        e.preventDefault();
+        wordleModal?.showModal();
+      };
+    });
 
     // Sync all theme toggle buttons across mobile header and desktop sidebar
     const toggleBtns = document.querySelectorAll<HTMLButtonElement>('.theme-toggle-btn');

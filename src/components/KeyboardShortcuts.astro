@@ -126,29 +126,28 @@
         return;
       }
 
-      // Alt + G: Play Wordle
+      // Alt + G: Play Wordle Modal
       if (e.altKey && e.key.toLowerCase() === 'g') {
         e.preventDefault();
         showToast('> play wordle');
-        setTimeout(() => window.location.href = '/play/wordle', 150);
-        return;
-      }
-
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-      // When playing Wordle, allow '?' for help modal, but do not capture single-letter route keys
-      if (window.location.pathname.startsWith('/play/wordle')) {
-        if (e.key === '?' || (e.shiftKey && e.key === '/')) {
-          e.preventDefault();
-          if (modal?.open) {
-            modal.close();
+        const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+        if (wordleModal) {
+          if (wordleModal.open) {
+            wordleModal.close();
           } else {
-            modal?.showModal();
-            showToast('man shortcuts');
+            wordleModal.showModal();
           }
         }
         return;
       }
+
+      // If Wordle modal is currently open, do not intercept keys for site navigation
+      const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+      if (wordleModal?.open) {
+        return;
+      }
+
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       if (e.key === '?' || (e.shiftKey && e.key === '/')) {
         e.preventDefault();
@@ -179,6 +178,17 @@
         showToast(`theme set to ${newTheme}`);
       }
     });
+
+    // Auto-open Wordle modal if URL has #wordle hash
+    function checkWordleHash() {
+      if (window.location.hash === '#wordle') {
+        const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+        wordleModal?.showModal();
+      }
+    }
+
+    checkWordleHash();
+    window.addEventListener('hashchange', checkWordleHash);
   }
 
   setupShortcuts();
