@@ -21,13 +21,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       The file or command you are looking for has been moved or deleted from the filesystem.
     </p>
 
-    <div class="pt-4 flex items-center justify-center gap-3 font-mono text-xs">
+    <div class="pt-4 flex items-center justify-center gap-3 font-mono text-xs flex-wrap">
       <a 
         href="/" 
         class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)] transition-colors"
       >
         <span>cd ~ (Go Home)</span>
         <kbd>h</kbd>
+      </a>
+      <a 
+        href="/play/wordle" 
+        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-colors"
+      >
+        <span>&gt; play wordle</span>
+        <div class="flex items-center gap-0.5">
+          <kbd>alt</kbd>
+          <kbd>g</kbd>
+        </div>
       </a>
     </div>
   </div>
