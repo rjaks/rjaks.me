@@ -7,11 +7,12 @@ const daily = getDailyWord();
 
 <dialog 
   id="wordle-modal" 
-  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 md:p-6 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center"
+  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center overflow-hidden"
+  style="width: min(94vw, 540px); max-width: 540px;"
 >
-  <div class="terminal-panel relative w-full max-w-md sm:max-w-xl md:max-w-2xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-5 md:p-6 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md select-none">
+  <div class="terminal-panel relative w-full max-w-[540px] bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-3.5 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md select-none">
     <!-- Top Modal Header -->
-    <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-[var(--color-border)]">
+    <div class="flex items-center justify-between pb-2 mb-2 border-b border-[var(--color-border)]">
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
         <h2 class="font-bold text-sm sm:text-base tracking-tight text-[var(--color-text-primary)]">
@@ -48,7 +49,7 @@ const daily = getDailyWord();
     </div>
 
     <!-- Mode Selector & Game Actions -->
-    <div class="flex items-center justify-between gap-2 mb-2.5 text-[11px]">
+    <div class="flex items-center justify-between gap-2 mb-2 text-[11px]">
       <div class="flex items-center gap-1 p-0.5 bg-[var(--color-bg)] border border-[var(--color-border-subtle)] rounded-xs">
         <button 
           id="modal-mode-daily"
@@ -92,7 +93,7 @@ const daily = getDailyWord();
     </div>
 
     <!-- Toast Floating Alert -->
-    <div id="m-wordle-toast" class="relative z-40 pointer-events-none transition-all duration-200 opacity-0 -translate-y-1 mb-2 h-0 overflow-visible flex justify-center">
+    <div id="m-wordle-toast" class="relative z-40 pointer-events-none transition-all duration-200 opacity-0 -translate-y-1 mb-1.5 h-0 overflow-visible flex justify-center">
       <div class="px-3 py-1 rounded-xs bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-text-primary)] font-mono text-xs shadow-xl flex items-center gap-1.5 whitespace-nowrap">
         <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
         <span id="m-wordle-toast-msg"></span>
@@ -100,7 +101,7 @@ const daily = getDailyWord();
     </div>
 
     <!-- Help Panel Overlay (Absolute over board to prevent layout expansion/scrolling) -->
-    <div id="m-help-panel" class="hidden absolute inset-x-3 sm:inset-x-6 top-16 bottom-3 z-30 p-4 sm:p-6 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl flex flex-col justify-between text-xs font-sans text-[var(--color-text-secondary)]">
+    <div id="m-help-panel" class="hidden absolute inset-x-3 sm:inset-x-5 top-14 bottom-3 z-30 p-4 sm:p-5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl flex flex-col justify-between text-xs font-sans text-[var(--color-text-secondary)]">
       <div class="space-y-3">
         <div class="flex items-center justify-between font-mono font-bold text-[var(--color-text-primary)]">
           <span class="text-sm">How to Play:</span>
@@ -128,43 +129,66 @@ const daily = getDailyWord();
     </div>
 
     <!-- 6x5 Wordle Grid -->
-    <div id="m-wordle-board" class="grid grid-rows-6 gap-1 sm:gap-1.5 mb-3 sm:mb-4 mx-auto" aria-label="Wordle Grid">
+    <div id="m-wordle-board" class="grid grid-rows-6 gap-1 sm:gap-1.5 mb-2.5 sm:mb-3 mx-auto" aria-label="Wordle Grid">
       <!-- Injected by script -->
     </div>
 
-    <!-- Virtual Keyboard -->
-    <div id="m-wordle-keyboard" class="w-full max-w-sm sm:max-w-md md:max-w-xl mx-auto flex flex-col gap-1.5 sm:gap-2 touch-manipulation mt-auto pt-2">
-      <!-- Row 1 -->
-      <div class="flex justify-center gap-1 sm:gap-1.5 md:gap-2">
+    <!-- Virtual Keyboard (Square-like chiclet keys) -->
+    <div id="m-wordle-keyboard" class="w-full max-w-[490px] mx-auto flex flex-col gap-1 sm:gap-1.5 touch-manipulation mt-auto select-none">
+      <!-- Row 1: 10 Keys -->
+      <div class="flex justify-center gap-1 sm:gap-1.5 w-full">
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((k) => (
-          <button class="m-key-btn flex-1 h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
+          <button 
+            class="m-key-btn flex-1 aspect-square max-w-[44px] flex items-center justify-center font-mono font-bold text-xs sm:text-sm md:text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+            data-key={k}
+          >
             {k}
           </button>
         ))}
       </div>
-      <!-- Row 2 -->
-      <div class="flex justify-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-4 md:px-6">
+      <!-- Row 2: 9 Keys + half-key spacers for authentic typewriter offset -->
+      <div class="flex justify-center gap-1 sm:gap-1.5 w-full">
+        <div class="flex-[0.5] max-w-[22px] pointer-events-none"></div>
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((k) => (
-          <button class="m-key-btn flex-1 h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
+          <button 
+            class="m-key-btn flex-1 aspect-square max-w-[44px] flex items-center justify-center font-mono font-bold text-xs sm:text-sm md:text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+            data-key={k}
+          >
             {k}
           </button>
         ))}
+        <div class="flex-[0.5] max-w-[22px] pointer-events-none"></div>
       </div>
-      <!-- Row 3 -->
-      <div class="flex justify-center gap-1 sm:gap-1.5 md:gap-2">
-        <button class="m-key-btn flex-[1.5] h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-[10px] sm:text-xs md:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key="ENTER">
-          ENTER
+      <!-- Row 3: Enter + 7 Keys + Backspace -->
+      <div class="flex justify-center gap-1 sm:gap-1.5 w-full">
+        <button 
+          class="m-key-btn flex-[1.3] max-w-[58px] self-stretch flex items-center justify-center gap-1 font-mono font-bold text-[10px] sm:text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+          data-key="ENTER"
+          aria-label="Enter"
+        >
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 10 4 15 9 20"></polyline>
+            <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+          </svg>
+          <span class="hidden sm:inline pointer-events-none text-[10px]">ENTER</span>
         </button>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((k) => (
-          <button class="m-key-btn flex-1 h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
+          <button 
+            class="m-key-btn flex-1 aspect-square max-w-[44px] flex items-center justify-center font-mono font-bold text-xs sm:text-sm md:text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+            data-key={k}
+          >
             {k}
           </button>
         ))}
-        <button class="m-key-btn flex-[1.5] h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key="BACKSPACE" aria-label="Backspace">
-          <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button 
+          class="m-key-btn flex-[1.3] max-w-[58px] self-stretch flex items-center justify-center rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+          data-key="BACKSPACE" 
+          aria-label="Backspace"
+        >
+          <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
             <line x1="18" y1="9" x2="12" y2="15"></line>
-            <line x1="12" y1="2" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
           </svg>
         </button>
       </div>
@@ -173,6 +197,29 @@ const daily = getDailyWord();
 </dialog>
 
 <style>
+  dialog#wordle-modal {
+    width: min(94vw, 540px) !important;
+    max-width: 540px !important;
+    overflow: hidden !important;
+    margin: auto !important;
+  }
+
+  dialog#wordle-modal::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+  }
+
+  .terminal-panel {
+    width: 100% !important;
+    max-width: 540px !important;
+    overflow: hidden !important;
+  }
+
+  .m-key-btn {
+    min-width: 0 !important;
+    touch-action: manipulation;
+  }
+
   .m-tile {
     perspective: 1000px;
     transform-style: preserve-3d;
@@ -232,30 +279,34 @@ const daily = getDailyWord();
     guesses: string[];
     evaluations: TileState[][];
     gameStatus: 'IN_PROGRESS' | 'WIN' | 'LOST';
+    lastPlayedDate?: string;
   }
 
   function setupWordleModal() {
-    const modal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+    const modal = document.getElementById('wordle-modal') as HTMLDialogElement;
     const boardEl = document.getElementById('m-wordle-board');
     if (!modal || !boardEl) return;
 
-    const toastEl = document.getElementById('m-wordle-toast');
-    const toastMsgEl = document.getElementById('m-wordle-toast-msg');
+    // Help panel elements
     const helpPanel = document.getElementById('m-help-panel');
     const btnHelp = document.getElementById('modal-btn-help');
     const btnHelpClose = document.getElementById('m-help-close');
     const btnHelpGotIt = document.getElementById('m-help-gotit');
-    const btnNewGame = document.getElementById('modal-btn-new-game');
+
+    // Action and Mode elements
     const modeDaily = document.getElementById('modal-mode-daily');
     const modePractice = document.getElementById('modal-mode-practice');
+    const btnNewGame = document.getElementById('modal-btn-new-game');
     const btnShare = document.getElementById('m-btn-share-result');
     const keyboardEl = document.getElementById('m-wordle-keyboard');
+    const toastEl = document.getElementById('m-wordle-toast');
+    const toastMsg = document.getElementById('m-wordle-toast-msg');
 
     let toastTimeout: number;
 
     function showToast(msg: string, duration = 1800) {
-      if (!toastEl || !toastMsgEl) return;
-      toastMsgEl.textContent = msg;
+      if (!toastEl || !toastMsg) return;
+      toastMsg.textContent = msg;
       toastEl.classList.remove('opacity-0', '-translate-y-1');
       toastEl.classList.add('opacity-100', 'translate-y-0');
       window.clearTimeout(toastTimeout);
@@ -265,7 +316,7 @@ const daily = getDailyWord();
       }, duration);
     }
 
-    // Modal lock body scroll when open and restore when closed
+    // Dialog state
     modal.addEventListener('close', () => {
       document.body.style.overflow = '';
       helpPanel?.classList.add('hidden');
@@ -279,7 +330,19 @@ const daily = getDailyWord();
 
     // Modal click outside to dismiss
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.close();
+      const panel = modal.querySelector('.terminal-panel');
+      if (panel) {
+        const rect = panel.getBoundingClientRect();
+        const isClickOutside = (
+          e.clientX < rect.left ||
+          e.clientX > rect.right ||
+          e.clientY < rect.top ||
+          e.clientY > rect.bottom
+        );
+        if (isClickOutside) modal.close();
+      } else if (e.target === modal) {
+        modal.close();
+      }
     });
 
     // Panel Toggles
@@ -307,7 +370,7 @@ const daily = getDailyWord();
         row.id = `m-row-${r}`;
         for (let c = 0; c < 5; c++) {
           const tile = document.createElement('div');
-          tile.className = 'm-tile w-11 h-11 sm:w-13 sm:h-13 md:w-15 md:h-15 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] select-none';
+          tile.className = 'm-tile w-10 h-10 sm:w-12 sm:h-12 md:w-13 md:h-13 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] select-none';
           tile.id = `m-tile-${r}-${c}`;
           row.appendChild(tile);
         }
