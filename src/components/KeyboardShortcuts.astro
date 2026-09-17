@@ -50,6 +50,13 @@
           <kbd>t</kbd>
         </div>
         <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Play Wordle</span>
+          <div class="flex items-center gap-0.5">
+            <kbd>alt</kbd>
+            <kbd>g</kbd>
+          </div>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
           <span class="text-[var(--color-text-secondary)]">Help</span>
           <kbd>?</kbd>
         </div>
@@ -119,7 +126,29 @@
         return;
       }
 
+      // Alt + G: Play Wordle
+      if (e.altKey && e.key.toLowerCase() === 'g') {
+        e.preventDefault();
+        showToast('> play wordle');
+        setTimeout(() => window.location.href = '/play/wordle', 150);
+        return;
+      }
+
       if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      // When playing Wordle, allow '?' for help modal, but do not capture single-letter route keys
+      if (window.location.pathname.startsWith('/play/wordle')) {
+        if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+          e.preventDefault();
+          if (modal?.open) {
+            modal.close();
+          } else {
+            modal?.showModal();
+            showToast('man shortcuts');
+          }
+        }
+        return;
+      }
 
       if (e.key === '?' || (e.shiftKey && e.key === '/')) {
         e.preventDefault();
