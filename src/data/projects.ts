@@ -23,6 +23,7 @@ export const projects: Project[] = [
     title: "PokéBase",
     description: "Refined Pokédex web application featuring lightning-fast search across 1,000+ Pokémon. Includes comprehensive base stats, weakness analyses, dual-type matchups, and interactive evolution chain trees.",
     tags: ["Nuxt", "TypeScript", "TailwindCSS", "PokéAPI"],
+    link: "https://pokebase-orpin.vercel.app/",
     github: "https://github.com/rjaks/pokebase",
     featured: true,
     image: "/images/projects/pokebase.png",
