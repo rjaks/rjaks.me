@@ -1,6 +1,7 @@
 ---
 // src/pages/play/wordle.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WordleGame from '../../components/game/WordleGame.astro';
 ---
 
 <BaseLayout 
@@ -32,11 +33,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </p>
     </div>
 
-    <!-- Game Board Container Placeholder for Phase 2 & 3 -->
+    <!-- Interactive Wordle Game -->
     <div id="wordle-root" class="w-full flex flex-col items-center">
-      <div class="terminal-panel p-6 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md text-center text-xs font-mono text-[var(--color-text-secondary)]">
-        Loading Wordle...
-      </div>
+      <WordleGame />
     </div>
   </div>
 </BaseLayout>
