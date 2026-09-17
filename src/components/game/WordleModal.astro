@@ -7,14 +7,14 @@ const daily = getDailyWord();
 
 <dialog 
   id="wordle-modal" 
-  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center"
+  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 md:p-6 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center"
 >
-  <div class="terminal-panel w-full max-w-lg bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-6 text-[var(--color-text-primary)] font-mono text-xs max-h-[96vh] sm:max-h-[92vh] overflow-y-auto flex flex-col rounded-md">
+  <div class="terminal-panel w-full max-w-md sm:max-w-xl md:max-w-2xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-6 md:p-8 text-[var(--color-text-primary)] font-mono text-xs max-h-[96vh] sm:max-h-[90vh] overflow-y-auto flex flex-col rounded-md">
     <!-- Top Modal Header -->
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--color-border)]">
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-[var(--color-border)]">
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
-        <h2 class="font-bold text-sm tracking-tight text-[var(--color-text-primary)]">
+        <h2 class="font-bold text-sm sm:text-base tracking-tight text-[var(--color-text-primary)]">
           rjaks:~$ play wordle
         </h2>
       </div>
@@ -164,40 +164,40 @@ const daily = getDailyWord();
     </div>
 
     <!-- 6x5 Wordle Grid -->
-    <div id="m-wordle-board" class="grid grid-rows-6 gap-1 sm:gap-1.5 mb-4 mx-auto" aria-label="Wordle Grid">
+    <div id="m-wordle-board" class="grid grid-rows-6 gap-1.5 sm:gap-2 mb-6 mx-auto" aria-label="Wordle Grid">
       <!-- Injected by script -->
     </div>
 
     <!-- Virtual Keyboard -->
-    <div id="m-wordle-keyboard" class="w-full flex flex-col gap-1 sm:gap-1.5 touch-manipulation mt-auto">
+    <div id="m-wordle-keyboard" class="w-full max-w-sm sm:max-w-md md:max-w-xl mx-auto flex flex-col gap-1.5 sm:gap-2 touch-manipulation mt-auto pt-2">
       <!-- Row 1 -->
-      <div class="flex justify-center gap-1 sm:gap-1.5">
+      <div class="flex justify-center gap-1 sm:gap-1.5 md:gap-2">
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((k) => (
-          <button class="m-key-btn flex-1 h-10 sm:h-11 flex items-center justify-center font-bold text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
+          <button class="m-key-btn flex-1 h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
             {k}
           </button>
         ))}
       </div>
       <!-- Row 2 -->
-      <div class="flex justify-center gap-1 sm:gap-1.5 px-2 sm:px-3">
+      <div class="flex justify-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-4 md:px-6">
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((k) => (
-          <button class="m-key-btn flex-1 h-10 sm:h-11 flex items-center justify-center font-bold text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
+          <button class="m-key-btn flex-1 h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
             {k}
           </button>
         ))}
       </div>
       <!-- Row 3 -->
-      <div class="flex justify-center gap-1 sm:gap-1.5">
-        <button class="m-key-btn flex-[1.4] h-10 sm:h-11 flex items-center justify-center font-bold text-[10px] rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key="ENTER">
+      <div class="flex justify-center gap-1 sm:gap-1.5 md:gap-2">
+        <button class="m-key-btn flex-[1.5] h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-[10px] sm:text-xs md:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key="ENTER">
           ENTER
         </button>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((k) => (
-          <button class="m-key-btn flex-1 h-10 sm:h-11 flex items-center justify-center font-bold text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
+          <button class="m-key-btn flex-1 h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key={k}>
             {k}
           </button>
         ))}
-        <button class="m-key-btn flex-[1.4] h-10 sm:h-11 flex items-center justify-center font-bold text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key="BACKSPACE" aria-label="Backspace">
-          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button class="m-key-btn flex-[1.5] h-10 sm:h-11 md:h-12 flex items-center justify-center font-bold text-xs sm:text-sm rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer" data-key="BACKSPACE" aria-label="Backspace">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
             <line x1="18" y1="9" x2="12" y2="15"></line>
             <line x1="12" y1="2" x2="12" y2="15"></line>
@@ -399,11 +399,11 @@ const daily = getDailyWord();
       boardEl.innerHTML = '';
       for (let r = 0; r < 6; r++) {
         const row = document.createElement('div');
-        row.className = 'grid grid-cols-5 gap-1 sm:gap-1.5 justify-center';
+        row.className = 'grid grid-cols-5 gap-1.5 sm:gap-2 justify-center';
         row.id = `m-row-${r}`;
         for (let c = 0; c < 5; c++) {
           const tile = document.createElement('div');
-          tile.className = 'm-tile w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center font-mono font-bold text-base sm:text-lg rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] select-none';
+          tile.className = 'm-tile w-11 h-11 sm:w-13 sm:h-13 md:w-15 md:h-15 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] select-none';
           tile.id = `m-tile-${r}-${c}`;
           row.appendChild(tile);
         }
@@ -441,7 +441,7 @@ const daily = getDailyWord();
       if (!tile) return;
 
       tile.textContent = letter;
-      tile.className = 'm-tile w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center font-mono font-bold text-base sm:text-lg rounded-xs select-none ';
+      tile.className = 'm-tile w-11 h-11 sm:w-13 sm:h-13 md:w-15 md:h-15 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs select-none ';
 
       if (state === 'correct') {
         tile.className += 'bg-[#10b981] text-black border border-[#10b981]';
