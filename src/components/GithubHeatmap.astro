@@ -64,19 +64,24 @@ const lastDate = days[days.length - 1]?.date ?? '';
     am i really a dev if i don't put up my github contribution chart?
   </p>
 
-  <!-- Heatmap Container (100% responsive, never scrollable) -->
+  <!-- Heatmap Container (smooth horizontal scroll on mobile, responsive fit on tablet & desktop) -->
   <div id="heatmap-container" class="terminal-panel p-3 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md w-full relative transition-colors">
-    <div class="w-full">
-      <svg 
-        id="heatmap-svg"
-        viewBox={`0 0 ${width} ${height}`} 
-        class="w-full h-auto block select-none transition-opacity duration-200" 
-        role="img" 
-        aria-label={`GitHub contribution calendar: ${totalContributions} contributions in the last year`}
-        data-total={totalContributions}
-        data-last-date={lastDate}
-        set:html={html}
-      />
+    <div 
+      id="heatmap-scroll-area" 
+      class="w-full overflow-x-auto overflow-y-hidden sm:overflow-x-visible -mx-1 px-1 sm:mx-0 sm:px-0 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
+      <div class="min-w-[690px] sm:min-w-0 w-full">
+        <svg 
+          id="heatmap-svg"
+          viewBox={`0 0 ${width} ${height}`} 
+          class="w-full h-auto block select-none transition-opacity duration-200" 
+          role="img" 
+          aria-label={`GitHub contribution calendar: ${totalContributions} contributions in the last year`}
+          data-total={totalContributions}
+          data-last-date={lastDate}
+          set:html={html}
+        />
+      </div>
     </div>
 
     <!-- Terminal Status Bar & Legend -->
@@ -86,16 +91,21 @@ const lastDate = days[days.length - 1]?.date ?? '';
         <span id="heatmap-status-text" class="transition-opacity duration-150" data-default={`${totalContributions} contributions in the last year`}>{totalContributions} contributions in the last year</span>
       </div>
 
-      <div class="flex items-center gap-1.5 ml-auto">
-        <span>Less</span>
-        <div class="flex items-center gap-1">
-          <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-0"></span>
-          <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-1"></span>
-          <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-2"></span>
-          <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-3"></span>
-          <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-4"></span>
+      <div class="flex items-center gap-2.5 sm:gap-3 ml-auto">
+        <span class="sm:hidden font-mono text-[10px] text-[var(--color-text-muted)] flex items-center gap-1">
+          <span>&larr; scroll year</span>
+        </span>
+        <div class="flex items-center gap-1.5">
+          <span>Less</span>
+          <div class="flex items-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-0"></span>
+            <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-1"></span>
+            <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-2"></span>
+            <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-3"></span>
+            <span class="w-2.5 h-2.5 rounded-[2px] contribution-cell level-4"></span>
+          </div>
+          <span>More</span>
         </div>
-        <span>More</span>
       </div>
     </div>
   </div>
@@ -140,11 +150,22 @@ const lastDate = days[days.length - 1]?.date ?? '';
       cell.addEventListener('mouseleave', hide);
       cell.addEventListener('focus', show);
       cell.addEventListener('blur', hide);
+      cell.addEventListener('touchstart', show, { passive: true });
     });
+  }
+
+  function autoScrollMobileHeatmap() {
+    const scrollArea = document.getElementById('heatmap-scroll-area');
+    if (scrollArea && window.innerWidth < 640) {
+      requestAnimationFrame(() => {
+        scrollArea.scrollLeft = scrollArea.scrollWidth;
+      });
+    }
   }
 
   async function syncHeatmap() {
     bindTooltips();
+    autoScrollMobileHeatmap();
 
     const container = document.getElementById('heatmap-container');
     const svg = document.getElementById('heatmap-svg') as SVGSVGElement | null;
