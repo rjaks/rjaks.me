@@ -59,12 +59,10 @@ const {
     ></div>
 
     <Navbar />
-    <div class="flex-1 w-full lg:pl-60 xl:pl-64 flex flex-col">
-      <main class="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-20 md:pt-28 pb-16 sm:pb-24 flex-1 min-w-0">
+    <div class="flex-1 w-full lg:pl-60 xl:pl-64 flex flex-col min-h-screen">
+      <main class="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 flex-1 min-w-0">
         <slot />
       </main>
-    </div>
-    <div class="lg:hidden">
       <Footer />
     </div>
     <KeyboardShortcuts />
