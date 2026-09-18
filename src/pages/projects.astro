@@ -27,7 +27,7 @@ import { projects } from '../data/projects';
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
       {projects.map((project) => (
-        <article class="terminal-panel bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between transition-all hover:border-[var(--color-accent)] overflow-hidden group">
+        <article class="terminal-panel terminal-card-interactive bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between overflow-hidden group">
           <!-- Terminal Window Header -->
           <div class="px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px]">
             <div class="flex items-center gap-1.5">

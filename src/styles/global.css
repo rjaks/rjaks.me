@@ -249,6 +249,11 @@ kbd {
   vertical-align: middle;
   line-height: 1;
   display: inline-block;
+  transition: transform 80ms ease, border-color var(--transition-fast), color var(--transition-fast);
+}
+
+kbd:active {
+  transform: translateY(1px);
 }
 
 [data-theme="light"] kbd {
@@ -294,6 +299,21 @@ kbd {
   border-color: var(--color-accent);
 }
 
+/* Interactive Terminal Card with Subtle Lift & Halo */
+.terminal-card-interactive {
+  transition: border-color var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal), background-color var(--transition-normal);
+}
+
+.terminal-card-interactive:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -4px rgba(245, 158, 11, 0.12);
+}
+
+[data-theme="light"] .terminal-card-interactive:hover {
+  box-shadow: 0 6px 20px -4px rgba(217, 119, 6, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
 /* Terminal Tag / Badge */
 .terminal-badge {
   font-family: var(--font-family-mono);
@@ -303,4 +323,67 @@ kbd {
   background: var(--color-border-subtle);
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+/* Floating Terminal Modal Animation */
+@keyframes terminalFloatIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+dialog[open] .terminal-panel {
+  animation: terminalFloatIn 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Theme Toggle Button Micro-Interaction */
+.theme-toggle-btn svg {
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-toggle-btn:hover svg {
+  transform: rotate(18deg) scale(1.1);
+}
+
+.theme-toggle-btn:active svg {
+  transform: rotate(45deg) scale(0.95);
+}
+
+/* Fast, Crisp View Transitions */
+::view-transition-old(root) {
+  animation: 100ms ease-out both fade-out;
+}
+::view-transition-new(root) {
+  animation: 150ms ease-out both fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

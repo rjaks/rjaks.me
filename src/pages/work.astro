@@ -29,9 +29,9 @@ import { experiences } from '../data/experience';
       {experiences.map((exp) => (
         <article class="relative group">
           <!-- Timeline Node -->
-          <div class="absolute -left-[21px] sm:-left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--color-surface)] border-2 border-[var(--color-accent)] group-hover:bg-[var(--color-accent)] transition-colors"></div>
+          <div class="absolute -left-[21px] sm:-left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--color-surface)] border-2 border-[var(--color-accent)] group-hover:bg-[var(--color-accent)] group-hover:ring-4 group-hover:ring-[var(--color-accent)]/20 transition-all duration-200"></div>
 
-          <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md transition-all hover:border-[var(--color-accent)]">
+          <div class="terminal-panel terminal-card-interactive p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md">
             <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
               <div>
                 <h2 class="font-heading text-sm sm:text-base font-extrabold text-[var(--color-text-primary)]">
