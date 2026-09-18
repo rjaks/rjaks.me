@@ -79,11 +79,49 @@
 </div>
 
 <script>
-  function setupShortcuts() {
-    const modal = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
+  import { navigate } from 'astro:transitions/client';
+
+  let toastTimeout: number;
+
+  function showToast(text: string) {
     const toast = document.getElementById('terminal-toast');
     const toastMsg = document.getElementById('toast-message');
-    let toastTimeout: number;
+    if (!toast || !toastMsg) return;
+    toastMsg.textContent = text;
+    toast.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      toast.classList.remove('opacity-0', 'translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+    });
+
+    window.clearTimeout(toastTimeout);
+    toastTimeout = window.setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-2');
+      setTimeout(() => toast.classList.add('hidden'), 200);
+    }, 1200);
+  }
+
+  function setupShortcuts() {
+    const modal = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+
+    // Auto-open Wordle modal if URL has #wordle hash
+    function checkWordleHash() {
+      if (window.location.hash === '#wordle') {
+        const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+        wordleModal?.showModal();
+      }
+    }
+
+    checkWordleHash();
+
+    // Ensure global window listeners are bound only once
+    if ((window as any).__shortcuts_bound) return;
+    (window as any).__shortcuts_bound = true;
 
     const routes: Record<string, [string, string]> = {
       h: ['/', 'cd ~ (home)'],
@@ -93,26 +131,7 @@
       s: ['/skills', 'cd ~/skills'],
     };
 
-    function showToast(text: string) {
-      if (!toast || !toastMsg) return;
-      toastMsg.textContent = text;
-      toast.classList.remove('hidden');
-      requestAnimationFrame(() => {
-        toast.classList.remove('opacity-0', 'translate-y-2');
-        toast.classList.add('opacity-100', 'translate-y-0');
-      });
-
-      window.clearTimeout(toastTimeout);
-      toastTimeout = window.setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.classList.add('hidden'), 200);
-      }, 1200);
-    }
-
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal) modal.close();
-    });
+    window.addEventListener('hashchange', checkWordleHash);
 
     window.addEventListener('keydown', (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
@@ -149,12 +168,14 @@
 
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
+      const modalEl = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
+
       if (e.key === '?' || (e.shiftKey && e.key === '/')) {
         e.preventDefault();
-        if (modal?.open) {
-          modal.close();
+        if (modalEl?.open) {
+          modalEl.close();
         } else {
-          modal?.showModal();
+          modalEl?.showModal();
           showToast('man shortcuts');
         }
         return;
@@ -165,7 +186,7 @@
         e.preventDefault();
         const [path, label] = routes[key];
         showToast(label);
-        setTimeout(() => window.location.href = path, 150);
+        navigate(path);
         return;
       }
 
@@ -178,17 +199,6 @@
         showToast(`theme set to ${newTheme}`);
       }
     });
-
-    // Auto-open Wordle modal if URL has #wordle hash
-    function checkWordleHash() {
-      if (window.location.hash === '#wordle') {
-        const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
-        wordleModal?.showModal();
-      }
-    }
-
-    checkWordleHash();
-    window.addEventListener('hashchange', checkWordleHash);
   }
 
   setupShortcuts();
