@@ -218,26 +218,31 @@ const daily = getDailyWord();
   .m-key-btn {
     min-width: 0 !important;
     touch-action: manipulation;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.08s ease;
+  }
+
+  .m-key-btn:active {
+    transform: scale(0.92);
   }
 
   .m-tile {
     perspective: 1000px;
     transform-style: preserve-3d;
-    transition: transform 0.25s ease-in-out, border-color 0.15s ease-in-out;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.15s ease, background-color 0.2s ease, color 0.2s ease;
   }
 
   .m-tile-pop {
-    animation: pop 0.1s ease-in-out;
+    animation: pop 0.12s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   @keyframes pop {
     0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.08); }
     100% { transform: scale(1); }
   }
 
   .m-tile-flip {
-    animation: flip 0.5s ease forwards;
+    animation: flip 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   @keyframes flip {
@@ -247,24 +252,24 @@ const daily = getDailyWord();
   }
 
   .m-row-shake {
-    animation: shake 0.5s ease-in-out;
+    animation: shake 0.4s ease-in-out;
   }
 
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
   }
 
   .m-tile-bounce {
-    animation: bounce 0.6s ease;
+    animation: bounce 0.5s ease;
   }
 
   @keyframes bounce {
     0%, 20% { transform: translateY(0); }
-    40% { transform: translateY(-12px); }
+    40% { transform: translateY(-8px); }
     50% { transform: translateY(0); }
-    60% { transform: translateY(-6px); }
+    60% { transform: translateY(-4px); }
     80%, 100% { transform: translateY(0); }
   }
 </style>
@@ -601,25 +606,31 @@ const daily = getDailyWord();
       }, 5 * 200 + 250);
     }
 
-    // Capture physical key presses ONLY while modal is open
-    window.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (!modal.open) return;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
+    (window as any).__handleWordleInput = handleKeyInput;
 
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        e.stopPropagation();
-        handleKeyInput('ENTER');
-      } else if (e.key === 'Backspace') {
-        e.preventDefault();
-        e.stopPropagation();
-        handleKeyInput('BACKSPACE');
-      } else if (/^[a-zA-Z]$/.test(e.key)) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleKeyInput(e.key.toUpperCase());
-      }
-    });
+    // Capture physical key presses ONLY while modal is open (single global listener)
+    if (!(window as any).__wordle_bound) {
+      (window as any).__wordle_bound = true;
+      window.addEventListener('keydown', (e: KeyboardEvent) => {
+        const modalEl = document.getElementById('wordle-modal') as HTMLDialogElement | null;
+        if (!modalEl?.open) return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          e.stopPropagation();
+          (window as any).__handleWordleInput?.('ENTER');
+        } else if (e.key === 'Backspace') {
+          e.preventDefault();
+          e.stopPropagation();
+          (window as any).__handleWordleInput?.('BACKSPACE');
+        } else if (/^[a-zA-Z]$/.test(e.key)) {
+          e.preventDefault();
+          e.stopPropagation();
+          (window as any).__handleWordleInput?.(e.key.toUpperCase());
+        }
+      });
+    }
 
     // Virtual keyboard button clicks
     keyboardEl?.addEventListener('click', (e) => {

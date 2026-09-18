@@ -180,18 +180,18 @@ const navItems = [
   function setupNavbar() {
     // Shortcuts button -> modal in KeyboardShortcuts.astro
     const shortcutsBtn = document.getElementById('sidebar-shortcuts-btn');
-    const modal = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
-    if (shortcutsBtn && modal) {
+    if (shortcutsBtn) {
       shortcutsBtn.onclick = () => {
-        modal.showModal();
+        const modal = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
+        modal?.showModal();
       };
     }
 
     // Wordle modal triggers
-    const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
     document.querySelectorAll('.open-wordle-trigger').forEach((btn) => {
       (btn as HTMLElement).onclick = (e) => {
         e.preventDefault();
+        const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
         wordleModal?.showModal();
       };
     });
