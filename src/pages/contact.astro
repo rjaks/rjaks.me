@@ -24,20 +24,20 @@ import { contactLinks } from '../data/contact';
       </p>
     </div>
 
-    <div class="terminal-panel p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-4 mt-6">
+    <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-4 mt-6">
       <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
         I'm most responsive via email and active on GitHub. If you'd like to collaborate or have an interesting engineering problem, drop me a line:
       </p>
 
-      <div class="space-y-2 pt-2">
+      <div class="space-y-2.5 pt-2">
         {contactLinks.map((link) => (
-          <div class="flex items-center justify-between p-2.5 rounded-sm bg-[var(--color-bg)] border border-[var(--color-border-subtle)] font-mono text-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 p-2.5 sm:p-3 rounded-sm bg-[var(--color-bg)] border border-[var(--color-border-subtle)] font-mono text-xs">
             <span class="text-[var(--color-text-primary)] font-semibold">{link.label}</span>
             <a 
               href={link.href} 
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              class="text-[var(--color-accent)] hover:underline inline-flex items-center gap-1"
+              class="text-[var(--color-accent)] hover:underline inline-flex items-center gap-1 break-all sm:break-normal"
             >
               <span>{link.href.replace('mailto:', '')}</span>
               <span class="ext-arrow">{link.external ? '↗' : '→'}</span>
