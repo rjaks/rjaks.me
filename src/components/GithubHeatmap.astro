@@ -65,12 +65,12 @@ const lastDate = days[days.length - 1]?.date ?? '';
   </p>
 
   <!-- Heatmap Container (100% responsive, never scrollable) -->
-  <div id="heatmap-container" class="terminal-panel p-3 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md w-full relative">
+  <div id="heatmap-container" class="terminal-panel p-3 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md w-full relative transition-colors">
     <div class="w-full">
       <svg 
         id="heatmap-svg"
         viewBox={`0 0 ${width} ${height}`} 
-        class="w-full h-auto block select-none" 
+        class="w-full h-auto block select-none transition-opacity duration-200" 
         role="img" 
         aria-label={`GitHub contribution calendar: ${totalContributions} contributions in the last year`}
         data-total={totalContributions}
@@ -83,7 +83,7 @@ const lastDate = days[days.length - 1]?.date ?? '';
     <div class="mt-3 pt-2.5 border-t border-[var(--color-border-subtle)] flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-[var(--color-text-secondary)]">
       <div id="heatmap-status" class="flex items-center gap-1.5 min-h-[1.25rem]">
         <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
-        <span id="heatmap-status-text" data-default={`${totalContributions} contributions in the last year`}>{totalContributions} contributions in the last year</span>
+        <span id="heatmap-status-text" class="transition-opacity duration-150" data-default={`${totalContributions} contributions in the last year`}>{totalContributions} contributions in the last year</span>
       </div>
 
       <div class="flex items-center gap-1.5 ml-auto">
@@ -146,6 +146,7 @@ const lastDate = days[days.length - 1]?.date ?? '';
   async function syncHeatmap() {
     bindTooltips();
 
+    const container = document.getElementById('heatmap-container');
     const svg = document.getElementById('heatmap-svg') as SVGSVGElement | null;
     const countBadge = document.getElementById('heatmap-count-badge');
     const statusText = document.getElementById('heatmap-status-text');
@@ -160,15 +161,23 @@ const lastDate = days[days.length - 1]?.date ?? '';
 
     const isFresh = cached && Date.now() - cached.time < 3600000;
 
-    function applyData(total: number, days: ContributionDay[]) {
+    function applyData(total: number, days: ContributionDay[], animate = false) {
       if (!days || days.length === 0) return;
       const lastDate = days[days.length - 1]?.date;
       if (svg && (svg.getAttribute('data-last-date') !== lastDate || svg.getAttribute('data-total') !== String(total))) {
         const { width, height, html } = buildHeatmapSvg(days);
+        if (animate) {
+          svg.style.opacity = '0.5';
+        }
         svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
         svg.setAttribute('data-total', String(total));
         svg.setAttribute('data-last-date', lastDate);
         svg.innerHTML = html;
+        if (animate) {
+          requestAnimationFrame(() => {
+            svg.style.opacity = '1';
+          });
+        }
         if (countBadge) countBadge.textContent = `[${total} this year]`;
         if (statusText) {
           const txt = `${total} contributions in the last year`;
@@ -177,6 +186,7 @@ const lastDate = days[days.length - 1]?.date ?? '';
         }
         bindTooltips();
       }
+      container?.classList.remove('is-loading');
     }
 
     if (cached?.days?.length) {
@@ -184,6 +194,12 @@ const lastDate = days[days.length - 1]?.date ?? '';
     }
 
     if (!isFresh) {
+      if (!cached?.days?.length) {
+        container?.classList.add('is-loading');
+        if (statusText) {
+          statusText.innerHTML = `git: syncing commit log<span class="terminal-cursor"></span>`;
+        }
+      }
       try {
         const res = await fetch('https://github-contributions-api.jogruber.de/v4/rjaks?y=last');
         if (res.ok) {
@@ -192,10 +208,16 @@ const lastDate = days[days.length - 1]?.date ?? '';
           const days: ContributionDay[] = data.contributions ?? [];
           if (days.length > 0) {
             localStorage.setItem(cacheKey, JSON.stringify({ total, days, time: Date.now() }));
-            applyData(total, days);
+            applyData(total, days, true);
           }
         }
-      } catch {}
+      } catch {
+        container?.classList.remove('is-loading');
+        if (statusText) {
+          const fallbackTxt = statusText.getAttribute('data-default') || '';
+          statusText.textContent = fallbackTxt;
+        }
+      }
     }
   }
 
@@ -204,8 +226,21 @@ const lastDate = days[days.length - 1]?.date ?? '';
 </script>
 
 <style is:global>
+  #heatmap-container.is-loading rect.contribution-cell {
+    animation: cellSkeletonPulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes cellSkeletonPulse {
+    0%, 100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
   #heatmap-container .contribution-cell {
-    transition: filter 0.15s ease, stroke 0.15s ease;
+    transition: filter 0.15s ease, stroke 0.15s ease, opacity 0.2s ease;
     outline: none;
   }
 
@@ -217,7 +252,7 @@ const lastDate = days[days.length - 1]?.date ?? '';
   #heatmap-container rect.contribution-cell:focus {
     stroke: var(--color-accent);
     stroke-width: 1.5px;
-    filter: brightness(1.25);
+    filter: brightness(1.35) drop-shadow(0 0 3px rgba(245, 158, 11, 0.4));
   }
 
   #heatmap-container .contribution-cell.level-0 {
