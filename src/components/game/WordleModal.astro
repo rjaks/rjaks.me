@@ -366,6 +366,8 @@ const daily = getDailyWord();
     let gameStatus: 'IN_PROGRESS' | 'WIN' | 'LOST' = 'IN_PROGRESS';
     let isSubmitting = false;
 
+    const TILE_BASE_CLASSES = 'm-tile w-11 h-11 sm:w-13 sm:h-13 md:w-15 md:h-15 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs select-none';
+
     function setupGridDOM() {
       if (!boardEl) return;
       boardEl.innerHTML = '';
@@ -375,7 +377,7 @@ const daily = getDailyWord();
         row.id = `m-row-${r}`;
         for (let c = 0; c < 5; c++) {
           const tile = document.createElement('div');
-          tile.className = 'm-tile w-10 h-10 sm:w-12 sm:h-12 md:w-13 md:h-13 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] select-none';
+          tile.className = `${TILE_BASE_CLASSES} border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)]`;
           tile.id = `m-tile-${r}-${c}`;
           row.appendChild(tile);
         }
@@ -413,19 +415,24 @@ const daily = getDailyWord();
       if (!tile) return;
 
       tile.textContent = letter;
-      tile.className = 'm-tile w-11 h-11 sm:w-13 sm:h-13 md:w-15 md:h-15 flex items-center justify-center font-mono font-bold text-base sm:text-xl md:text-2xl rounded-xs select-none ';
 
+      let stateClasses = 'bg-[var(--color-bg)] text-[var(--color-text-primary)] border border-[var(--color-border)]';
       if (state === 'correct') {
-        tile.className += 'bg-[#10b981] text-black border border-[#10b981]';
+        stateClasses = 'bg-[#10b981] text-black border border-[#10b981]';
       } else if (state === 'present') {
-        tile.className += 'bg-[#f59e0b] text-black border border-[#f59e0b]';
+        stateClasses = 'bg-[#f59e0b] text-black border border-[#f59e0b]';
       } else if (state === 'absent') {
-        tile.className += 'bg-[var(--color-border-subtle)] text-[var(--color-text-muted)] border border-[var(--color-border-subtle)]';
+        stateClasses = 'bg-[var(--color-border-subtle)] text-[var(--color-text-muted)] border border-[var(--color-border-subtle)]';
       } else if (letter) {
-        tile.className += 'bg-[var(--color-bg)] text-[var(--color-text-primary)] border border-[var(--color-text-primary)] m-tile-pop';
-      } else {
-        tile.className += 'bg-[var(--color-bg)] text-[var(--color-text-primary)] border border-[var(--color-border)]';
+        stateClasses = 'bg-[var(--color-bg)] text-[var(--color-text-primary)] border border-[var(--color-text-primary)] m-tile-pop';
       }
+
+      const animClasses = [];
+      if (tile.classList.contains('m-tile-flip')) animClasses.push('m-tile-flip');
+      if (tile.classList.contains('m-tile-bounce')) animClasses.push('m-tile-bounce');
+
+      const animSuffix = animClasses.length > 0 ? ` ${animClasses.join(' ')}` : '';
+      tile.className = `${TILE_BASE_CLASSES} ${stateClasses}${animSuffix}`;
     }
 
     function syncBoard() {
