@@ -21,7 +21,7 @@ const recentPosts = allPosts
   description="Personal website of Adrian Reforsado (rjaks). Software engineer, CS student, building developer tools and clean web systems."
 >
   <!-- Hero / Introduction -->
-  <section class="space-y-4">
+  <section class="space-y-4 reveal-on-scroll stagger-1">
     <!-- Shell Prompt Breadcrumb / Command -->
     <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
       <span>rjaks:~$</span>
@@ -68,14 +68,18 @@ const recentPosts = allPosts
   </section>
 
   <!-- Live GitHub Heatmap -->
-  <GithubHeatmap />
+  <div class="reveal-on-scroll stagger-2">
+    <GithubHeatmap />
+  </div>
 
   <!-- Now & Off The Terminal Section -->
-  <NowSection />
+  <div class="reveal-on-scroll stagger-3">
+    <NowSection />
+  </div>
 
   <!-- Featured Projects Highlight -->
   <section class="my-8 sm:my-12">
-    <div class="flex items-center justify-between gap-2 mb-4">
+    <div class="flex items-center justify-between gap-2 mb-4 reveal-on-scroll">
       <div class="flex items-center gap-2">
         <span class="font-mono text-xs text-[var(--color-accent)] font-bold">~/projects $</span>
         <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
@@ -89,70 +93,72 @@ const recentPosts = allPosts
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-      {featuredProjects.map((project) => (
-        <article class="terminal-panel terminal-card-interactive bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between overflow-hidden group">
-          <!-- Terminal Window Header -->
-          <div class="px-3.5 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px]">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-[#EF4444] opacity-70"></span>
-              <span class="w-2 h-2 rounded-full bg-[#F59E0B] opacity-70"></span>
-              <span class="w-2 h-2 rounded-full bg-[#10B981] opacity-70"></span>
-            </div>
-            <span class="text-[var(--color-text-muted)] text-[10px] truncate max-w-[140px]">
-              {project.title.toLowerCase().replace(/\s+/g, '-')}
-            </span>
-          </div>
-
-          <!-- Preview Image / Visual -->
-          {project.image && (
-            <div class="relative aspect-video overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)]">
-              <img 
-                src={project.image} 
-                alt={project.imageAlt || project.title}
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
-              />
-            </div>
-          )}
-
-          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex items-start justify-between gap-2 mb-2">
-                <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
-                  {project.title}
-                </h3>
-                <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                  {project.github && project.github !== '#' && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
-                      code ↗
-                    </a>
-                  )}
-                  {project.link && project.link !== '#' && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
-                      live ↗
-                    </a>
-                  )}
-                </div>
+      {featuredProjects.map((project, idx) => (
+        <div class="reveal-on-scroll flex" style={`--reveal-delay: ${idx * 60}ms;`}>
+          <article class="terminal-panel terminal-card-interactive bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between overflow-hidden group w-full">
+            <!-- Terminal Window Header -->
+            <div class="px-3.5 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px]">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#EF4444] opacity-70"></span>
+                <span class="w-2 h-2 rounded-full bg-[#F59E0B] opacity-70"></span>
+                <span class="w-2 h-2 rounded-full bg-[#10B981] opacity-70"></span>
               </div>
-              <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                {project.description}
-              </p>
+              <span class="text-[var(--color-text-muted)] text-[10px] truncate max-w-[140px]">
+                {project.title.toLowerCase().replace(/\s+/g, '-')}
+              </span>
             </div>
-            <div class="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
-              {project.tags.map((tag) => (
-                <span class="terminal-badge text-[10px]">
-                  {tag}
-                </span>
-              ))}
+
+            <!-- Preview Image / Visual -->
+            {project.image && (
+              <div class="relative aspect-video overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)]">
+                <img 
+                  src={project.image} 
+                  alt={project.imageAlt || project.title}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                />
+              </div>
+            )}
+
+            <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+                    {project.title}
+                  </h3>
+                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                    {project.github && project.github !== '#' && (
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                        code ↗
+                      </a>
+                    )}
+                    {project.link && project.link !== '#' && (
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
+                        live ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
+                  {project.description}
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
+                {project.tags.map((tag) => (
+                  <span class="terminal-badge text-[10px]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       ))}
     </div>
   </section>
 
   <!-- Technologies & Tools Highlight -->
-  <section class="my-8 sm:my-12">
+  <section class="my-8 sm:my-12 reveal-on-scroll">
     <div class="flex items-center justify-between gap-2 mb-4">
       <div class="flex items-center gap-2">
         <span class="font-mono text-xs text-[var(--color-prompt)] font-bold">~/stack $</span>
@@ -186,7 +192,7 @@ const recentPosts = allPosts
 
   <!-- Recent Writing Highlight -->
   {recentPosts.length > 0 && (
-    <section class="my-8 sm:my-12">
+    <section class="my-8 sm:my-12 reveal-on-scroll">
       <div class="flex items-center justify-between gap-2 mb-4">
         <div class="flex items-center gap-2">
           <span class="font-mono text-xs text-[var(--color-accent-secondary)] font-bold">~/writing $</span>
