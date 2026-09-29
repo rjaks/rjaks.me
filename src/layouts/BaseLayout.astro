@@ -49,6 +49,16 @@ const {
       applyTheme();
       document.addEventListener('astro:after-swap', applyTheme);
     </script>
+    
+    <!-- Noscript fallback for reveal animations -->
+    <noscript>
+      <style>
+        .reveal-on-scroll {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body class="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text-primary)]">
     <!-- Top Route Progress Bar -->
@@ -113,6 +123,41 @@ const {
 
       document.addEventListener('astro:before-preparation', startProgress);
       document.addEventListener('astro:page-load', finishProgress);
+
+      // Scroll Reveal Observer
+      function setupScrollReveal() {
+        const targets = document.querySelectorAll<HTMLElement>('.reveal-on-scroll:not([data-revealed])');
+        if (!targets.length) return;
+
+        if (!('IntersectionObserver' in window)) {
+          targets.forEach((el) => {
+            el.classList.add('is-revealed');
+            el.setAttribute('data-revealed', 'true');
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement;
+                el.classList.add('is-revealed');
+                el.setAttribute('data-revealed', 'true');
+                observer.unobserve(el);
+              }
+            });
+          },
+          {
+            threshold: 0.08,
+            rootMargin: '0px 0px -20px 0px',
+          }
+        );
+
+        targets.forEach((el) => observer.observe(el));
+      }
+
+      document.addEventListener('astro:page-load', setupScrollReveal);
     </script>
   </body>
 </html>
