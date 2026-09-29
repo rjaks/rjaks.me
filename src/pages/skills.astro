@@ -12,28 +12,30 @@ const totalSkills = skillCategories.reduce((acc, cat) => acc + cat.skills.length
 >
   <div class="space-y-6">
     <!-- Terminal Prompt Breadcrumb -->
-    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-      <span>rjaks:~$</span>
-      <span class="text-[var(--color-text-primary)]">neofetch --skills</span>
-    </div>
-
-    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[var(--color-border-subtle)] pb-4">
-      <div>
-        <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-          Skills & Technologies
-        </h1>
-        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-          Languages, frameworks, databases, and tooling I use across frontend, backend, and DevOps.
-        </p>
+    <div class="reveal-on-scroll stagger-1 space-y-4">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+        <span>rjaks:~$</span>
+        <span class="text-[var(--color-text-primary)]">neofetch --skills</span>
       </div>
-      <div class="font-mono text-xs text-[var(--color-text-muted)] shrink-0">
-        [{totalSkills} technologies tracked]
+
+      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[var(--color-border-subtle)] pb-4">
+        <div>
+          <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+            Skills & Technologies
+          </h1>
+          <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+            Languages, frameworks, databases, and tooling I use across frontend, backend, and DevOps.
+          </p>
+        </div>
+        <div class="font-mono text-xs text-[var(--color-text-muted)] shrink-0">
+          [{totalSkills} technologies tracked]
+        </div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-      {skillCategories.map((cat) => (
-        <div class="terminal-panel p-3.5 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-3">
+      {skillCategories.map((cat, idx) => (
+        <div class="terminal-panel p-3.5 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-3 reveal-on-scroll" style={`--reveal-delay: ${(idx % 4) * 60}ms;`}>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="text-[var(--color-accent)] font-mono text-xs font-bold">&gt;</span>

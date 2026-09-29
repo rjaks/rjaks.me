@@ -13,22 +13,24 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 >
   <div class="space-y-6">
     <!-- Terminal Prompt Breadcrumb -->
-    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-      <span>rjaks:~$</span>
-      <span class="text-[var(--color-text-primary)]">ls -la ~/writing</span>
-    </div>
+    <div class="reveal-on-scroll stagger-1 space-y-4">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+        <span>rjaks:~$</span>
+        <span class="text-[var(--color-text-primary)]">ls -la ~/writing</span>
+      </div>
 
-    <div>
-      <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-        Writing & Notes
-      </h1>
-      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-        Reflections, technical deep dives, and notes on software engineering, distributed systems, and craft.
-      </p>
+      <div>
+        <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Writing & Notes
+        </h1>
+        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+          Reflections, technical deep dives, and notes on software engineering, distributed systems, and craft.
+        </p>
+      </div>
     </div>
 
     <!-- Posts List -->
-    <div class="divide-y divide-[var(--color-border-subtle)] border border-[var(--color-border)] rounded-md bg-[var(--color-surface)] mt-8">
+    <div class="divide-y divide-[var(--color-border-subtle)] border border-[var(--color-border)] rounded-md bg-[var(--color-surface)] mt-8 reveal-on-scroll stagger-2">
       {posts.map((post) => (
         <article class="p-4 sm:p-5 hover:bg-[var(--color-surface-hover)] transition-colors">
           <a href={`/writing/${post.id}`} class="group block space-y-2">

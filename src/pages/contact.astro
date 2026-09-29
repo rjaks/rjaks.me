@@ -10,21 +10,23 @@ import { contactLinks } from '../data/contact';
 >
   <div class="space-y-6">
     <!-- Terminal Prompt Breadcrumb -->
-    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-      <span>rjaks:~$</span>
-      <span class="text-[var(--color-text-primary)]">contact --list</span>
+    <div class="reveal-on-scroll stagger-1 space-y-4">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+        <span>rjaks:~$</span>
+        <span class="text-[var(--color-text-primary)]">contact --list</span>
+      </div>
+
+      <div>
+        <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Get in Touch
+        </h1>
+        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+          Feel free to reach out for software engineering inquiries, open-source collaborations, or just to chat tech.
+        </p>
+      </div>
     </div>
 
-    <div>
-      <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-        Get in Touch
-      </h1>
-      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-        Feel free to reach out for software engineering inquiries, open-source collaborations, or just to chat tech.
-      </p>
-    </div>
-
-    <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-4 mt-6">
+    <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-4 mt-6 reveal-on-scroll stagger-2">
       <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
         I'm most responsive via email and active on GitHub. If you'd like to collaborate or have an interesting engineering problem, drop me a line:
       </p>

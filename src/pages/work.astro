@@ -10,24 +10,26 @@ import { experiences } from '../data/experience';
 >
   <div class="space-y-6">
     <!-- Terminal Prompt Breadcrumb -->
-    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-      <span>rjaks:~$</span>
-      <span class="text-[var(--color-text-primary)]">cd ~/work && ls -la</span>
-    </div>
+    <div class="reveal-on-scroll stagger-1 space-y-4">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+        <span>rjaks:~$</span>
+        <span class="text-[var(--color-text-primary)]">cd ~/work && ls -la</span>
+      </div>
 
-    <div>
-      <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-        Work & Experience
-      </h1>
-      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-        A chronological history of teams I've built with, roles I've held, and systems I've engineered.
-      </p>
+      <div>
+        <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Work & Experience
+        </h1>
+        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+          A chronological history of teams I've built with, roles I've held, and systems I've engineered.
+        </p>
+      </div>
     </div>
 
     <!-- Timeline List -->
     <div class="space-y-6 mt-6 sm:mt-8 border-l border-[var(--color-border)] pl-3.5 sm:pl-6 ml-1.5 sm:ml-2">
-      {experiences.map((exp) => (
-        <article class="relative group">
+      {experiences.map((exp, idx) => (
+        <article class="relative group reveal-on-scroll" style={`--reveal-delay: ${(idx % 4) * 70}ms;`}>
           <!-- Timeline Node -->
           <div class="absolute -left-[20px] sm:-left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--color-surface)] border-2 border-[var(--color-accent)] group-hover:bg-[var(--color-accent)] group-hover:ring-4 group-hover:ring-[var(--color-accent)]/20 transition-all duration-200"></div>
 

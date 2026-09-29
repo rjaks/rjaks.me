@@ -10,24 +10,27 @@ import { projects } from '../data/projects';
 >
   <div class="space-y-6">
     <!-- Terminal Prompt Breadcrumb -->
-    <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
-      <span>rjaks:~$</span>
-      <span class="text-[var(--color-text-primary)]">cd ~/projects && ls -la</span>
-    </div>
+    <div class="reveal-on-scroll stagger-1 space-y-4">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+        <span>rjaks:~$</span>
+        <span class="text-[var(--color-text-primary)]">cd ~/projects && ls -la</span>
+      </div>
 
-    <div>
-      <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-        Projects
-      </h1>
-      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-        A directory of software tools, web applications, libraries, and open-source experiments.
-      </p>
+      <div>
+        <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+          Projects
+        </h1>
+        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+          A directory of software tools, web applications, libraries, and open-source experiments.
+        </p>
+      </div>
     </div>
 
     <!-- Projects Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6">
-      {projects.map((project) => (
-        <article class="terminal-panel terminal-card-interactive bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between overflow-hidden group">
+      {projects.map((project, idx) => (
+        <div class="reveal-on-scroll flex" style={`--reveal-delay: ${(idx % 4) * 60}ms;`}>
+          <article class="terminal-panel terminal-card-interactive bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between overflow-hidden group w-full">
           <!-- Terminal Window Header -->
           <div class="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between gap-2 font-mono text-[11px] overflow-hidden">
             <div class="flex items-center gap-1.5 shrink-0">
@@ -108,7 +111,8 @@ import { projects } from '../data/projects';
               </div>
             </div>
           </div>
-        </article>
+          </article>
+        </div>
       ))}
     </div>
   </div>
