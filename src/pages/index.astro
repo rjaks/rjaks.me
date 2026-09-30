@@ -77,82 +77,178 @@ const recentPosts = allPosts
     <NowSection />
   </div>
 
-  <!-- Featured Projects Highlight -->
-  <section class="my-8 sm:my-12">
-    <div class="flex items-center justify-between gap-2 mb-4 reveal-on-scroll">
-      <div class="flex items-center gap-2">
-        <span class="font-mono text-xs text-[var(--color-accent)] font-bold">~/projects $</span>
-        <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
+  <!-- Featured Projects Highlight (Bryllim-style Spotlight Card Deck) -->
+  <section class="my-8 sm:my-14 reveal-on-scroll">
+    <div class="flex items-center justify-between gap-2 mb-6 sm:mb-8">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="font-mono text-xs text-[var(--color-accent)] font-bold shrink-0">~/projects $</span>
+        <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)] truncate">
           Selected Projects
         </h2>
       </div>
-      <a href="/projects" class="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1">
+
+      <a href="/projects" class="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1 shrink-0">
         <span>View all ({projects.length})</span>
         <span class="ext-arrow">→</span>
       </a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-      {featuredProjects.map((project, idx) => (
-        <div class="reveal-on-scroll flex" style={`--reveal-delay: ${idx * 60}ms;`}>
-          <article class="terminal-panel terminal-card-interactive bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md flex flex-col justify-between overflow-hidden group w-full">
-            <!-- Terminal Window Header -->
-            <div class="px-3.5 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px]">
-              <div class="flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-[#EF4444] opacity-70"></span>
-                <span class="w-2 h-2 rounded-full bg-[#F59E0B] opacity-70"></span>
-                <span class="w-2 h-2 rounded-full bg-[#10B981] opacity-70"></span>
-              </div>
-              <span class="text-[var(--color-text-muted)] text-[10px] truncate max-w-[140px]">
-                {project.title.toLowerCase().replace(/\s+/g, '-')}
-              </span>
-            </div>
-
-            <!-- Preview Image / Visual -->
-            {project.image && (
-              <div class="relative aspect-video overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)]">
-                <img 
-                  src={project.image} 
-                  alt={project.imageAlt || project.title}
-                  loading="lazy"
-                  class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
-                />
-              </div>
-            )}
-
-            <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between gap-2 mb-2">
-                  <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
-                    {project.title}
-                  </h3>
-                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                    {project.github && project.github !== '#' && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
-                        code ↗
-                      </a>
-                    )}
-                    {project.link && project.link !== '#' && (
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">
-                        live ↗
-                      </a>
-                    )}
-                  </div>
+    <!-- Mobile Spotlight Deck (< 640px) -->
+    <div class="sm:hidden">
+      <div class="spotlight-deck" data-deck>
+        {featuredProjects.map((project, idx) => {
+          const initialSlot = idx === 0 ? 'is-center' : idx === 1 ? 'is-right' : 'is-left';
+          return (
+            <article 
+              class={`deck-card ${initialSlot} terminal-panel bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden group select-none flex flex-col`}
+              role="button"
+              tabindex="0"
+              aria-label={`Select project: ${project.title}`}
+              data-deck-card
+              data-index={idx}
+            >
+              <!-- Terminal Window Header -->
+              <div class="px-3 py-1.5 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[10px] shrink-0">
+                <div class="flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-[#EF4444] opacity-75"></span>
+                  <span class="w-2 h-2 rounded-full bg-[#F59E0B] opacity-75"></span>
+                  <span class="w-2 h-2 rounded-full bg-[#10B981] opacity-75"></span>
                 </div>
-                <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                  {project.description}
-                </p>
+                <span class="text-[var(--color-text-muted)] text-[9px] truncate max-w-[120px]">
+                  ~/projects/{project.title.toLowerCase().replace(/\s+/g, '-')}
+                </span>
               </div>
-              <div class="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
-                {project.tags.map((tag) => (
-                  <span class="terminal-badge text-[10px]">
-                    {tag}
-                  </span>
-                ))}
+
+              <!-- Preview Image -->
+              {project.image && (
+                <div class="relative aspect-[16/9] overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)] shrink-0">
+                  <img 
+                    src={project.image} 
+                    alt={project.imageAlt || project.title}
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                  />
+                </div>
+              )}
+
+              <!-- Content -->
+              <div class="p-4 pb-6 flex flex-col justify-between flex-1">
+                <div>
+                  <div class="flex items-start justify-between gap-2 mb-2">
+                    <h3 class="font-heading text-xs font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+                      {project.title}
+                    </h3>
+                    <div class="flex items-center gap-1.5 font-mono text-[11px] shrink-0 deck-card-links">
+                      {project.github && project.github !== '#' && (
+                        <a 
+                          href={project.github} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                        >
+                          code ↗
+                        </a>
+                      )}
+                      {project.link && project.link !== '#' && (
+                        <a 
+                          href={project.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          class="text-[var(--color-accent)] hover:underline"
+                        >
+                          live ↗
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed">
+                    {project.summary || project.description}
+                  </p>
+                </div>
               </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <!-- Deck Indicator (spaced comfortably below cards) -->
+      <div class="flex items-center justify-center gap-2 mt-6" aria-label="Project deck navigation">
+        {featuredProjects.map((_, idx) => (
+          <button
+            type="button"
+            class="deck-dot h-1.5 rounded-full transition-all duration-300 bg-[var(--color-border)] data-[active=true]:bg-[var(--color-accent)] data-[active=true]:w-6 w-2 cursor-pointer"
+            data-index={idx}
+            aria-label={`Show project ${idx + 1}`}
+            data-active={idx === 0 ? "true" : "false"}
+          />
+        ))}
+      </div>
+    </div>
+
+    <!-- Desktop Responsive Grid (>= 640px) -->
+    <div class="hidden sm:grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
+      {featuredProjects.map((project) => (
+        <article class="terminal-panel bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden group hover:border-[var(--color-accent)] transition-colors flex flex-col h-full">
+          <!-- Terminal Window Header -->
+          <div class="px-3 py-1.5 bg-[var(--color-surface)] border-b border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[10px]">
+            <div class="flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-[#EF4444] opacity-75"></span>
+              <span class="w-2 h-2 rounded-full bg-[#F59E0B] opacity-75"></span>
+              <span class="w-2 h-2 rounded-full bg-[#10B981] opacity-75"></span>
             </div>
-          </article>
-        </div>
+            <span class="text-[var(--color-text-muted)] text-[10px] truncate max-w-[140px]">
+              ~/projects/{project.title.toLowerCase().replace(/\s+/g, '-')}
+            </span>
+          </div>
+
+          <!-- Preview Image -->
+          {project.image && (
+            <div class="relative aspect-[16/9] overflow-hidden bg-[var(--color-bg)] border-b border-[var(--color-border-subtle)]">
+              <img 
+                src={project.image} 
+                alt={project.imageAlt || project.title}
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+              />
+            </div>
+          )}
+
+          <!-- Card Content -->
+          <div class="p-4 pb-6 flex flex-col justify-between flex-1">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h3 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+                  {project.title}
+                </h3>
+                <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                  {project.github && project.github !== '#' && (
+                    <a 
+                      href={project.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                    >
+                      code ↗
+                    </a>
+                  )}
+                  {project.link && project.link !== '#' && (
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="text-[var(--color-accent)] hover:underline"
+                    >
+                      live ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+              <p class="font-sans text-xs text-[var(--color-text-secondary)] leading-relaxed">
+                {project.summary || project.description}
+              </p>
+            </div>
+          </div>
+        </article>
       ))}
     </div>
   </section>
@@ -228,5 +324,228 @@ const recentPosts = allPosts
       </div>
     </section>
   )}
+
+  <style>
+    /* ── Spotlight Card Deck (Mobile Only, < 640px) ── */
+    .spotlight-deck {
+      position: relative;
+      height: 22rem;
+      margin-inline: calc(50% - 50vw);
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+    @supports not (overflow-x: clip) {
+      .spotlight-deck {
+        overflow-x: hidden;
+      }
+    }
+
+    .deck-card {
+      position: absolute;
+      top: 0.5rem;
+      left: 50%;
+      width: 14.8rem;
+      height: 20rem;
+      margin-left: -7.4rem;
+      transform-origin: center bottom;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.25s ease;
+      will-change: transform;
+      outline: none;
+    }
+
+    /* Center Spotlight Card */
+    .deck-card.is-center {
+      transform: translateY(0) rotate(0deg) scale(1);
+      z-index: 30;
+      box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--color-border);
+      border-color: var(--color-border);
+    }
+    .deck-card.is-center:hover {
+      transform: translateY(-4px) scale(1.015);
+      border-color: var(--color-accent);
+      box-shadow: 0 20px 40px -14px rgba(245, 158, 11, 0.22), 0 0 0 1px var(--color-accent);
+    }
+
+    /* Left Card */
+    .deck-card.is-left {
+      transform: translateX(-36%) translateY(10px) rotate(-8deg) scale(0.88);
+      z-index: 10;
+      box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+    }
+    .deck-card.is-left:hover {
+      transform: translateX(-40%) translateY(3px) rotate(-5deg) scale(0.91);
+      z-index: 25;
+      border-color: var(--color-accent);
+    }
+
+    /* Right Card */
+    .deck-card.is-right {
+      transform: translateX(36%) translateY(10px) rotate(8deg) scale(0.88);
+      z-index: 20;
+      box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+    }
+    .deck-card.is-right:hover {
+      transform: translateX(40%) translateY(3px) rotate(5deg) scale(0.91);
+      z-index: 25;
+      border-color: var(--color-accent);
+    }
+
+    /* Dimming layer on side cards so center pops */
+    .deck-card.is-left::after,
+    .deck-card.is-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--color-bg);
+      opacity: 0.45;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .deck-card.is-left:hover::after,
+    .deck-card.is-right:hover::after {
+      opacity: 0.12;
+    }
+
+    /* Only center card's links are interactive */
+    .deck-card:not(.is-center) a {
+      pointer-events: none;
+    }
+  </style>
+
+  <!-- Spotlight Deck Interactive Controller Script -->
+  <script>
+    function setupSpotlightDeck() {
+      const deck = document.querySelector<HTMLElement>('[data-deck]');
+      if (!deck) return;
+
+      const cards = Array.from(deck.querySelectorAll<HTMLElement>('[data-deck-card]'));
+      const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('.deck-dot'));
+
+      if (cards.length < 2) return;
+
+      // Ensure all cards are visible
+      cards.forEach((c) => {
+        c.classList.add('is-revealed');
+        c.setAttribute('data-revealed', 'true');
+      });
+
+      function syncActiveDot() {
+        const centerCard = deck?.querySelector<HTMLElement>('.deck-card.is-center');
+        if (!centerCard) return;
+        const activeIdx = parseInt(centerCard.getAttribute('data-index') || '0', 10);
+        dots.forEach((dot, idx) => {
+          dot.setAttribute('data-active', idx === activeIdx ? 'true' : 'false');
+        });
+      }
+
+      function activateCard(card: HTMLElement) {
+        if (card.classList.contains('is-center')) return;
+
+        const currentCenter = deck?.querySelector<HTMLElement>('.deck-card.is-center');
+        if (!currentCenter) return;
+
+        const targetSlot = card.classList.contains('is-left') ? 'is-left' : 'is-right';
+
+        currentCenter.classList.remove('is-center');
+        currentCenter.classList.add(targetSlot);
+
+        card.classList.remove('is-left', 'is-right');
+        card.classList.add('is-center');
+
+        syncActiveDot();
+      }
+
+      function activateByIndex(targetIdx: number) {
+        const targetCard = cards.find(
+          (c) => parseInt(c.getAttribute('data-index') || '-1', 10) === targetIdx
+        );
+        if (targetCard) activateCard(targetCard);
+      }
+
+      function nextCard() {
+        const rightCard = deck?.querySelector<HTMLElement>('.deck-card.is-right');
+        if (rightCard) activateCard(rightCard);
+      }
+
+      function prevCard() {
+        const leftCard = deck?.querySelector<HTMLElement>('.deck-card.is-left');
+        if (leftCard) activateCard(leftCard);
+      }
+
+      cards.forEach((card) => {
+        card.onclick = (e) => {
+          const target = e.target as HTMLElement;
+          if (card.classList.contains('is-center') && target.closest('a')) {
+            return;
+          }
+          e.preventDefault();
+          activateCard(card);
+        };
+
+        card.onkeydown = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const target = e.target as HTMLElement;
+            if (card.classList.contains('is-center') && target.closest('a')) {
+              return;
+            }
+            e.preventDefault();
+            activateCard(card);
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextCard();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevCard();
+          }
+        };
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.onclick = () => activateByIndex(idx);
+      });
+
+      // Touch / Swipe support
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+
+      deck.addEventListener(
+        'touchstart',
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        },
+        { passive: true }
+      );
+
+      deck.addEventListener(
+        'touchend',
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          touchEndY = e.changedTouches[0].screenY;
+          const diffX = touchEndX - touchStartX;
+          const diffY = touchEndY - touchStartY;
+
+          if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX < 0) {
+              nextCard();
+            } else {
+              prevCard();
+            }
+          }
+        },
+        { passive: true }
+      );
+
+      syncActiveDot();
+    }
+
+    setupSpotlightDeck();
+    document.addEventListener('astro:page-load', setupSpotlightDeck);
+  </script>
 </BaseLayout>
 
