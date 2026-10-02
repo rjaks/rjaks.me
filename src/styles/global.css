@@ -372,7 +372,7 @@ dialog[open] .terminal-panel {
   to { opacity: 1; }
 }
 
-/* Circular Ripple Theme Transition */
+/* Terminal Scanline Wipe Theme Transition */
 html.theme-transition::view-transition-old(root) {
   animation: none;
   mix-blend-mode: normal;
@@ -380,19 +380,19 @@ html.theme-transition::view-transition-old(root) {
 }
 
 html.theme-transition::view-transition-new(root) {
-  animation: theme-ripple 700ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: terminal-scanline 450ms cubic-bezier(0.2, 0, 0, 1) forwards;
   mix-blend-mode: normal;
   z-index: 9999;
   /* Prevent 1-frame flash before animation kicks in */
-  clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+  clip-path: inset(0 0 100% 0);
 }
 
-@keyframes theme-ripple {
+@keyframes terminal-scanline {
   from {
-    clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+    clip-path: inset(0 0 100% 0);
   }
   to {
-    clip-path: circle(var(--ripple-r, 150vmax) at var(--ripple-x, 50%) var(--ripple-y, 50%));
+    clip-path: inset(0 0 0 0);
   }
 }
 
