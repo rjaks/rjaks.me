@@ -276,6 +276,8 @@ const navItems = [
 </aside>
 
 <script>
+  import { toggleThemeWithRipple } from '../utils/theme';
+
   function setupNavbar() {
     // Shortcuts button -> modal in KeyboardShortcuts.astro
     const openShortcuts = () => {
@@ -383,12 +385,8 @@ const navItems = [
     }
 
     toggleBtns.forEach((btn) => {
-      btn.onclick = () => {
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const newTheme = isLight ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        syncThemeIcons();
+      btn.onclick = (e) => {
+        toggleThemeWithRipple(e);
       };
     });
 

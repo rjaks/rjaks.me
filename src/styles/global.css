@@ -347,11 +347,11 @@ dialog[open] .terminal-panel {
 }
 
 .theme-toggle-btn:hover svg {
-  transform: rotate(18deg) scale(1.1);
+  transform: rotate(18deg);
 }
 
 .theme-toggle-btn:active svg {
-  transform: rotate(45deg) scale(0.95);
+  transform: rotate(45deg);
 }
 
 /* Fast, Crisp View Transitions */
@@ -370,6 +370,36 @@ dialog[open] .terminal-panel {
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Circular Ripple Theme Transition */
+html.theme-transition::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  z-index: 1;
+}
+
+html.theme-transition::view-transition-new(root) {
+  animation: theme-ripple 700ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  mix-blend-mode: normal;
+  z-index: 9999;
+  /* Prevent 1-frame flash before animation kicks in */
+  clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+}
+
+@keyframes theme-ripple {
+  from {
+    clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--ripple-r, 150vmax) at var(--ripple-x, 50%) var(--ripple-y, 50%));
+  }
+}
+
+/* Suppress body transitions during theme snapshot capture to prevent double animation/flicker */
+html.theme-transition,
+html.theme-transition body {
+  transition: none !important;
 }
 
 /* Reveal-on-Scroll & Entrance Animations */

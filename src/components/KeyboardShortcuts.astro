@@ -80,6 +80,7 @@
 
 <script>
   import { navigate } from 'astro:transitions/client';
+  import { toggleThemeWithRipple } from '../utils/theme';
 
   let toastTimeout: number;
 
@@ -194,9 +195,24 @@
         e.preventDefault();
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        showToast(`theme set to ${newTheme}`);
+
+        // Trigger active visual rotation feedback on the visible theme button
+        const visibleBtn = Array.from(document.querySelectorAll<HTMLButtonElement>('.theme-toggle-btn'))
+          .find((btn) => btn.offsetWidth > 0 && btn.offsetHeight > 0);
+        if (visibleBtn) {
+          const svg = visibleBtn.querySelector('svg');
+          if (svg) svg.style.transform = 'rotate(45deg)';
+          setTimeout(() => {
+            if (svg) svg.style.transform = '';
+          }, 300);
+        }
+
+        toggleThemeWithRipple(null);
+
+        // Defer toast slightly so it does not collide with the view transition snapshot
+        setTimeout(() => {
+          showToast(`theme set to ${newTheme}`);
+        }, 120);
       }
     });
   }
