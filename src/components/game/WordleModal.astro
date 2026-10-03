@@ -7,10 +7,24 @@ const daily = getDailyWord();
 
 <dialog 
   id="wordle-modal" 
-  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center overflow-hidden"
+  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center overflow-visible"
   style="width: min(94vw, 540px); max-width: 540px;"
 >
-  <div class="terminal-panel relative w-full max-w-[540px] bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-3.5 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md select-none">
+  <!-- Modal Relative Wrapper (allows floating toast above modal) -->
+  <div class="relative w-full max-w-[540px] flex flex-col items-center">
+    <!-- Toast Floating Alert Above Modal -->
+    <div 
+      id="m-wordle-toast" 
+      class="absolute z-50 pointer-events-none transition-all duration-200 ease-out opacity-0 -translate-y-2 flex justify-center w-max max-w-[90vw]"
+      style="top: -3.25rem;"
+    >
+      <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-md bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-text-primary)] font-mono text-xs sm:text-[13px] shadow-2xl flex items-center gap-2 whitespace-nowrap">
+        <span class="text-[var(--color-prompt)] font-bold text-sm leading-none select-none">&gt;</span>
+        <span id="m-wordle-toast-msg" class="font-medium tracking-wide"></span>
+      </div>
+    </div>
+
+    <div class="terminal-panel relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-3.5 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md select-none">
     <!-- Top Modal Header -->
     <div class="flex items-center justify-between pb-2 mb-2 border-b border-[var(--color-border)]">
       <div class="flex items-center gap-2">
@@ -89,14 +103,6 @@ const daily = getDailyWord();
         >
           <span>+ new word</span>
         </button>
-      </div>
-    </div>
-
-    <!-- Toast Floating Alert -->
-    <div id="m-wordle-toast" class="relative z-40 pointer-events-none transition-all duration-200 opacity-0 -translate-y-1 mb-1.5 h-0 overflow-visible flex justify-center">
-      <div class="px-3 py-1 rounded-xs bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-text-primary)] font-mono text-xs shadow-xl flex items-center gap-1.5 whitespace-nowrap">
-        <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
-        <span id="m-wordle-toast-msg"></span>
       </div>
     </div>
 
@@ -194,14 +200,25 @@ const daily = getDailyWord();
       </div>
     </div>
   </div>
+</div>
 </dialog>
 
 <style>
   dialog#wordle-modal {
     width: min(94vw, 540px) !important;
     max-width: 540px !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     margin: auto !important;
+  }
+
+  #m-wordle-toast {
+    top: -3.25rem;
+  }
+
+  @media (max-height: 640px) {
+    #m-wordle-toast {
+      top: 0.6rem;
+    }
   }
 
   dialog#wordle-modal::backdrop {
@@ -312,12 +329,12 @@ const daily = getDailyWord();
     function showToast(msg: string, duration = 1800) {
       if (!toastEl || !toastMsg) return;
       toastMsg.textContent = msg;
-      toastEl.classList.remove('opacity-0', '-translate-y-1');
+      toastEl.classList.remove('opacity-0', '-translate-y-2');
       toastEl.classList.add('opacity-100', 'translate-y-0');
       window.clearTimeout(toastTimeout);
       toastTimeout = window.setTimeout(() => {
         toastEl.classList.remove('opacity-100', 'translate-y-0');
-        toastEl.classList.add('opacity-0', '-translate-y-1');
+        toastEl.classList.add('opacity-0', '-translate-y-2');
       }, duration);
     }
 
@@ -325,6 +342,9 @@ const daily = getDailyWord();
     modal.addEventListener('close', () => {
       document.body.style.overflow = '';
       helpPanel?.classList.add('hidden');
+      window.clearTimeout(toastTimeout);
+      toastEl?.classList.remove('opacity-100', 'translate-y-0');
+      toastEl?.classList.add('opacity-0', '-translate-y-2');
     });
 
     const originalShowModal = modal.showModal.bind(modal);
@@ -491,6 +511,9 @@ const daily = getDailyWord();
       isSubmitting = false;
 
       helpPanel?.classList.add('hidden');
+      window.clearTimeout(toastTimeout);
+      toastEl?.classList.remove('opacity-100', 'translate-y-0');
+      toastEl?.classList.add('opacity-0', '-translate-y-2');
 
       setupGridDOM();
       resetKeyColors();
