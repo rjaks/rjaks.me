@@ -2,51 +2,292 @@
 // src/pages/contact.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contactLinks } from '../data/contact';
+
+// Pre-calculate initial Philippine time for instant SSR render
+const now = new Date();
+const parts = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Manila',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+  hour12: false
+}).formatToParts(now);
+
+let initH = 0, initM = 0, initS = 0;
+for (const p of parts) {
+  if (p.type === 'hour') initH = parseInt(p.value, 10);
+  if (p.type === 'minute') initM = parseInt(p.value, 10);
+  if (p.type === 'second') initS = parseInt(p.value, 10);
+}
+
+const initSecDeg = Math.round((initS / 60) * 360);
+const initMinDeg = Math.round((initM / 60) * 360 + (initS / 60) * 6);
+const initHourDeg = Math.round(((initH % 12) / 12) * 360 + (initM / 60) * 30);
+const initDigital = `${String(initH).padStart(2, '0')}:${String(initM).padStart(2, '0')}:${String(initS).padStart(2, '0')} PHT`;
+const initDate = now.toLocaleDateString('en-US', {
+  timeZone: 'Asia/Manila',
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric'
+});
 ---
 
 <BaseLayout 
   title="Contact — Adrian Reforsado (rjaks)" 
-  description="Get in touch with Adrian Reforsado for engineering collaborations, opportunities, or technical inquiries."
+  description="Get in touch with Adrian Reforsado for software engineering, collaborations, or technical questions."
 >
-  <div class="space-y-6">
-    <!-- Terminal Prompt Breadcrumb -->
-    <div class="reveal-on-scroll stagger-1 space-y-4">
+  <div class="space-y-6 max-w-2xl">
+    <!-- Header -->
+    <div class="reveal-on-scroll stagger-1 space-y-3">
       <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
         <span>rjaks:~$</span>
-        <span class="text-[var(--color-text-primary)]">contact --list</span>
+        <span class="text-[var(--color-text-primary)]">contact --analog-clock</span>
       </div>
 
       <div>
         <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
           Get in Touch
         </h1>
-        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
-          Feel free to reach out for software engineering inquiries, open-source collaborations, or just to chat tech.
+        <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
+          Open for software engineering opportunities, contracts, or technical chat. Reach me directly through any channel below.
         </p>
       </div>
     </div>
 
-    <div class="terminal-panel p-4 sm:p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-4 mt-6 reveal-on-scroll stagger-2">
-      <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
-        I'm most responsive via email and active on GitHub. If you'd like to collaborate or have an interesting engineering problem, drop me a line:
-      </p>
+    <!-- Analog Clock Terminal Pane -->
+    <div class="terminal-panel overflow-hidden bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md reveal-on-scroll stagger-2">
+      <!-- Top Bar -->
+      <div class="flex items-center justify-between px-3.5 py-2 bg-[var(--color-bg)] border-b border-[var(--color-border)] font-mono text-[11px] text-[var(--color-text-muted)]">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] inline-block"></span>
+          <span class="text-[var(--color-text-secondary)] font-semibold">clock.sys</span>
+          <span class="text-[var(--color-text-muted)]">·</span>
+          <span>Naga City, Camarines Sur</span>
+        </div>
+        <span id="date-label" class="text-[var(--color-text-secondary)]">{initDate}</span>
+      </div>
 
-      <div class="space-y-2.5 pt-2">
-        {contactLinks.map((link) => (
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 p-2.5 sm:p-3 rounded-sm bg-[var(--color-bg)] border border-[var(--color-border-subtle)] font-mono text-xs">
-            <span class="text-[var(--color-text-primary)] font-semibold">{link.label}</span>
+      <!-- Clock Display -->
+      <div class="py-6 px-4 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 bg-[var(--color-surface)] select-none">
+        
+        <!-- SVG Minimalist Analog Clock Face with Slender Arrow Hands -->
+        <div class="relative w-44 h-44 sm:w-48 sm:h-48 shrink-0">
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-sm">
+            <!-- Clock Dial Background & Outer Rings -->
+            <circle cx="100" cy="100" r="92" fill="var(--color-bg)" stroke="var(--color-border)" stroke-width="1.5" />
+            <circle cx="100" cy="100" r="86" fill="none" stroke="var(--color-border-subtle)" stroke-width="1" />
+
+            <!-- 12 Clean Hour Tick Markers (No Numerals) -->
+            {Array.from({ length: 12 }).map((_, i) => {
+              const angle = (i * 30 * Math.PI) / 180;
+              const isMajor = i % 3 === 0;
+              const r1 = isMajor ? 72 : 77;
+              const r2 = 83;
+              const x1 = 100 + r1 * Math.sin(angle);
+              const y1 = 100 - r1 * Math.cos(angle);
+              const x2 = 100 + r2 * Math.sin(angle);
+              const y2 = 100 - r2 * Math.cos(angle);
+              return (
+                <line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={isMajor ? 'var(--color-accent)' : 'var(--color-border)'}
+                  stroke-width={isMajor ? '2' : '1'}
+                  stroke-linecap="round"
+                />
+              );
+            })}
+
+            <!-- HOUR HAND (Slender Arrow) -->
+            <g id="clock-hour" transform={`rotate(${initHourDeg}, 100, 100)`}>
+              <line x1="100" y1="106" x2="100" y2="54" stroke="var(--color-text-primary)" stroke-width="2" stroke-linecap="round" />
+              <polygon points="97,58 103,58 100,48" fill="var(--color-text-primary)" />
+            </g>
+
+            <!-- MINUTE HAND (Long Fine Arrow) -->
+            <g id="clock-min" transform={`rotate(${initMinDeg}, 100, 100)`}>
+              <line x1="100" y1="110" x2="100" y2="36" stroke="var(--color-text-primary)" stroke-width="1.5" stroke-linecap="round" />
+              <polygon points="97.5,40 102.5,40 100,28" fill="var(--color-text-primary)" />
+            </g>
+
+            <!-- SECOND HAND (Ultra-fine Amber Needle with Arrow Tip) -->
+            <g id="clock-sec" transform={`rotate(${initSecDeg}, 100, 100)`}>
+              <line x1="100" y1="116" x2="100" y2="28" stroke="var(--color-accent)" stroke-width="1" stroke-linecap="round" />
+              <polygon points="98,32 102,32 100,20" fill="var(--color-accent)" />
+              <circle cx="100" cy="112" r="2" fill="var(--color-accent)" />
+            </g>
+
+            <!-- Center Pivot Cap -->
+            <circle cx="100" cy="100" r="3.5" fill="var(--color-accent)" />
+            <circle cx="100" cy="100" r="1.2" fill="var(--color-bg)" />
+          </svg>
+        </div>
+
+        <!-- Telemetry Details Next to Clock -->
+        <div class="space-y-2 text-center sm:text-left font-mono">
+          <div class="text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+            Local Timezone
+          </div>
+          <div 
+            id="digital-clock" 
+            class="text-2xl sm:text-3xl font-extrabold text-[var(--color-text-primary)] tabular-nums tracking-tight"
+          >
+            {initDigital}
+          </div>
+          <div class="space-y-0.5 text-xs text-[var(--color-text-secondary)]">
+            <p class="font-semibold text-[var(--color-text-primary)]">Naga City, Camarines Sur</p>
+            <p class="text-[11px] text-[var(--color-text-muted)]">Philippines · 13.62° N, 123.19° E</p>
+            <p class="text-[11px] text-[var(--color-accent)] font-medium">UTC+08:00 (PHT)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact List -->
+    <div class="terminal-panel p-2 sm:p-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md space-y-2 reveal-on-scroll stagger-3">
+      {contactLinks.map((link) => (
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-sm bg-[var(--color-bg)] border border-[var(--color-border-subtle)] font-mono text-xs hover:border-[var(--color-border)] transition-colors">
+          <div class="space-y-0.5">
+            <div class="text-[var(--color-text-primary)] font-semibold flex items-center gap-2">
+              <span>{link.label}</span>
+              {link.handle && (
+                <span class="text-[var(--color-text-muted)] text-[11px] font-normal">
+                  ({link.handle})
+                </span>
+              )}
+            </div>
+            {link.description && (
+              <p class="font-sans text-[11px] text-[var(--color-text-muted)]">
+                {link.description}
+              </p>
+            )}
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
+            {link.icon === 'email' && (
+              <button
+                type="button"
+                id="copy-btn"
+                data-email="contact@rjaks.me"
+                class="cursor-pointer text-[11px] px-2 py-1 rounded-sm border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+              >
+                copy
+              </button>
+            )}
             <a 
-              href={link.href} 
+              href={link.href}
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              class="text-[var(--color-accent)] hover:underline inline-flex items-center gap-1 break-all sm:break-normal"
+              class="px-2.5 py-1 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-accent)] hover:border-[var(--color-accent)] hover:underline inline-flex items-center gap-1 transition-colors"
             >
-              <span>{link.href.replace('mailto:', '')}</span>
+              <span>{link.external ? 'open' : 'send email'}</span>
               <span class="ext-arrow">{link.external ? '↗' : '→'}</span>
             </a>
           </div>
-        ))}
+        </div>
+      ))}
+    </div>
+
+    <!-- Quick Terminal One-Liner -->
+    <div class="reveal-on-scroll stagger-3 p-3 rounded-md bg-[var(--color-bg)] border border-[var(--color-border-subtle)] font-mono text-xs flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 text-[var(--color-text-muted)] overflow-hidden">
+        <span class="text-[var(--color-prompt)] font-bold">$</span>
+        <span class="truncate text-[var(--color-text-secondary)]">curl -s https://rjaks.me/contact</span>
       </div>
+      <button
+        type="button"
+        id="copy-curl-btn"
+        data-curl="curl -s https://rjaks.me/contact"
+        class="cursor-pointer text-[11px] px-2 py-0.5 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors shrink-0"
+      >
+        copy curl
+      </button>
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  function setupAnalogClock() {
+    const hourHand = document.getElementById('clock-hour');
+    const minHand = document.getElementById('clock-min');
+    const secHand = document.getElementById('clock-sec');
+    const digital = document.getElementById('digital-clock');
+    const dateLabel = document.getElementById('date-label');
+    let timerId: number | undefined;
+
+    function update() {
+      const now = new Date();
+
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Manila',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false
+      }).formatToParts(now);
+
+      let h = 0, m = 0, s = 0;
+      for (const p of parts) {
+        if (p.type === 'hour') h = parseInt(p.value, 10);
+        if (p.type === 'minute') m = parseInt(p.value, 10);
+        if (p.type === 'second') s = parseInt(p.value, 10);
+      }
+
+      const secDeg = (s / 60) * 360;
+      const minDeg = (m / 60) * 360 + (s / 60) * 6;
+      const hourDeg = ((h % 12) / 12) * 360 + (m / 60) * 30;
+
+      if (secHand) secHand.setAttribute('transform', `rotate(${secDeg}, 100, 100)`);
+      if (minHand) minHand.setAttribute('transform', `rotate(${minDeg}, 100, 100)`);
+      if (hourHand) hourHand.setAttribute('transform', `rotate(${hourDeg}, 100, 100)`);
+
+      if (digital) {
+        const hh = String(h).padStart(2, '0');
+        const mm = String(m).padStart(2, '0');
+        const ss = String(s).padStart(2, '0');
+        digital.textContent = `${hh}:${mm}:${ss} PHT`;
+      }
+
+      if (dateLabel) {
+        dateLabel.textContent = now.toLocaleDateString('en-US', {
+          timeZone: 'Asia/Manila',
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric'
+        });
+      }
+    }
+
+    update();
+    timerId = window.setInterval(update, 1000);
+
+    // Copy handlers
+    function bindCopy(id: string, textAttr: string, successText = 'copied!') {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.onclick = async () => {
+        const val = el.getAttribute(textAttr) || '';
+        await navigator.clipboard.writeText(val);
+        const prev = el.textContent;
+        el.textContent = successText;
+        setTimeout(() => (el.textContent = prev), 1500);
+      };
+    }
+
+    bindCopy('copy-btn', 'data-email');
+    bindCopy('copy-curl-btn', 'data-curl');
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        if (timerId) clearInterval(timerId);
+      },
+      { once: true }
+    );
+  }
+
+  setupAnalogClock();
+  document.addEventListener('astro:page-load', setupAnalogClock);
+</script>
