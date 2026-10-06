@@ -21,3 +21,23 @@ export const skillCategories: SkillCategory[] = [
     skills: ["Docker", "Coolify", "Discloud", "Git", "GitHub", "GitLab", "Vercel", "ClickUp"]
   }
 ];
+
+export const highlightSkillCategories: SkillCategory[] = [
+  {
+    name: "Languages",
+    skills: ["TypeScript", "JavaScript", "SQL", "Python"]
+  },
+  {
+    name: "Frontend",
+    skills: ["Nuxt 4", "Vue.js", "React", "TailwindCSS"]
+  },
+  {
+    name: "Backend & Cloud",
+    skills: ["Cloudflare", "Hono", "Prisma", "Drizzle ORM", "Convex"]
+  },
+  {
+    name: "DevOps & Tools",
+    skills: ["Docker", "Coolify", "Git", "GitHub", "Vercel"]
+  }
+];
+
