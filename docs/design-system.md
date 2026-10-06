@@ -61,14 +61,14 @@ This site merges the ultra-clean, readable editorial structure of developer port
 | Role | Font | Fallback | CSS Variable |
 |---|---|---|---|
 | **Headings** | Geist Mono (700, 800) | Space Mono, monospace | `--font-family-heading` |
-| **Body / UI** | JUST Sans (400, 700, 800) | -apple-system, sans-serif | `--font-family-base` |
+| **Body / UI** | Geist (400, 500, 600, 700, 800) | -apple-system, sans-serif | `--font-family-base` |
 | **Terminal & Meta** | Geist Mono / Space Mono | monospace | `--font-family-mono` |
 | **Serif Accent** | Recoleta (400) | Georgia, serif | `--font-family-serif` |
 
 ### Typography Guidelines
 - Headings use tight-spaced `Geist Mono` (`letter-spacing: -0.04em`, `font-weight: 700`) for a modern, high-precision developer aesthetic.
 - Terminal prompts (`rjaks:~$`), badges, keycaps (`<kbd>`), code blocks, dates, and navigation hints use `Geist Mono`.
-- Body paragraphs use `JUST Sans` for clean editorial readability.
+- Body paragraphs use `Geist` for clean, modern editorial readability.
 
 ---
 
