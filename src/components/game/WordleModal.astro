@@ -38,9 +38,11 @@ const daily = getDailyWord();
       <div class="flex items-center gap-1.5">
         <!-- Help Toggle -->
         <button 
+          type="button"
           id="modal-btn-help"
           class="p-1 rounded-xs border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
           title="How to Play"
+          aria-label="How to Play"
         >
           <span class="sr-only">Help</span>
           <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,16 +51,6 @@ const daily = getDailyWord();
             <path d="M12 17h.01"></path>
           </svg>
         </button>
-
-        <!-- Close Button -->
-        <form method="dialog">
-          <button 
-            id="modal-btn-close"
-            class="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-mono text-[11px] cursor-pointer px-2 py-0.5 border border-[var(--color-border)] rounded-xs hover:border-[var(--color-accent)] transition-colors"
-          >
-            ESC [x]
-          </button>
-        </form>
       </div>
     </div>
 
@@ -107,30 +99,32 @@ const daily = getDailyWord();
     </div>
 
     <!-- Help Panel Overlay (Absolute over board to prevent layout expansion/scrolling) -->
-    <div id="m-help-panel" class="hidden absolute inset-x-3 sm:inset-x-5 top-14 bottom-3 z-30 p-4 sm:p-5 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl flex flex-col justify-between text-xs font-sans text-[var(--color-text-secondary)]">
-      <div class="space-y-3">
-        <div class="flex items-center justify-between font-mono font-bold text-[var(--color-text-primary)]">
-          <span class="text-sm">How to Play:</span>
-          <button id="m-help-close" class="cursor-pointer hover:text-[var(--color-accent)] font-mono text-xs">[close]</button>
+    <div id="m-help-panel" class="hidden absolute inset-x-3 sm:inset-x-5 top-14 bottom-3 z-30 p-4 sm:p-6 rounded-sm bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl flex flex-col justify-between font-sans text-[var(--color-text-secondary)]">
+      <div class="space-y-4 sm:space-y-5">
+        <div class="flex items-center gap-2 font-mono font-bold text-[var(--color-text-primary)] border-b border-[var(--color-border-subtle)] pb-2 text-sm sm:text-base">
+          <span class="text-[var(--color-prompt)]">&gt;</span>
+          <span>How to Play:</span>
         </div>
-        <p>Guess the 5-letter word in 6 attempts. Tiles reveal proximity:</p>
-        <div class="space-y-2 pt-1 font-mono text-xs">
-          <div class="flex items-center gap-2">
-            <span class="w-7 h-7 flex items-center justify-center bg-[#10b981] text-black font-bold rounded-xs">S</span>
-            <span><strong>S</strong> is in the correct spot.</span>
+        <p class="text-xs sm:text-sm md:text-base leading-relaxed text-[var(--color-text-secondary)]">
+          Guess the 5-letter word in 6 attempts. Each guess must be a valid word. Tiles reveal proximity:
+        </p>
+        <div class="space-y-3 pt-1 font-mono text-xs sm:text-sm">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-[#10b981] text-black font-bold rounded-xs shrink-0 text-sm sm:text-base">S</span>
+            <span><strong class="text-[var(--color-text-primary)]">S</strong> is in the correct spot.</span>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="w-7 h-7 flex items-center justify-center bg-[#f59e0b] text-black font-bold rounded-xs">P</span>
-            <span><strong>P</strong> is in the word but wrong spot.</span>
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-[#f59e0b] text-black font-bold rounded-xs shrink-0 text-sm sm:text-base">P</span>
+            <span><strong class="text-[var(--color-text-primary)]">P</strong> is in the word but wrong spot.</span>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="w-7 h-7 flex items-center justify-center bg-[var(--color-border-subtle)] text-[var(--color-text-muted)] font-bold rounded-xs">X</span>
-            <span><strong>X</strong> is not in the word.</span>
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-[var(--color-border-subtle)] text-[var(--color-text-muted)] font-bold rounded-xs shrink-0 text-sm sm:text-base">X</span>
+            <span><strong class="text-[var(--color-text-primary)]">X</strong> is not in the word.</span>
           </div>
         </div>
       </div>
-      <div class="pt-3 border-t border-[var(--color-border)] text-right">
-        <button id="m-help-gotit" class="px-3 py-1 rounded-xs bg-[var(--color-accent)] text-[var(--color-bg)] font-bold font-mono text-xs cursor-pointer hover:bg-[var(--color-accent-hover)] transition-colors">Got it!</button>
+      <div class="pt-3 sm:pt-4 border-t border-[var(--color-border)] flex justify-center">
+        <button type="button" id="m-help-gotit" class="px-6 py-1.5 sm:py-2 rounded-xs bg-[var(--color-accent)] text-[var(--color-bg)] font-bold font-mono text-xs sm:text-sm cursor-pointer hover:bg-[var(--color-accent-hover)] transition-colors">Got it!</button>
       </div>
     </div>
 
@@ -309,10 +303,12 @@ const daily = getDailyWord();
     const boardEl = document.getElementById('m-wordle-board');
     if (!modal || !boardEl) return;
 
+    if (modal.dataset.initialized === 'true') return;
+    modal.dataset.initialized = 'true';
+
     // Help panel elements
     const helpPanel = document.getElementById('m-help-panel');
     const btnHelp = document.getElementById('modal-btn-help');
-    const btnHelpClose = document.getElementById('m-help-close');
     const btnHelpGotIt = document.getElementById('m-help-gotit');
 
     // Action and Mode elements
@@ -371,11 +367,19 @@ const daily = getDailyWord();
     });
 
     // Panel Toggles
-    btnHelp?.addEventListener('click', () => {
+    btnHelp?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       helpPanel?.classList.toggle('hidden');
     });
-    btnHelpClose?.addEventListener('click', () => helpPanel?.classList.add('hidden'));
-    btnHelpGotIt?.addEventListener('click', () => helpPanel?.classList.add('hidden'));
+    btnHelpGotIt?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      helpPanel?.classList.add('hidden');
+    });
+    helpPanel?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
 
     // State Variables
     let currentMode: 'daily' | 'practice' = 'daily';

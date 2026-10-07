@@ -31,6 +31,26 @@ Before making any UI, styling, or component changes, read the canonical design s
 
 This document is the source of truth for colors, typography, spacing, components, interactions, and tone of voice. Do not deviate from it without explicit instruction.
 
+## UI & Component Invariants
+
+### 1. Terminal Badge & Tag Sizing Invariant
+Whenever rendering technology, tool, or post tag badges across pages (`index.astro`, `projects.astro`, `skills.astro`, `writing/`):
+- Always ensure the parent flex container specifies `text-xs` (e.g. `<div class="flex flex-wrap gap-1.5 text-xs">`).
+- Use the uniform badge classes:
+  ```html
+  <span class="terminal-badge text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5">
+    {tag}
+  </span>
+  ```
+- *Why:* `.terminal-badge` in `src/styles/global.css` evaluates font sizing via inheritance. Omitting `text-xs` on the parent container causes badges to inadvertently inherit the root `1rem` (16px) size.
+
+### 2. Homepage Hero Avatar Proportions
+On `src/pages/index.astro`, the hero avatar terminal frame must maintain:
+- Mobile: `w-48 h-48`
+- Tablet: `sm:w-56 sm:h-56`
+- Desktop: `md:w-60 md:h-60`
+This guarantees the avatar bottom edge and `~/rjaks` badge align cleanly with the social links row across viewport widths.
+
 ## Development
 
 When starting the dev server, use background mode:

@@ -16,7 +16,6 @@
           rjaks:~$ chat --community
         </h2>
       </div>
-      <span class="text-[10px] text-[var(--color-text-muted)] select-none">esc to close</span>
     </div>
 
     <!-- Messages Stream -->
@@ -86,6 +85,8 @@
   function initCommunityChat() {
     const modal = document.getElementById('chat-modal') as HTMLDialogElement | null;
     if (!modal) return;
+    if (modal.dataset.initialized === 'true') return;
+    modal.dataset.initialized = 'true';
 
     const messagesContainer = document.getElementById('chat-messages-container');
     const nickInput = document.getElementById('chat-nick-input') as HTMLInputElement | null;
