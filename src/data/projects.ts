@@ -15,7 +15,7 @@ export const projects: Project[] = [
     title: "ThePILLARS Publication",
     description: "Official web publication platform for Ateneo de Naga University's student publication. Spearheaded platform architecture and full-stack edge rebuild using Nuxt and Cloudflare serverless primitives (D1, KV, R2, Pages) with Prisma ORM, serving 4,500+ monthly readers with 100% uptime during high-traffic events.",
     summary: "Official university publication platform serving 4.5k+ monthly readers. Built with Nuxt, Prisma, and Cloudflare edge primitives.",
-    tags: ["Nuxt", "Vue", "TypeScript", "Prisma", "Cloudflare D1", "KV", "R2", "Pages", "TailwindCSS"],
+    tags: ["Nuxt", "Vue", "TypeScript", "Cloudflare", "Prisma", "KV", "R2", "Pages", "TailwindCSS"],
     link: "https://thepillarspub.com",
     featured: true,
     image: "/images/projects/thepillars.png",
