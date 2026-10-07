@@ -17,7 +17,7 @@ function devChatPlugin() {
   return {
     name: 'dev-chat-api',
     configureServer(server) {
-      server.middlewares.use('/api/chat', (req, res) => {
+      server.middlewares.use('/api/chat', /** @param {any} req @param {any} res */ (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Cache-Control', 'no-store');
 
@@ -28,7 +28,7 @@ function devChatPlugin() {
 
         if (req.method === 'POST') {
           let bodyStr = '';
-          req.on('data', (chunk) => {
+          req.on('data', /** @param {any} chunk */ (chunk) => {
             bodyStr += chunk;
           });
           req.on('end', () => {
