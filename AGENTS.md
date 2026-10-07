@@ -50,6 +50,11 @@ On `src/pages/index.astro`, the hero avatar terminal frame must maintain:
 - Desktop: `md:w-60 md:h-60`
 This guarantees the avatar bottom edge and `~/rjaks` badge align cleanly with the social links row across viewport widths.
 
+### 3. Modal Header Controls & Dismissal Invariant
+Do NOT add visible "ESC", "ESC [x]", or explicit close buttons to modal headers (`KeyboardShortcuts.astro`, `WordleModal.astro`, `ChatModal.astro`).
+- Modals are dismissed via physical `Escape` key, modal toggle shortcuts (`?`, `alt+g`, `alt+c`), or clicking outside on the backdrop.
+- Preserve the clean terminal header aesthetic; only include functional interactive controls when necessary (e.g., the Wordle how-to-play help toggle).
+
 ## Development
 
 When starting the dev server, use background mode:

@@ -269,11 +269,56 @@ kbd:active {
   transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
-/* Floating Terminal Modal Animation */
-@keyframes terminalFloatIn {
+/* ==========================================================================
+   Terminal Modal Animations (In & Out)
+   ========================================================================== */
+
+dialog.modal-animated::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+dialog.modal-animated[open]:not(.is-closing)::backdrop {
+  animation: modalBackdropFadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+dialog.modal-animated.is-closing::backdrop {
+  animation: modalBackdropFadeOut 160ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+dialog.modal-animated[open]:not(.is-closing) > .modal-panel {
+  animation: modalPanelIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+dialog.modal-animated.is-closing > .modal-panel {
+  animation: modalPanelOut 160ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes modalBackdropFadeIn {
   from {
     opacity: 0;
-    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalBackdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalPanelIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
   }
   to {
     opacity: 1;
@@ -281,9 +326,17 @@ kbd:active {
   }
 }
 
-dialog[open] .terminal-panel {
-  animation: terminalFloatIn 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes modalPanelOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
 }
+
 
 /* Theme Toggle Button Micro-Interaction */
 .theme-toggle-btn svg {

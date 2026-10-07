@@ -3,8 +3,8 @@
 ---
 
 <!-- Keyboard Shortcuts Modal / Cheat Sheet -->
-<dialog id="shortcuts-modal" class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/60 backdrop:backdrop-blur-sm open:flex items-center justify-center w-full h-full max-w-none max-h-none">
-  <div class="terminal-panel w-[calc(100%-1.5rem)] sm:w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-6 relative text-[var(--color-text-primary)]">
+<dialog id="shortcuts-modal" class="modal-animated fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit open:flex items-center justify-center w-full h-full max-w-none max-h-none">
+  <div class="modal-panel terminal-panel w-[calc(100%-1.5rem)] sm:w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-6 relative text-[var(--color-text-primary)]">
     <div class="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
@@ -12,11 +12,6 @@
           rjaks:~$ man shortcuts
         </h3>
       </div>
-      <form method="dialog">
-        <button class="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-mono text-xs cursor-pointer px-2 py-1 border border-[var(--color-border)] rounded-xs hover:border-[var(--color-accent)] transition-colors">
-          ESC [x]
-        </button>
-      </form>
     </div>
 
     <div class="mt-4 space-y-3 font-mono text-xs sm:text-sm">
@@ -88,6 +83,7 @@
 <script>
   import { navigate } from 'astro:transitions/client';
   import { toggleThemeWithRipple } from '../utils/theme';
+  import { registerModalAnimation } from '../utils/modal';
 
   let toastTimeout: number;
 
@@ -113,9 +109,25 @@
   function setupShortcuts() {
     const modal = document.getElementById('shortcuts-modal') as HTMLDialogElement | null;
 
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal) modal.close();
-    });
+    if (modal) {
+      registerModalAnimation(modal);
+
+      modal.addEventListener('click', (e) => {
+        const panel = modal.querySelector('.modal-panel');
+        if (panel) {
+          const rect = panel.getBoundingClientRect();
+          const isClickOutside = (
+            e.clientX < rect.left ||
+            e.clientX > rect.right ||
+            e.clientY < rect.top ||
+            e.clientY > rect.bottom
+          );
+          if (isClickOutside) modal.close();
+        } else if (e.target === modal) {
+          modal.close();
+        }
+      });
+    }
 
     // Auto-open Wordle or Chat modal if URL has matching hash
     function checkUrlHashes() {

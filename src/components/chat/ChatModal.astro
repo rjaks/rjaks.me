@@ -4,10 +4,10 @@
 
 <dialog 
   id="chat-modal" 
-  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/60 backdrop:backdrop-blur-sm open:flex items-center justify-center overflow-visible"
+  class="modal-animated fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit open:flex items-center justify-center overflow-visible"
   style="width: min(94vw, 540px); max-width: 540px;"
 >
-  <div class="relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md">
+  <div class="modal-panel terminal-panel relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md">
     <!-- Top Modal Header -->
     <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[var(--color-border)]">
       <div class="flex items-center gap-2">
@@ -75,6 +75,8 @@
 </dialog>
 
 <script>
+  import { registerModalAnimation } from '../../utils/modal';
+
   interface ChatMessage {
     id: string;
     nickname: string;
@@ -85,6 +87,7 @@
   function initCommunityChat() {
     const modal = document.getElementById('chat-modal') as HTMLDialogElement | null;
     if (!modal) return;
+    registerModalAnimation(modal);
     if (modal.dataset.initialized === 'true') return;
     modal.dataset.initialized = 'true';
 
@@ -309,10 +312,23 @@
     });
 
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.close();
+      const panel = modal.querySelector('.modal-panel');
+      if (panel) {
+        const rect = panel.getBoundingClientRect();
+        const isClickOutside = (
+          e.clientX < rect.left ||
+          e.clientX > rect.right ||
+          e.clientY < rect.top ||
+          e.clientY > rect.bottom
+        );
+        if (isClickOutside) modal.close();
+      } else if (e.target === modal) {
+        modal.close();
+      }
     });
 
     modal.addEventListener('close', () => {
+      document.body.style.overflow = '';
       stopPolling();
     });
 
@@ -328,6 +344,7 @@
 
     const originalShowModal = modal.showModal.bind(modal);
     modal.showModal = function () {
+      document.body.style.overflow = 'hidden';
       originalShowModal();
       startPolling();
       setTimeout(() => (nickInput?.value ? msgInput?.focus() : nickInput?.focus()), 100);

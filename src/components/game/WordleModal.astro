@@ -7,11 +7,11 @@ const daily = getDailyWord();
 
 <dialog 
   id="wordle-modal" 
-  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/60 backdrop:backdrop-blur-sm open:flex items-center justify-center overflow-visible"
+  class="modal-animated fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit open:flex items-center justify-center overflow-visible"
   style="width: min(94vw, 540px); max-width: 540px;"
 >
   <!-- Modal Relative Wrapper (allows floating toast above modal) -->
-  <div class="relative w-full max-w-[540px] flex flex-col items-center">
+  <div class="modal-panel relative w-full max-w-[540px] flex flex-col items-center">
     <!-- Toast Floating Alert Above Modal -->
     <div 
       id="m-wordle-toast" 
@@ -215,11 +215,6 @@ const daily = getDailyWord();
     }
   }
 
-  dialog#wordle-modal::backdrop {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
-  }
-
   .terminal-panel {
     width: 100% !important;
     max-width: 540px !important;
@@ -287,6 +282,7 @@ const daily = getDailyWord();
 
 <script>
   import { getDailyWord, getRandomWord, evaluateGuess, isValidGuess, type TileState } from '../../data/wordleWords';
+  import { registerModalAnimation } from '../../utils/modal';
 
   interface SavedGameState {
     word: string;
@@ -302,6 +298,8 @@ const daily = getDailyWord();
     const modal = document.getElementById('wordle-modal') as HTMLDialogElement;
     const boardEl = document.getElementById('m-wordle-board');
     if (!modal || !boardEl) return;
+
+    registerModalAnimation(modal);
 
     if (modal.dataset.initialized === 'true') return;
     modal.dataset.initialized = 'true';
@@ -647,7 +645,7 @@ const daily = getDailyWord();
       (window as any).__wordle_bound = true;
       window.addEventListener('keydown', (e: KeyboardEvent) => {
         const modalEl = document.getElementById('wordle-modal') as HTMLDialogElement | null;
-        if (!modalEl?.open) return;
+        if (!modalEl?.open || modalEl.classList.contains('is-closing')) return;
         if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         if (e.key === 'Enter') {
