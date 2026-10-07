@@ -1,0 +1,417 @@
+---
+// src/components/chat/ChatModal.astro
+---
+
+<dialog 
+  id="chat-modal" 
+  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center overflow-visible"
+  style="width: min(94vw, 560px); max-width: 560px;"
+>
+  <!-- Modal Relative Wrapper -->
+  <div class="relative w-full max-w-[560px] flex flex-col items-center">
+    <!-- Floating Toast Alert Above Modal -->
+    <div 
+      id="m-chat-toast" 
+      class="absolute z-50 pointer-events-none transition-all duration-200 ease-out opacity-0 -translate-y-2 flex justify-center w-max max-w-[90vw]"
+      style="top: -3.25rem;"
+    >
+      <div class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-md bg-[var(--color-surface)] border border-[var(--color-accent)] text-[var(--color-text-primary)] font-mono text-xs sm:text-[13px] shadow-2xl flex items-center gap-2 whitespace-nowrap">
+        <span class="text-[var(--color-prompt)] font-bold text-sm leading-none select-none">&gt;</span>
+        <span id="m-chat-toast-msg" class="font-medium tracking-wide"></span>
+      </div>
+    </div>
+
+    <!-- Main Terminal Window -->
+    <div class="terminal-panel relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-3.5 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md">
+      <!-- Top Modal Header -->
+      <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[var(--color-border)]">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+          <h2 class="font-bold text-xs sm:text-sm tracking-tight text-[var(--color-text-primary)]">
+            rjaks:~$ chat --community
+          </h2>
+          <span id="chat-count-badge" class="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded-xs bg-[var(--color-border-subtle)] text-[var(--color-text-muted)] border border-[var(--color-border)]">
+            0 notes
+          </span>
+        </div>
+
+        <!-- Window Controls -->
+        <div class="flex items-center gap-1.5">
+          <button 
+            id="chat-refresh-btn"
+            class="p-1 rounded-xs border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+            title="Refresh messages"
+            aria-label="Refresh messages"
+          >
+            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+              <path d="M16 21h5v-5"></path>
+            </svg>
+          </button>
+
+          <form method="dialog">
+            <button 
+              id="chat-btn-close"
+              class="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-mono text-[11px] cursor-pointer px-2 py-0.5 border border-[var(--color-border)] rounded-xs hover:border-[var(--color-accent)] transition-colors"
+            >
+              ESC [x]
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Handle / Identity Bar -->
+      <div class="flex items-center justify-between pb-2 mb-2 border-b border-[var(--color-border-subtle)] text-[11px] text-[var(--color-text-secondary)]">
+        <div class="flex items-center gap-1.5">
+          <span>handle:</span>
+          <span class="text-[var(--color-prompt)] font-bold">@</span>
+          <button 
+            id="chat-edit-nick-btn" 
+            class="font-semibold text-[var(--color-accent)] hover:underline cursor-pointer transition-colors max-w-[120px] sm:max-w-[180px] truncate"
+            title="Click to change your handle"
+          >
+            guest
+          </button>
+        </div>
+        <div class="flex items-center gap-2 text-[10px] text-[var(--color-text-muted)]">
+          <span id="chat-live-status" class="flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>synced</span>
+          </span>
+          <span class="hidden sm:inline">|</span>
+          <span class="hidden sm:inline">Alt+C toggles</span>
+        </div>
+      </div>
+
+      <!-- Messages Stream -->
+      <div 
+        id="chat-messages-container" 
+        class="h-64 sm:h-72 overflow-y-auto pr-1.5 space-y-2 mb-3 scrollbar-thin divide-y divide-[var(--color-border-subtle)]/40"
+      >
+        <div id="chat-loading-skeleton" class="py-6 text-center text-[var(--color-text-muted)] italic text-xs">
+          connecting to guestbook stream...
+        </div>
+      </div>
+
+      <!-- Input & Send Area -->
+      <form id="chat-send-form" class="mt-auto space-y-1.5 pt-2 border-t border-[var(--color-border)]">
+        <!-- Invisible honeypot field for bot protection -->
+        <input type="text" name="website" id="chat-honeypot" class="hidden" tabindex="-1" autocomplete="off" />
+
+        <div class="flex items-center gap-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xs px-2.5 py-1.5 focus-within:border-[var(--color-accent)] transition-colors">
+          <span class="text-[var(--color-prompt)] font-bold select-none">&gt;</span>
+          <input 
+            type="text" 
+            id="chat-input" 
+            placeholder="say hi or leave a note..." 
+            maxlength="280"
+            autocomplete="off"
+            class="w-full bg-transparent text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] font-mono text-xs focus:outline-none"
+          />
+          <button 
+            type="submit" 
+            id="chat-submit-btn" 
+            class="shrink-0 text-[11px] px-2 py-0.5 rounded-xs bg-[var(--color-border-subtle)] hover:bg-[var(--color-accent)] hover:text-black font-semibold text-[var(--color-text-secondary)] border border-[var(--color-border)] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Send ↵
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between text-[10px] text-[var(--color-text-muted)] px-0.5">
+          <span id="chat-error-msg" class="text-rose-400 font-mono"></span>
+          <span id="chat-char-counter" class="ml-auto font-mono">280</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  interface ChatMessage {
+    id: string;
+    nickname: string;
+    message: string;
+    created_at: number;
+  }
+
+  function initCommunityChat() {
+    const modal = document.getElementById('chat-modal') as HTMLDialogElement | null;
+    if (!modal) return;
+
+    const messagesContainer = document.getElementById('chat-messages-container');
+    const input = document.getElementById('chat-input') as HTMLInputElement | null;
+    const form = document.getElementById('chat-send-form') as HTMLFormElement | null;
+    const honeypot = document.getElementById('chat-honeypot') as HTMLInputElement | null;
+    const countBadge = document.getElementById('chat-count-badge');
+    const refreshBtn = document.getElementById('chat-refresh-btn');
+    const nickBtn = document.getElementById('chat-edit-nick-btn');
+    const statusText = document.getElementById('chat-live-status');
+    const errorMsg = document.getElementById('chat-error-msg');
+    const charCounter = document.getElementById('chat-char-counter');
+    const submitBtn = document.getElementById('chat-submit-btn') as HTMLButtonElement | null;
+
+    let pollInterval: number | null = null;
+    let cachedMessages: ChatMessage[] = [];
+    let isSubmitting = false;
+
+    // Toast helper
+    let toastTimeout: number;
+    function showChatToast(msg: string) {
+      const toast = document.getElementById('m-chat-toast');
+      const toastMsg = document.getElementById('m-chat-toast-msg');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', '-translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      window.clearTimeout(toastTimeout);
+      toastTimeout = window.setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-2');
+      }, 1800);
+    }
+
+    // Get or initialize Nickname in localStorage
+    function getNickname(): string {
+      let nick = localStorage.getItem('rjaks_chat_nickname');
+      if (!nick) {
+        const randId = Math.floor(100 + Math.random() * 900);
+        nick = `guest_${randId}`;
+        localStorage.setItem('rjaks_chat_nickname', nick);
+      }
+      return nick;
+    }
+
+    function updateNickDisplay() {
+      const current = getNickname();
+      if (nickBtn) nickBtn.textContent = current;
+    }
+
+    updateNickDisplay();
+
+    // Nickname click to edit
+    nickBtn?.addEventListener('click', () => {
+      const current = getNickname();
+      const entered = window.prompt('Enter your terminal handle (max 24 chars):', current);
+      if (entered !== null) {
+        const cleaned = entered.trim().replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24);
+        if (cleaned) {
+          localStorage.setItem('rjaks_chat_nickname', cleaned);
+          updateNickDisplay();
+          showChatToast(`handle updated to @${cleaned}`);
+        }
+      }
+    });
+
+    // Format timestamp
+    function formatTime(ts: number): string {
+      const d = new Date(ts);
+      const hours = d.getHours().toString().padStart(2, '0');
+      const mins = d.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${mins}`;
+    }
+
+    // Render message items
+    function renderMessages(messages: ChatMessage[]) {
+      if (!messagesContainer) return;
+      cachedMessages = messages;
+
+      if (countBadge) {
+        countBadge.textContent = `${messages.length} ${messages.length === 1 ? 'note' : 'notes'}`;
+      }
+
+      if (messages.length === 0) {
+        messagesContainer.innerHTML = `
+          <div class="py-8 text-center text-[var(--color-text-muted)] font-mono text-xs">
+            no notes yet. be the first to leave a greeting!
+          </div>
+        `;
+        return;
+      }
+
+      // Check if user was already at bottom before appending
+      const isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop <= messagesContainer.clientHeight + 40;
+
+      messagesContainer.innerHTML = messages.map((m) => {
+        const timeStr = formatTime(m.created_at);
+        const isMe = m.nickname === getNickname();
+        return `
+          <div class="pt-2 text-xs font-mono leading-relaxed group">
+            <div class="flex items-baseline gap-1.5 flex-wrap">
+              <span class="text-[10px] text-[var(--color-text-muted)] shrink-0 select-none">[${timeStr}]</span>
+              <span class="font-bold ${isMe ? 'text-[var(--color-prompt)] underline decoration-dotted' : 'text-[var(--color-accent)]'} shrink-0">
+                &lt;${m.nickname}&gt;
+              </span>
+              <span class="text-[var(--color-text-primary)] break-words break-all whitespace-pre-wrap">${m.message}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (isAtBottom) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    }
+
+    // Fetch messages from backend
+    async function fetchMessages(isPolling = false) {
+      try {
+        if (!isPolling && statusText) {
+          statusText.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span><span>syncing</span>';
+        }
+
+        const res = await fetch('/api/chat', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Network error');
+        const data = await res.json();
+
+        if (data.ok && Array.isArray(data.messages)) {
+          // If length changed or latest ID is different, re-render
+          const lastOldId = cachedMessages[cachedMessages.length - 1]?.id;
+          const lastNewId = data.messages[data.messages.length - 1]?.id;
+          if (cachedMessages.length !== data.messages.length || lastOldId !== lastNewId) {
+            renderMessages(data.messages);
+          }
+        }
+        if (statusText) {
+          statusText.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span>synced</span>';
+        }
+      } catch (err) {
+        if (statusText) {
+          statusText.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span><span>offline</span>';
+        }
+      }
+    }
+
+    // Polling lifecycle
+    function startPolling() {
+      if (pollInterval) clearInterval(pollInterval);
+      fetchMessages(false);
+      pollInterval = window.setInterval(() => {
+        if (modal?.open) {
+          fetchMessages(true);
+        }
+      }, 4000);
+    }
+
+    function stopPolling() {
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    }
+
+    // Character counter
+    input?.addEventListener('input', () => {
+      const remaining = 280 - (input.value.length || 0);
+      if (charCounter) charCounter.textContent = remaining.toString();
+      if (errorMsg) errorMsg.textContent = '';
+    });
+
+    // Form submission
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (isSubmitting || !input) return;
+
+      const rawMsg = input.value.trim();
+      if (!rawMsg) return;
+
+      const honeyVal = honeypot?.value || '';
+      if (honeyVal) return;
+
+      const nick = getNickname();
+      isSubmitting = true;
+      if (submitBtn) submitBtn.disabled = true;
+      if (errorMsg) errorMsg.textContent = '';
+
+      // Optimistic append
+      const tempId = `temp-${Date.now()}`;
+      const tempMsg: ChatMessage = {
+        id: tempId,
+        nickname: nick,
+        message: rawMsg.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        created_at: Date.now(),
+      };
+      renderMessages([...cachedMessages, tempMsg]);
+      input.value = '';
+      if (charCounter) charCounter.textContent = '280';
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nickname: nick,
+            message: rawMsg,
+            honeypot: honeyVal,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || 'Failed to send');
+        }
+
+        showChatToast('note dispatched');
+        // Re-fetch to get authoritative server record
+        fetchMessages(false);
+      } catch (err: any) {
+        if (errorMsg) {
+          errorMsg.textContent = err?.message || 'Error sending note.';
+        }
+        // Rollback optimistic message
+        renderMessages(cachedMessages.filter((m) => m.id !== tempId));
+      } finally {
+        isSubmitting = false;
+        if (submitBtn) submitBtn.disabled = false;
+        input.focus();
+      }
+    });
+
+    // Refresh button
+    refreshBtn?.addEventListener('click', () => {
+      fetchMessages(false);
+      showChatToast('refreshing feed...');
+    });
+
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.close();
+      }
+    });
+
+    // Dialog state change listeners
+    modal.addEventListener('close', () => {
+      stopPolling();
+    });
+
+    // Hook modal triggers
+    document.querySelectorAll('.open-chat-trigger').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!modal.open) {
+          modal.showModal();
+          startPolling();
+          setTimeout(() => input?.focus(), 100);
+        }
+      });
+    });
+
+    // If modal is opened programmatically
+    const originalShowModal = modal.showModal.bind(modal);
+    modal.showModal = function () {
+      originalShowModal();
+      startPolling();
+      setTimeout(() => input?.focus(), 100);
+    };
+
+    // Auto-open if #chat hash is present
+    if (window.location.hash === '#chat' && !modal.open) {
+      modal.showModal();
+    }
+  }
+
+  // Run on first load and after Astro View Transitions
+  initCommunityChat();
+  document.addEventListener('astro:page-load', initCommunityChat);
+</script>

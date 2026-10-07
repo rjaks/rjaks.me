@@ -10,11 +10,22 @@
       <span>Adrian Reforsado (<span class="text-[var(--color-accent)]">rjaks</span>)</span>
     </div>
 
-    <!-- Center: Shortcuts Help Hint -->
-    <div class="hidden md:flex items-center gap-1.5 text-[11px] text-[var(--color-text-muted)]">
-      <span>Tip: Press</span>
-      <kbd>?</kbd>
-      <span>for terminal shortcuts</span>
+    <!-- Center: Shortcuts Help Hint & Guestbook Trigger -->
+    <div class="flex items-center gap-2.5 text-[11px] text-[var(--color-text-muted)]">
+      <button 
+        class="open-chat-trigger text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors cursor-pointer flex items-center gap-1 font-mono"
+        title="Open Community Chat (Alt+C)"
+      >
+        <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
+        <span>chat / guestbook</span>
+        <kbd class="hidden sm:inline-block text-[10px]">alt+c</kbd>
+      </button>
+      <span class="hidden md:inline text-[var(--color-border)]">|</span>
+      <div class="hidden md:flex items-center gap-1.5">
+        <span>Press</span>
+        <kbd>?</kbd>
+        <span>shortcuts</span>
+      </div>
     </div>
 
     <!-- Right: Quick Links -->

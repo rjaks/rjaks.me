@@ -41,6 +41,13 @@ const navItems = [
         >
           <span>wordle</span>
         </button>
+        <button 
+          class="open-chat-trigger flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-sm transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)] cursor-pointer"
+          aria-label="Open Community Chat"
+          title="Community Chat (Alt+C)"
+        >
+          <span>chat</span>
+        </button>
       </nav>
 
       <div class="h-3.5 w-[1px] bg-[var(--color-border)]"></div>
@@ -146,16 +153,25 @@ const navItems = [
     <div class="my-3 border-t border-[var(--color-border-subtle)]"></div>
 
     <!-- Quick Tools & Actions -->
-    <div class="grid grid-cols-2 gap-2 font-mono text-xs">
+    <div class="grid grid-cols-3 gap-1.5 font-mono text-xs">
       <button 
-        class="open-wordle-trigger flex items-center justify-center gap-1.5 px-3 py-2 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer text-xs"
+        class="open-wordle-trigger flex items-center justify-center gap-1 px-2 py-2 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer text-xs"
+        title="Play Wordle"
       >
         <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
         <span>wordle</span>
       </button>
       <button 
+        class="open-chat-trigger flex items-center justify-center gap-1 px-2 py-2 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer text-xs"
+        title="Community Chat"
+      >
+        <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
+        <span>chat</span>
+      </button>
+      <button 
         id="mobile-shortcuts-btn"
-        class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer text-xs"
+        class="flex items-center justify-center gap-1 px-2 py-2 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer text-xs"
+        title="Shortcuts Cheat Sheet"
       >
         <span>man ?</span>
       </button>
@@ -221,6 +237,21 @@ const navItems = [
       <div class="flex items-center gap-0.5">
         <kbd class="text-[9px]">alt</kbd>
         <kbd class="text-[9px]">g</kbd>
+      </div>
+    </button>
+
+    <!-- Community Chat Trigger -->
+    <button 
+      class="open-chat-trigger w-full flex items-center justify-between px-2.5 py-1.5 rounded-sm border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)] transition-colors group text-[11px] font-mono cursor-pointer"
+      title="Community Chat (Alt+C)"
+    >
+      <div class="flex items-center gap-1.5">
+        <span class="text-[var(--color-prompt)] font-bold">&gt;</span>
+        <span>community chat</span>
+      </div>
+      <div class="flex items-center gap-0.5">
+        <kbd class="text-[9px]">alt</kbd>
+        <kbd class="text-[9px]">c</kbd>
       </div>
     </button>
 
@@ -361,6 +392,16 @@ const navItems = [
         closeMobileMenu();
         const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
         wordleModal?.showModal();
+      };
+    });
+
+    // Chat modal triggers
+    document.querySelectorAll('.open-chat-trigger').forEach((btn) => {
+      (btn as HTMLElement).onclick = (e) => {
+        e.preventDefault();
+        closeMobileMenu();
+        const chatModal = document.getElementById('chat-modal') as HTMLDialogElement | null;
+        chatModal?.showModal();
       };
     });
 

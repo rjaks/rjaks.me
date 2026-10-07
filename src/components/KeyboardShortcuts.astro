@@ -57,6 +57,13 @@
           </div>
         </div>
         <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Community Chat</span>
+          <div class="flex items-center gap-0.5">
+            <kbd>alt</kbd>
+            <kbd>c</kbd>
+          </div>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
           <span class="text-[var(--color-text-secondary)]">Help</span>
           <kbd>?</kbd>
         </div>
@@ -110,15 +117,18 @@
       if (e.target === modal) modal.close();
     });
 
-    // Auto-open Wordle modal if URL has #wordle hash
-    function checkWordleHash() {
+    // Auto-open Wordle or Chat modal if URL has matching hash
+    function checkUrlHashes() {
       if (window.location.hash === '#wordle') {
         const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
         wordleModal?.showModal();
+      } else if (window.location.hash === '#chat') {
+        const chatModal = document.getElementById('chat-modal') as HTMLDialogElement | null;
+        chatModal?.showModal();
       }
     }
 
-    checkWordleHash();
+    checkUrlHashes();
 
     // Ensure global window listeners are bound only once
     if ((window as any).__shortcuts_bound) return;
@@ -132,7 +142,7 @@
       s: ['/skills', 'cd ~/skills'],
     };
 
-    window.addEventListener('hashchange', checkWordleHash);
+    window.addEventListener('hashchange', checkUrlHashes);
 
     window.addEventListener('keydown', (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
@@ -161,9 +171,25 @@
         return;
       }
 
-      // If Wordle modal is currently open, do not intercept keys for site navigation
+      // Alt + C: Community Chat Modal
+      if (e.altKey && e.key.toLowerCase() === 'c') {
+        e.preventDefault();
+        showToast('> chat --community');
+        const chatModal = document.getElementById('chat-modal') as HTMLDialogElement | null;
+        if (chatModal) {
+          if (chatModal.open) {
+            chatModal.close();
+          } else {
+            chatModal.showModal();
+          }
+        }
+        return;
+      }
+
+      // If Wordle or Chat modal is currently open, do not intercept keys for site navigation
       const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
-      if (wordleModal?.open) {
+      const chatModal = document.getElementById('chat-modal') as HTMLDialogElement | null;
+      if (wordleModal?.open || chatModal?.open) {
         return;
       }
 
