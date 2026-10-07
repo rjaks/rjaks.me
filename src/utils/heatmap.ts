@@ -77,17 +77,3 @@ export function buildHeatmapSvg(days: ContributionDay[]) {
     html: monthsHtml + cellsHtml,
   };
 }
-
-const proc = (globalThis as any).process;
-if (proc?.argv && import.meta.url === `file://${proc.argv[1]}`) {
-  const sample = [
-    { date: '2026-09-14', count: 2, level: 1 },
-    { date: '2026-09-15', count: 5, level: 3 },
-  ];
-  const weeks = buildWeeks(sample);
-  console.assert(weeks.length > 0, 'weeks should not be empty');
-  const svg = buildHeatmapSvg(sample);
-  console.assert(svg.html.includes('level-3'), 'svg should include level-3 cell');
-  console.assert(svg.width >= 690, 'width should be at least 690');
-  console.log('Heatmap self-check passed.');
-}

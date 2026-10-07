@@ -1,3 +1,28 @@
+## Project Overview
+
+This is the personal portfolio and terminal-inspired website for **Adrian Reforsado (`rjaks`)**, a full-stack software engineer and CS student.
+
+- **Stack:** Astro 7 (static output, ClientRouter / View Transitions), Tailwind CSS v4 (`@tailwindcss/vite`), TypeScript.
+- **Hosting:** Cloudflare Pages (wrangler static output `./dist`).
+- **Core Aesthetic:** Minimalist Dual-Mode Terminal × Developer Editorial with warm amber (`#f59e0b` / `#d97706`) accents.
+
+## Architecture & Directory Conventions
+
+- `src/pages/`: File-based routes (`index.astro`, `work.astro`, `projects.astro`, `skills.astro`, `contact.astro`, `writing/`, `404.astro`).
+- `src/components/`: Astro components. Key components:
+  - `Navbar.astro`: Desktop sidebar (>= lg), tablet navigation (sm to lg), mobile drawer (< sm).
+  - `Footer.astro`: Bottom status bar with shortcut hints and links.
+  - `GithubHeatmap.astro`: SVG contribution calendar with client caching and fallback.
+  - `KeyboardShortcuts.astro`: Single-key navigation listener and cheat sheet `<dialog>`.
+  - `NowSection.astro`: Snapshot of current projects, books, music, and off-terminal interests.
+  - `game/WordleModal.astro`: Embedded terminal Wordle game (`<dialog>`) triggered via `alt+g` or UI buttons.
+- `src/data/`: Structured TypeScript data files (`projects.ts`, `experience.ts`, `skills.ts`, `now.ts`, `contact.ts`, `wordleWords.ts`). Edit data here rather than hardcoding in pages.
+- `src/content/blog/`: Markdown posts managed by Astro Content Collections (`src/content.config.ts`).
+- `src/utils/`: Lightweight client/build utilities:
+  - `theme.ts`: `toggleThemeWithRipple()` CRT terminal scanline wipe transition.
+  - `heatmap.ts`: `buildHeatmapSvg()` grid builder.
+- `src/styles/global.css`: Core Tailwind theme, CSS custom properties, and animations.
+
 ## Design System
 
 Before making any UI, styling, or component changes, read the canonical design system:

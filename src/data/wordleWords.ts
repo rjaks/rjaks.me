@@ -93,30 +93,10 @@ const UNIQUE_TARGETS = Array.from(new Set(TARGET_WORDS.map(w => w.toUpperCase())
 export const TARGET_SET = new Set(UNIQUE_TARGETS);
 
 /**
- * Common valid 5-letter words allowed as guesses (superset of target words)
- */
-export const VALID_GUESSES_EXTRA = [
-  "AAHED", "ABACA", "ABACI", "ABACK", "ABAFT", "ABAMP", "ABAND", "ABASH",
-  "ABATE", "ABBEY", "ABBOT", "ABEAM", "ABEAR", "ABELE", "ABETS", "ABHOR",
-  "ABIDE", "ABIES", "ABLED", "ABLER", "ABLES", "ABLET", "ABLOW", "ABMHO",
-  "ABODE", "ABOHM", "ABOIL", "ABOMA", "ABOON", "ABORD", "ABORE", "ABORT",
-  "ABOUT", "ABOVE", "ABRAY", "ABRIM", "ABRIN", "ABRIS", "ABSEY", "ABSIT",
-  "ABUNA", "ABUNE", "ABUSE", "ABUTS", "ABUZZ", "ABYDE", "ABYSM", "ABYSS",
-  "ACARI", "ACCAS", "ACCOY", "ACERB", "ACERS", "ACETA", "ACHAR", "ACHED",
-  "ACHES", "ACHOO", "ACIDS", "ACIDY", "ACING", "ACINI", "ACKEE", "ACKER",
-  "ACMES", "ACMIC", "ACNED", "ACNES", "ACOCK", "ACOLD", "AALII", "AARGH"
-];
-
-const EXTENDED_SET = new Set([...UNIQUE_TARGETS, ...VALID_GUESSES_EXTRA]);
-
-/**
  * Validates if a guess is a valid 5-letter word
  */
 export function isValidGuess(guess: string): boolean {
-  if (!guess || guess.length !== 5) return false;
-  const upper = guess.toUpperCase();
-  // Any target word or in extended set, or valid 5-letter alpha string
-  return EXTENDED_SET.has(upper) || TARGET_SET.has(upper) || /^[A-Z]{5}$/.test(upper);
+  return Boolean(guess && /^[A-Za-z]{5}$/.test(guess));
 }
 
 /**

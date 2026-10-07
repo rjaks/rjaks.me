@@ -63,7 +63,6 @@ This site merges the ultra-clean, readable editorial structure of developer port
 | **Headings** | Geist Mono (700, 800) | Space Mono, monospace | `--font-family-heading` |
 | **Body / UI** | Geist (400, 500, 600, 700, 800) | -apple-system, sans-serif | `--font-family-base` |
 | **Terminal & Meta** | Geist Mono / Space Mono | monospace | `--font-family-mono` |
-| **Serif Accent** | Recoleta (400) | Georgia, serif | `--font-family-serif` |
 
 ### Typography Guidelines
 - Headings use tight-spaced `Geist Mono` (`letter-spacing: -0.04em`, `font-weight: 700`) for a modern, high-precision developer aesthetic.
@@ -94,11 +93,13 @@ This site merges the ultra-clean, readable editorial structure of developer port
 
 ### 3. Keyboard Shortcuts (`<kbd>`)
 - Keycaps are rendered with `<kbd>`:
-  - `<kbd>h</kbd>` → Home
-  - `<kbd>w</kbd>` → Work
-  - `<kbd>p</kbd>` → Projects
-  - `<kbd>b</kbd>` → Writing (Blog)
-  - `<kbd>t</kbd>` → Toggle theme
+  - `<kbd>h</kbd>` → Home (`/`)
+  - `<kbd>w</kbd>` → Work (`/work`)
+  - `<kbd>p</kbd>` → Projects (`/projects`)
+  - `<kbd>b</kbd>` → Writing (`/writing`)
+  - `<kbd>s</kbd>` → Skills (`/skills`)
+  - `<kbd>t</kbd>` → Toggle theme (Scanline transition)
+  - `<kbd>alt</kbd>+<kbd>g</kbd>` → Play Wordle mini-game
   - `<kbd>?</kbd>` → Shortcuts cheat sheet modal
 - Visible `<kbd>` hint pills appear in navbar links and the footer status bar.
 

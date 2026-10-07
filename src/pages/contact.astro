@@ -5,20 +5,7 @@ import { contactLinks } from '../data/contact';
 
 // Pre-calculate initial Philippine time for instant SSR render
 const now = new Date();
-const parts = new Intl.DateTimeFormat('en-GB', {
-  timeZone: 'Asia/Manila',
-  hour: 'numeric',
-  minute: 'numeric',
-  second: 'numeric',
-  hour12: false
-}).formatToParts(now);
-
-let initH = 0, initM = 0, initS = 0;
-for (const p of parts) {
-  if (p.type === 'hour') initH = parseInt(p.value, 10);
-  if (p.type === 'minute') initM = parseInt(p.value, 10);
-  if (p.type === 'second') initS = parseInt(p.value, 10);
-}
+const [initH, initM, initS] = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Manila', hour12: false }).split(':').map(Number);
 
 const initSecDeg = Math.round((initS / 60) * 360);
 const initMinDeg = Math.round((initM / 60) * 360 + (initS / 60) * 6);
@@ -219,21 +206,7 @@ const initDate = now.toLocaleDateString('en-US', {
 
     function update() {
       const now = new Date();
-
-      const parts = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Asia/Manila',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: false
-      }).formatToParts(now);
-
-      let h = 0, m = 0, s = 0;
-      for (const p of parts) {
-        if (p.type === 'hour') h = parseInt(p.value, 10);
-        if (p.type === 'minute') m = parseInt(p.value, 10);
-        if (p.type === 'second') s = parseInt(p.value, 10);
-      }
+      const [h, m, s] = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Manila', hour12: false }).split(':').map(Number);
 
       const secDeg = (s / 60) * 360;
       const minDeg = (m / 60) * 360 + (s / 60) * 6;

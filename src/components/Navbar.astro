@@ -385,8 +385,8 @@ const navItems = [
     }
 
     toggleBtns.forEach((btn) => {
-      btn.onclick = (e) => {
-        toggleThemeWithRipple(e);
+      btn.onclick = () => {
+        toggleThemeWithRipple();
       };
     });
 

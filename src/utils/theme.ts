@@ -2,7 +2,7 @@
  * Toggles the site theme (dark <-> light) with a crisp CRT Terminal Scanline Wipe animation
  * powered by the View Transitions API and CSS clip-path inset.
  */
-export function toggleThemeWithRipple(_event?: MouseEvent | { clientX: number; clientY: number } | null): void {
+export function toggleThemeWithRipple(): void {
   const isLight = document.documentElement.getAttribute('data-theme') === 'light';
   const newTheme = isLight ? 'dark' : 'light';
 
