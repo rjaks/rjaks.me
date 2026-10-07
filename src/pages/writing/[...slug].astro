@@ -49,7 +49,7 @@ const { Content } = await render(post);
         <span>•</span>
         <div class="flex flex-wrap gap-1.5">
           {post.data.tags.map((tag: string) => (
-            <span class="terminal-badge text-[10px]">
+            <span class="terminal-badge text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5">
               #{tag}
             </span>
           ))}

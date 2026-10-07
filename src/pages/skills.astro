@@ -47,9 +47,9 @@ const totalSkills = skillCategories.reduce((acc, cat) => acc + cat.skills.length
               {cat.skills.length} tools
             </span>
           </div>
-          <div class="flex flex-wrap gap-1.5">
+          <div class="flex flex-wrap gap-1.5 text-xs">
             {cat.skills.map((skill) => (
-              <span class="terminal-badge text-[9px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 sm:py-1 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors cursor-default">
+              <span class="terminal-badge text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors cursor-default">
                 {skill}
               </span>
             ))}
