@@ -34,6 +34,11 @@ function devChatPlugin() {
           req.on('end', () => {
             try {
               const body = JSON.parse(bodyStr || '{}');
+              if (body.honeypot && body.honeypot.trim().length > 0) {
+                res.statusCode = 400;
+                res.end(JSON.stringify({ ok: false, error: 'Spam detected' }));
+                return;
+              }
               const nickname = (body.nickname || 'guest').trim().slice(0, 24);
               const message = (body.message || '').trim().slice(0, 280);
 

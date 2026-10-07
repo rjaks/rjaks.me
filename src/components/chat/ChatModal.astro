@@ -136,6 +136,39 @@
       return `<svg class="w-3.5 h-3.5 rounded-xs shrink-0 bg-[var(--color-surface)] border border-[var(--color-border)] p-[1px]" viewBox="0 0 10 10">${rects}</svg>`;
     }
 
+    function createMessageNode(m: ChatMessage): HTMLElement {
+      const item = document.createElement('div');
+      item.className = 'pt-2.5 pb-1 text-xs font-mono';
+
+      const header = document.createElement('div');
+      header.className = 'flex items-center justify-between text-[11px] mb-1';
+
+      const userGroup = document.createElement('div');
+      userGroup.className = 'flex items-center gap-1.5';
+      userGroup.innerHTML = getAvatarSvg(m.nickname);
+
+      const nickSpan = document.createElement('span');
+      nickSpan.className = 'font-bold text-[var(--color-accent)]';
+      nickSpan.textContent = m.nickname;
+      userGroup.appendChild(nickSpan);
+
+      const timeSpan = document.createElement('span');
+      timeSpan.className = 'text-[10px] text-[var(--color-text-muted)] select-none';
+      timeSpan.textContent = formatTime(m.created_at);
+
+      header.appendChild(userGroup);
+      header.appendChild(timeSpan);
+
+      const msgP = document.createElement('p');
+      msgP.className = 'text-[var(--color-text-primary)] break-words whitespace-pre-wrap leading-relaxed';
+      msgP.textContent = m.message;
+
+      item.appendChild(header);
+      item.appendChild(msgP);
+
+      return item;
+    }
+
     function renderMessages(messages: ChatMessage[]) {
       if (!messagesContainer) return;
       cachedMessages = messages;
@@ -151,21 +184,11 @@
 
       const isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop <= messagesContainer.clientHeight + 40;
 
-      messagesContainer.innerHTML = messages.map((m) => {
-        const timeStr = formatTime(m.created_at);
-        return `
-          <div class="pt-2.5 pb-1 text-xs font-mono">
-            <div class="flex items-center justify-between text-[11px] mb-1">
-              <div class="flex items-center gap-1.5">
-                ${getAvatarSvg(m.nickname)}
-                <span class="font-bold text-[var(--color-accent)]">${m.nickname}</span>
-              </div>
-              <span class="text-[10px] text-[var(--color-text-muted)] select-none">${timeStr}</span>
-            </div>
-            <p class="text-[var(--color-text-primary)] break-words whitespace-pre-wrap leading-relaxed">${m.message}</p>
-          </div>
-        `;
-      }).join('');
+      const fragment = document.createDocumentFragment();
+      for (const m of messages) {
+        fragment.appendChild(createMessageNode(m));
+      }
+      messagesContainer.replaceChildren(fragment);
 
       if (isAtBottom) {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -249,7 +272,7 @@
       const tempMsg: ChatMessage = {
         id: tempId,
         nickname: nick,
-        message: rawMsg.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        message: rawMsg,
         created_at: Date.now(),
       };
       renderMessages([...cachedMessages, tempMsg]);

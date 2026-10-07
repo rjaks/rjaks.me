@@ -1,5 +1,8 @@
-// Cloudflare Pages Function: /api/chat
-interface Env {
+// Cloudflare Worker: Community Chat API Handler
+export interface Env {
+  ASSETS?: {
+    fetch: (request: Request | string) => Promise<Response>;
+  };
   DB?: {
     prepare: (query: string) => {
       bind: (...args: any[]) => {
@@ -9,16 +12,16 @@ interface Env {
       };
     };
   };
+  IP_SALT?: string;
 }
 
-interface MessageRow {
+export interface MessageRow {
   id: string;
   nickname: string;
   message: string;
   created_at: number;
 }
 
-// In-memory fallback if D1 is not bound yet (e.g. during initial local dev)
 const memoryStore: MessageRow[] = [
   {
     id: 'welcome-1',
@@ -28,26 +31,20 @@ const memoryStore: MessageRow[] = [
   },
 ];
 
-function sanitizeString(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+// Strip unprintable control characters, preserving normal text and newlines
+export function sanitizeText(str: string): string {
+  return str.replace(/[\u0000-\u0008\u000B-\u000C\u000E-\u001F\u007F-\u009F]/g, '');
 }
 
-async function hashIp(ip: string): Promise<string> {
+export async function hashIp(ip: string, salt: string = 'salt_'): Promise<string> {
   const enc = new TextEncoder();
-  const data = enc.encode(`salt_${ip}`);
+  const data = enc.encode(`${salt}${ip}`);
   const hashBuf = await crypto.subtle.digest('SHA-256', data);
   const hashArr = Array.from(new Uint8Array(hashBuf));
   return hashArr.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-export const onRequestGet = async (context: { env: Env }) => {
-  const { env } = context;
-
+export async function handleGetChat(env: Env): Promise<Response> {
   try {
     if (env.DB) {
       const { results } = await env.DB.prepare(
@@ -56,7 +53,6 @@ export const onRequestGet = async (context: { env: Env }) => {
         .bind()
         .all<MessageRow>();
 
-      // Return chronological order (oldest to newest)
       const chronological = (results || []).slice().reverse();
       return new Response(JSON.stringify({ ok: true, messages: chronological }), {
         headers: {
@@ -66,7 +62,6 @@ export const onRequestGet = async (context: { env: Env }) => {
       });
     }
 
-    // Fallback if D1 is not attached
     return new Response(JSON.stringify({ ok: true, messages: memoryStore, fallback: true }), {
       headers: {
         'Content-Type': 'application/json',
@@ -82,11 +77,9 @@ export const onRequestGet = async (context: { env: Env }) => {
       }
     );
   }
-};
+}
 
-export const onRequestPost = async (context: { request: Request; env: Env }) => {
-  const { request, env } = context;
-
+export async function handlePostChat(request: Request, env: Env): Promise<Response> {
   try {
     const body = await request.json().catch(() => null);
     if (!body || typeof body !== 'object') {
@@ -102,7 +95,7 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       honeypot?: string;
     };
 
-    // Bot detection via honeypot
+    // Honeypot spam trap
     if (honeypot && honeypot.trim().length > 0) {
       return new Response(JSON.stringify({ ok: false, error: 'Spam detected' }), {
         status: 400,
@@ -110,12 +103,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       });
     }
 
-    // Clean & validate nickname
-    let cleanNick = (nickname || 'guest').trim().slice(0, 24);
-    cleanNick = sanitizeString(cleanNick);
+    let cleanNick = sanitizeText((nickname || 'guest').trim().slice(0, 24));
     if (!cleanNick) cleanNick = 'guest';
 
-    // Clean & validate message
     const rawMessage = (message || '').trim();
     if (!rawMessage) {
       return new Response(JSON.stringify({ ok: false, error: 'Message cannot be empty' }), {
@@ -130,14 +120,13 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       });
     }
 
-    const cleanMessage = sanitizeString(rawMessage);
+    const cleanMessage = sanitizeText(rawMessage);
     const clientIp = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || '127.0.0.1';
-    const ipHash = await hashIp(clientIp);
+    const ipHash = await hashIp(clientIp, env.IP_SALT || 'salt_');
     const now = Date.now();
     const id = crypto.randomUUID();
 
     if (env.DB) {
-      // Rate limit check: max 1 message every 10 seconds per IP
       const recent = await env.DB.prepare(
         'SELECT created_at FROM messages WHERE ip_hash = ? AND created_at > ? LIMIT 1'
       )
@@ -154,14 +143,12 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         );
       }
 
-      // Insert message
       await env.DB.prepare(
         'INSERT INTO messages (id, nickname, message, created_at, ip_hash) VALUES (?, ?, ?, ?, ?)'
       )
         .bind(id, cleanNick, cleanMessage, now, ipHash)
         .run();
     } else {
-      // Memory store fallback
       memoryStore.push({
         id,
         nickname: cleanNick,
@@ -195,4 +182,17 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       }
     );
   }
-};
+}
+
+export async function handleChat(request: Request, env: Env): Promise<Response> {
+  if (request.method === 'GET') {
+    return handleGetChat(env);
+  }
+  if (request.method === 'POST') {
+    return handlePostChat(request, env);
+  }
+  return new Response(JSON.stringify({ ok: false, error: 'Method not allowed' }), {
+    status: 405,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
