@@ -4,44 +4,19 @@
 
 <dialog 
   id="chat-modal" 
-  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/75 backdrop:backdrop-blur-xs open:flex items-center justify-center overflow-visible"
+  class="fixed inset-0 m-auto z-50 p-2 sm:p-4 bg-transparent border-none text-inherit backdrop:bg-black/60 backdrop:backdrop-blur-sm open:flex items-center justify-center overflow-visible"
   style="width: min(94vw, 540px); max-width: 540px;"
 >
-  <div class="terminal-panel relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md">
+  <div class="relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl p-4 sm:p-5 text-[var(--color-text-primary)] font-mono text-xs overflow-hidden flex flex-col rounded-md">
     <!-- Top Modal Header -->
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--color-border)]">
+    <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[var(--color-border)]">
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+        <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
         <h2 class="font-bold text-xs sm:text-sm tracking-tight text-[var(--color-text-primary)]">
           rjaks:~$ chat --community
         </h2>
       </div>
-
-      <!-- Window Controls -->
-      <div class="flex items-center gap-2">
-        <button 
-          id="chat-refresh-btn"
-          class="p-1 rounded-xs border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
-          title="Refresh messages"
-          aria-label="Refresh messages"
-        >
-          <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-            <path d="M3 3v5h5"></path>
-            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
-            <path d="M16 21h5v-5"></path>
-          </svg>
-        </button>
-
-        <form method="dialog">
-          <button 
-            id="chat-btn-close"
-            class="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] font-mono text-[11px] cursor-pointer px-2 py-0.5 border border-[var(--color-border)] rounded-xs hover:border-[var(--color-accent)] transition-colors"
-          >
-            ESC [x]
-          </button>
-        </form>
-      </div>
+      <span class="text-[10px] text-[var(--color-text-muted)] select-none">esc to close</span>
     </div>
 
     <!-- Messages Stream -->
@@ -117,7 +92,6 @@
     const msgInput = document.getElementById('chat-input') as HTMLInputElement | null;
     const form = document.getElementById('chat-send-form') as HTMLFormElement | null;
     const honeypot = document.getElementById('chat-honeypot') as HTMLInputElement | null;
-    const refreshBtn = document.getElementById('chat-refresh-btn');
     const errorMsg = document.getElementById('chat-error-msg');
     const charCounter = document.getElementById('chat-char-counter');
     const submitBtn = document.getElementById('chat-submit-btn') as HTMLButtonElement | null;
@@ -308,10 +282,6 @@
         if (submitBtn) submitBtn.disabled = false;
         msgInput.focus();
       }
-    });
-
-    refreshBtn?.addEventListener('click', () => {
-      fetchMessages();
     });
 
     modal.addEventListener('click', (e) => {
