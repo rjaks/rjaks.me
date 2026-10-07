@@ -139,6 +139,28 @@
       return `${hours}:${mins}`;
     }
 
+    function getAvatarSvg(name: string): string {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = (hash << 5) - hash + name.charCodeAt(i);
+        hash |= 0;
+      }
+      const colors = ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4', '#eab308'];
+      const color = colors[Math.abs(hash) % colors.length];
+      let rects = '';
+      for (let y = 0; y < 5; y++) {
+        for (let x = 0; x < 3; x++) {
+          if ((Math.abs(hash) >> (y * 3 + x)) & 1) {
+            rects += `<rect x="${x * 2}" y="${y * 2}" width="2" height="2" fill="${color}"/>`;
+            if (x < 2) {
+              rects += `<rect x="${(4 - x) * 2}" y="${y * 2}" width="2" height="2" fill="${color}"/>`;
+            }
+          }
+        }
+      }
+      return `<svg class="w-3.5 h-3.5 rounded-xs shrink-0 bg-[var(--color-surface)] border border-[var(--color-border)] p-[1px]" viewBox="0 0 10 10">${rects}</svg>`;
+    }
+
     function renderMessages(messages: ChatMessage[]) {
       if (!messagesContainer) return;
       cachedMessages = messages;
@@ -159,7 +181,10 @@
         return `
           <div class="pt-2.5 pb-1 text-xs font-mono">
             <div class="flex items-center justify-between text-[11px] mb-1">
-              <span class="font-bold text-[var(--color-accent)]">${m.nickname}</span>
+              <div class="flex items-center gap-1.5">
+                ${getAvatarSvg(m.nickname)}
+                <span class="font-bold text-[var(--color-accent)]">${m.nickname}</span>
+              </div>
               <span class="text-[10px] text-[var(--color-text-muted)] select-none">${timeStr}</span>
             </div>
             <p class="text-[var(--color-text-primary)] break-words whitespace-pre-wrap leading-relaxed">${m.message}</p>
