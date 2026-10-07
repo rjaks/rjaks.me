@@ -22,7 +22,6 @@ Built with **Astro 7**, **Tailwind CSS v4**, and **TypeScript**, styled around a
 ├── src/
 │   ├── components/         # Reusable Astro UI components
 │   │   ├── Navbar.astro    # Responsive navigation (desktop sidebar, tablet bar, mobile drawer)
-│   │   ├── Footer.astro    # Bottom status bar, quick links, shortcut hint
 │   │   ├── GithubHeatmap.astro # Live / cached GitHub contribution calendar
 │   │   ├── KeyboardShortcuts.astro # Global single-key navigation & cheat sheet dialog
 │   │   ├── NowSection.astro # /now snapshot & personal interests

@@ -11,7 +11,6 @@ This is the personal portfolio and terminal-inspired website for **Adrian Refors
 - `src/pages/`: File-based routes (`index.astro`, `work.astro`, `projects.astro`, `skills.astro`, `contact.astro`, `writing/`, `404.astro`).
 - `src/components/`: Astro components. Key components:
   - `Navbar.astro`: Desktop sidebar (>= lg), tablet navigation (sm to lg), mobile drawer (< sm).
-  - `Footer.astro`: Bottom status bar with shortcut hints and links.
   - `GithubHeatmap.astro`: SVG contribution calendar with client caching and fallback.
   - `KeyboardShortcuts.astro`: Single-key navigation listener and cheat sheet `<dialog>`.
   - `NowSection.astro`: Snapshot of current projects, books, music, and off-terminal interests.

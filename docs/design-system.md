@@ -101,7 +101,7 @@ This site merges the ultra-clean, readable editorial structure of developer port
   - `<kbd>t</kbd>` → Toggle theme (Scanline transition)
   - `<kbd>alt</kbd>+<kbd>g</kbd>` → Play Wordle mini-game
   - `<kbd>?</kbd>` → Shortcuts cheat sheet modal
-- Visible `<kbd>` hint pills appear in navbar links and the footer status bar.
+- Visible `<kbd>` hint pills appear in navbar links.
 
 ### 4. GitHub Contribution Heatmap
 - Live contribution grid styled to match the dark/light palette.
