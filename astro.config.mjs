@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 /** @type {Array<{ id: string, nickname: string, message: string, created_at: number }>} */
 const devMessages = [
@@ -81,6 +82,7 @@ export default defineConfig({
   redirects: {
     '/experience': '/work',
   },
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss(), devChatPlugin()],
   },

@@ -18,6 +18,11 @@ const { Content } = await render(post);
 <BaseLayout 
   title={`${post.data.title} — Adrian Reforsado`} 
   description={post.data.description}
+  article={{
+    publishedTime: post.data.pubDate.toISOString(),
+    modifiedTime: post.data.updatedDate?.toISOString(),
+    tags: post.data.tags,
+  }}
 >
   <article class="space-y-6 max-w-3xl">
     <!-- Back to Writing Breadcrumb -->
