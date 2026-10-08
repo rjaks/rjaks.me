@@ -424,6 +424,64 @@ html.theme-transition body {
 .stagger-6 { --reveal-delay: 350ms; }
 .stagger-7 { --reveal-delay: 420ms; }
 
+/* Terminal Background Dot Matrix Layer */
+.terminal-bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.32;
+  mask-image: radial-gradient(ellipse 80% 65% at 50% 15%, #000 50%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 65% at 50% 15%, #000 50%, transparent 100%);
+}
+
+[data-theme="light"] .terminal-bg-grid {
+  opacity: 0.16;
+}
+
+/* Hero Ambient Breathing Amber Glow */
+.hero-ambient-glow {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 60% 50% at 30% 25%,
+    rgba(245, 158, 11, 0.08) 0%,
+    rgba(245, 158, 11, 0.02) 50%,
+    transparent 80%
+  );
+  filter: blur(40px);
+  animation: hero-ambient-breathe 9s ease-in-out infinite alternate;
+  will-change: opacity, transform;
+}
+
+[data-theme="light"] .hero-ambient-glow {
+  background: radial-gradient(
+    ellipse 60% 50% at 30% 25%,
+    rgba(217, 119, 6, 0.05) 0%,
+    rgba(217, 119, 6, 0.01) 50%,
+    transparent 80%
+  );
+  filter: blur(48px);
+}
+
+@keyframes hero-ambient-breathe {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 0.95;
+    transform: scale(1.03);
+  }
+}
+
 /* Accessibility: Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -436,6 +494,9 @@ html.theme-transition body {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+  .hero-ambient-glow {
+    animation: none !important;
   }
   ::view-transition-group(*),
   ::view-transition-old(*),
