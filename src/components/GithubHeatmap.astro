@@ -297,24 +297,37 @@ const lastDate = days[days.length - 1]?.date ?? '';
     background-color: #f59e0b;
   }
 
+  #heatmap-container text.month-label {
+    fill: var(--color-text-secondary);
+    font-size: 9px;
+    font-family: var(--font-family-mono);
+  }
+
+  [data-theme="light"] #heatmap-container rect.contribution-cell:hover,
+  [data-theme="light"] #heatmap-container rect.contribution-cell:focus {
+    stroke: var(--color-accent);
+    stroke-width: 1.5px;
+    filter: drop-shadow(0 1px 3px rgba(217, 119, 6, 0.35));
+  }
+
   [data-theme="light"] #heatmap-container .contribution-cell.level-0 {
-    fill: #ebedf0;
-    background-color: #ebedf0;
+    fill: #e2e8f0;
+    background-color: #e2e8f0;
   }
   [data-theme="light"] #heatmap-container .contribution-cell.level-1 {
-    fill: #fef3c7;
-    background-color: #fef3c7;
+    fill: #fcd34d;
+    background-color: #fcd34d;
   }
   [data-theme="light"] #heatmap-container .contribution-cell.level-2 {
-    fill: #fde68a;
-    background-color: #fde68a;
-  }
-  [data-theme="light"] #heatmap-container .contribution-cell.level-3 {
     fill: #f59e0b;
     background-color: #f59e0b;
   }
-  [data-theme="light"] #heatmap-container .contribution-cell.level-4 {
+  [data-theme="light"] #heatmap-container .contribution-cell.level-3 {
     fill: #b45309;
     background-color: #b45309;
+  }
+  [data-theme="light"] #heatmap-container .contribution-cell.level-4 {
+    fill: #78350f;
+    background-color: #78350f;
   }
 </style>
