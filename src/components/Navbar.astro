@@ -10,7 +10,7 @@ const navItems = [
 ---
 
 <!-- Mobile & Tablet Top Header (< lg) -->
-<header class="lg:hidden w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-md sticky top-0 z-40 transition-colors">
+<header class="lg:hidden w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-md sticky top-0 z-40 transition-colors relative">
   <div class="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3">
     <!-- Brand / Shell Prompt -->
     <a 
@@ -117,8 +117,8 @@ const navItems = [
         aria-controls="mobile-menu-drawer"
         aria-label="Toggle navigation menu"
       >
-        <span class="text-[var(--color-prompt)] font-bold mobile-menu-indicator">&gt;</span>
-        <span id="mobile-menu-label">menu</span>
+        <span class="text-[var(--color-prompt)] font-bold mobile-menu-indicator transition-transform duration-200 inline-block select-none">&gt;</span>
+        <span id="mobile-menu-label" class="select-none">menu</span>
       </button>
     </div>
   </div>
@@ -126,17 +126,18 @@ const navItems = [
   <!-- Mobile Dropdown Drawer (< sm) -->
   <div 
     id="mobile-menu-drawer" 
-    class="sm:hidden hidden border-t border-[var(--color-border)] bg-[var(--color-bg)]/98 backdrop-blur-xl px-4 py-4 shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-2"
+    class="sm:hidden hidden absolute top-full left-0 right-0 border-b border-[var(--color-border)] bg-[var(--color-bg)]/98 backdrop-blur-xl px-4 py-4 shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto"
   >
     <!-- CLI Routes -->
     <nav class="space-y-1 font-mono text-xs" aria-label="Mobile Navigation">
-      <div class="text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider px-2 py-1 font-bold">
+      <div class="mobile-nav-item text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider px-2 py-1 font-bold">
         Directory
       </div>
-      {navItems.map((item) => (
+      {navItems.map((item, index) => (
         <a 
           href={item.href} 
-          class={`mobile-nav-link flex items-center justify-between px-3 py-2.5 rounded-sm transition-colors ${item.active ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
+          style={`animation-delay: ${(index + 1) * 25}ms`}
+          class={`mobile-nav-item mobile-nav-link flex items-center justify-between px-3 py-2.5 rounded-sm transition-colors ${item.active ? 'text-[var(--color-accent)] font-bold bg-[var(--color-border-subtle)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-subtle)]'}`}
         >
           <div class="flex items-center gap-2">
             <span class={item.active ? 'text-[var(--color-accent)] font-bold' : 'text-[var(--color-text-muted)]'}>
@@ -153,7 +154,7 @@ const navItems = [
     <div class="my-3 border-t border-[var(--color-border-subtle)]"></div>
 
     <!-- Quick Tools & Actions -->
-    <div class="grid grid-cols-3 gap-1.5 font-mono text-xs">
+    <div class="mobile-nav-item grid grid-cols-3 gap-1.5 font-mono text-xs" style={`animation-delay: ${(navItems.length + 1) * 25}ms`}>
       <button 
         class="open-wordle-trigger flex items-center justify-center gap-1 px-2 py-2 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:bg-[var(--color-border-subtle)] transition-colors cursor-pointer text-xs"
         title="Play Wordle"
@@ -178,7 +179,7 @@ const navItems = [
     </div>
 
     <!-- Email Contact Link -->
-    <div class="mt-3 pt-2.5 border-t border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)]">
+    <div class="mobile-nav-item mt-3 pt-2.5 border-t border-[var(--color-border-subtle)] flex items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)]" style={`animation-delay: ${(navItems.length + 2) * 25}ms`}>
       <span>get in touch:</span>
       <a href="mailto:contact@rjaks.me" class="text-[var(--color-accent)] font-semibold hover:underline">
         contact@rjaks.me
@@ -186,6 +187,13 @@ const navItems = [
     </div>
   </div>
 </header>
+
+<!-- Mobile Menu Backdrop Overlay (< sm) -->
+<div 
+  id="mobile-menu-backdrop" 
+  class="fixed inset-0 bg-black/50 backdrop-blur-xs z-30 sm:hidden hidden opacity-0 transition-opacity duration-200"
+  aria-hidden="true"
+></div>
 
 <!-- Desktop Terminal Sidebar (>= lg) -->
 <aside 
@@ -322,7 +330,7 @@ const navItems = [
     const mobileShortcutsBtn = document.getElementById('mobile-shortcuts-btn');
     if (mobileShortcutsBtn) {
       mobileShortcutsBtn.onclick = () => {
-        closeMobileMenu();
+        closeMobileMenu(true);
         openShortcuts();
       };
     }
@@ -334,25 +342,102 @@ const navItems = [
     // Mobile menu drawer toggle
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const menuDrawer = document.getElementById('mobile-menu-drawer');
+    const menuBackdrop = document.getElementById('mobile-menu-backdrop');
     const menuLabel = document.getElementById('mobile-menu-label');
     const menuIndicator = menuToggle?.querySelector('.mobile-menu-indicator');
 
-    function closeMobileMenu() {
-      if (!menuDrawer || menuDrawer.classList.contains('hidden')) return;
-      menuDrawer.classList.add('hidden');
+    let isClosing = false;
+    let closeTimeout: number | undefined;
+    let openTimeout: number | undefined;
+
+    function closeMobileMenu(immediate = false) {
+      if (!menuDrawer || menuDrawer.classList.contains('hidden') || isClosing) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (immediate || prefersReducedMotion) {
+        window.clearTimeout(openTimeout);
+        window.clearTimeout(closeTimeout);
+        menuDrawer.classList.remove('is-opening', 'is-closing');
+        menuDrawer.classList.add('hidden');
+        if (menuBackdrop) {
+          menuBackdrop.classList.remove('opacity-100');
+          menuBackdrop.classList.add('opacity-0', 'hidden');
+        }
+        menuToggle?.setAttribute('aria-expanded', 'false');
+        menuToggle?.classList.remove('border-[var(--color-accent)]', 'bg-[var(--color-border-subtle)]');
+        if (menuLabel) menuLabel.textContent = 'menu';
+        if (menuIndicator) {
+          menuIndicator.textContent = '>';
+          menuIndicator.classList.remove('rotate-90');
+        }
+        isClosing = false;
+        return;
+      }
+
+      isClosing = true;
+      window.clearTimeout(openTimeout);
+      menuDrawer.classList.remove('is-opening');
+      menuDrawer.classList.add('is-closing');
+
+      if (menuBackdrop) {
+        menuBackdrop.classList.remove('opacity-100');
+        menuBackdrop.classList.add('opacity-0');
+      }
+
       menuToggle?.setAttribute('aria-expanded', 'false');
+      menuToggle?.classList.remove('border-[var(--color-accent)]', 'bg-[var(--color-border-subtle)]');
       if (menuLabel) menuLabel.textContent = 'menu';
-      if (menuIndicator) menuIndicator.textContent = '>';
+      if (menuIndicator) {
+        menuIndicator.textContent = '>';
+        menuIndicator.classList.remove('rotate-90');
+      }
+
+      window.clearTimeout(closeTimeout);
+      closeTimeout = window.setTimeout(() => {
+        menuDrawer.classList.remove('is-closing');
+        menuDrawer.classList.add('hidden');
+        if (menuBackdrop) {
+          menuBackdrop.classList.add('hidden');
+        }
+        isClosing = false;
+      }, 180);
+    }
+
+    function openMobileMenu() {
+      if (!menuDrawer) return;
+      window.clearTimeout(closeTimeout);
+      window.clearTimeout(openTimeout);
+      isClosing = false;
+
+      menuDrawer.classList.remove('hidden', 'is-closing');
+      menuDrawer.classList.add('is-opening');
+
+      if (menuBackdrop) {
+        menuBackdrop.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          menuBackdrop.classList.remove('opacity-0');
+          menuBackdrop.classList.add('opacity-100');
+        });
+      }
+
+      menuToggle?.setAttribute('aria-expanded', 'true');
+      menuToggle?.classList.add('border-[var(--color-accent)]', 'bg-[var(--color-border-subtle)]');
+      if (menuLabel) menuLabel.textContent = 'close';
+      if (menuIndicator) {
+        menuIndicator.textContent = 'x';
+        menuIndicator.classList.add('rotate-90');
+      }
+
+      openTimeout = window.setTimeout(() => {
+        menuDrawer.classList.remove('is-opening');
+      }, 350);
     }
 
     function toggleMobileMenu() {
       if (!menuDrawer) return;
-      const isClosed = menuDrawer.classList.contains('hidden');
+      const isClosed = menuDrawer.classList.contains('hidden') || isClosing;
       if (isClosed) {
-        menuDrawer.classList.remove('hidden');
-        menuToggle?.setAttribute('aria-expanded', 'true');
-        if (menuLabel) menuLabel.textContent = 'close';
-        if (menuIndicator) menuIndicator.textContent = 'x';
+        openMobileMenu();
       } else {
         closeMobileMenu();
       }
@@ -364,23 +449,62 @@ const navItems = [
         toggleMobileMenu();
       };
 
+      if (menuBackdrop) {
+        menuBackdrop.onclick = () => {
+          closeMobileMenu();
+        };
+      }
+
       // Close mobile drawer when clicking any link inside it
       menuDrawer.querySelectorAll('a').forEach((link) => {
-        link.onclick = () => closeMobileMenu();
+        link.onclick = () => {
+          const href = link.getAttribute('href');
+          const isCurrentPage = href === window.location.pathname;
+          if (isCurrentPage) {
+            closeMobileMenu();
+          } else {
+            closeMobileMenu(true);
+          }
+        };
       });
+    }
+
+    // Ensure global window/document listeners are registered only once
+    if (!(window as any).__mobile_nav_bound) {
+      (window as any).__mobile_nav_bound = true;
 
       // Close on clicking outside header
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement | null;
-        if (target && !target.closest('header')) {
-          closeMobileMenu();
+        if (target && !target.closest('header') && !target.closest('#mobile-menu-backdrop')) {
+          const drawer = document.getElementById('mobile-menu-drawer');
+          if (drawer && !drawer.classList.contains('hidden')) {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            toggle?.click();
+          }
         }
       });
 
       // Close on ESC key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          closeMobileMenu();
+          const drawer = document.getElementById('mobile-menu-drawer');
+          if (drawer && !drawer.classList.contains('hidden')) {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            toggle?.click();
+            toggle?.focus();
+          }
+        }
+      });
+
+      // Auto-close on resize to tablet/desktop (>= 640px)
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 640) {
+          const drawer = document.getElementById('mobile-menu-drawer');
+          if (drawer && !drawer.classList.contains('hidden')) {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            toggle?.click();
+          }
         }
       });
     }
@@ -389,7 +513,7 @@ const navItems = [
     document.querySelectorAll('.open-wordle-trigger').forEach((btn) => {
       (btn as HTMLElement).onclick = (e) => {
         e.preventDefault();
-        closeMobileMenu();
+        closeMobileMenu(true);
         const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
         wordleModal?.showModal();
       };
@@ -399,7 +523,7 @@ const navItems = [
     document.querySelectorAll('.open-chat-trigger').forEach((btn) => {
       (btn as HTMLElement).onclick = (e) => {
         e.preventDefault();
-        closeMobileMenu();
+        closeMobileMenu(true);
         const chatModal = document.getElementById('chat-modal') as HTMLDialogElement | null;
         chatModal?.showModal();
       };
