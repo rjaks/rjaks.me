@@ -390,11 +390,26 @@ dialog.modal-animated.is-closing > .modal-panel {
   }
 }
 
+/* Backdrop Fade In & Out with immediate hardware-accelerated blur */
+#mobile-menu-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+  opacity: 0;
+}
+
+#mobile-menu-backdrop.is-active {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   #mobile-menu-drawer.is-opening,
   #mobile-menu-drawer.is-closing,
-  #mobile-menu-drawer.is-opening .mobile-nav-item {
+  #mobile-menu-drawer.is-opening .mobile-nav-item,
+  #mobile-menu-backdrop {
     animation: none !important;
+    transition: none !important;
   }
 }
 
@@ -453,9 +468,11 @@ html.theme-transition::view-transition-new(root) {
   }
 }
 
-/* Suppress body transitions during theme snapshot capture to prevent double animation/flicker */
+/* Suppress all CSS transitions during theme scanline wipe to prevent color bleeding */
 html.theme-transition,
-html.theme-transition body {
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
   transition: none !important;
 }
 

@@ -191,7 +191,7 @@ const navItems = [
 <!-- Mobile Menu Backdrop Overlay (< sm) -->
 <div 
   id="mobile-menu-backdrop" 
-  class="fixed inset-0 bg-black/50 backdrop-blur-xs z-30 sm:hidden hidden opacity-0 transition-opacity duration-200"
+  class="fixed inset-0 bg-black/50 z-30 sm:hidden hidden"
   aria-hidden="true"
 ></div>
 
@@ -315,7 +315,7 @@ const navItems = [
 </aside>
 
 <script>
-  import { toggleThemeWithRipple } from '../utils/theme';
+  import { toggleThemeWithRipple, skipThemeTransition } from '../utils/theme';
 
   function setupNavbar() {
     // Shortcuts button -> modal in KeyboardShortcuts.astro
@@ -360,8 +360,8 @@ const navItems = [
         menuDrawer.classList.remove('is-opening', 'is-closing');
         menuDrawer.classList.add('hidden');
         if (menuBackdrop) {
-          menuBackdrop.classList.remove('opacity-100');
-          menuBackdrop.classList.add('opacity-0', 'hidden');
+          menuBackdrop.classList.remove('is-active');
+          menuBackdrop.classList.add('hidden');
         }
         menuToggle?.setAttribute('aria-expanded', 'false');
         menuToggle?.classList.remove('border-[var(--color-accent)]', 'bg-[var(--color-border-subtle)]');
@@ -380,8 +380,7 @@ const navItems = [
       menuDrawer.classList.add('is-closing');
 
       if (menuBackdrop) {
-        menuBackdrop.classList.remove('opacity-100');
-        menuBackdrop.classList.add('opacity-0');
+        menuBackdrop.classList.remove('is-active');
       }
 
       menuToggle?.setAttribute('aria-expanded', 'false');
@@ -405,6 +404,10 @@ const navItems = [
 
     function openMobileMenu() {
       if (!menuDrawer) return;
+
+      // Abort any ongoing theme transition immediately so blur is responsive with zero waiting
+      skipThemeTransition();
+
       window.clearTimeout(closeTimeout);
       window.clearTimeout(openTimeout);
       isClosing = false;
@@ -414,10 +417,9 @@ const navItems = [
 
       if (menuBackdrop) {
         menuBackdrop.classList.remove('hidden');
-        requestAnimationFrame(() => {
-          menuBackdrop.classList.remove('opacity-0');
-          menuBackdrop.classList.add('opacity-100');
-        });
+        // Force synchronous style recalculation so the opacity transition triggers immediately
+        void menuBackdrop.offsetHeight;
+        menuBackdrop.classList.add('is-active');
       }
 
       menuToggle?.setAttribute('aria-expanded', 'true');
