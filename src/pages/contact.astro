@@ -181,12 +181,12 @@ const initDate = now.toLocaleDateString('en-US', {
     <div class="reveal-on-scroll stagger-3 p-3 rounded-md bg-[var(--color-bg)] border border-[var(--color-border-subtle)] font-mono text-xs flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 text-[var(--color-text-muted)] overflow-hidden">
         <span class="text-[var(--color-prompt)] font-bold">$</span>
-        <span class="truncate text-[var(--color-text-secondary)]">curl -s https://rjaks.me/contact</span>
+        <span class="truncate text-[var(--color-text-secondary)]">curl -sL https://rjaks.me/contact/</span>
       </div>
       <button
         type="button"
         id="copy-curl-btn"
-        data-curl="curl -s https://rjaks.me/contact"
+        data-curl="curl -sL https://rjaks.me/contact/"
         class="cursor-pointer text-[11px] px-2 py-0.5 rounded-sm border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors shrink-0"
       >
         copy curl
