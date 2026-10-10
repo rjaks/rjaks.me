@@ -79,6 +79,7 @@ function devChatPlugin() {
 export default defineConfig({
   site: 'https://rjaks.me',
   output: 'static',
+  trailingSlash: 'never',
   redirects: {
     '/experience': '/work',
   },
