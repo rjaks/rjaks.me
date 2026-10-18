@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.astro';
 import KeyboardShortcuts from '../components/KeyboardShortcuts.astro';
 import WordleModal from '../components/game/WordleModal.astro';
 import ChatModal from '../components/chat/ChatModal.astro';
+import TerminalModal from '../components/terminal/TerminalModal.astro';
 
 interface Props {
   title?: string;
@@ -195,6 +196,15 @@ const jsonLd = {
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
+        const savedAccent = localStorage.getItem('accent');
+        if (savedAccent && savedAccent !== 'amber') {
+          document.documentElement.setAttribute('data-accent', savedAccent);
+        } else {
+          document.documentElement.removeAttribute('data-accent');
+        }
+        // Platform flag so shortcut hints render as ⌘ on Apple, ctrl elsewhere
+        const platform = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent || '';
+        document.documentElement.setAttribute('data-os', /mac|iphone|ipad|ipod/i.test(platform) ? 'mac' : 'other');
       }
       applyTheme();
       document.addEventListener('astro:after-swap', applyTheme);
@@ -230,6 +240,7 @@ const jsonLd = {
     <KeyboardShortcuts />
     <WordleModal />
     <ChatModal />
+    <TerminalModal />
 
     <!-- Route Progress Bar Controller -->
     <script>

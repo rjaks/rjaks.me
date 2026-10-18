@@ -59,15 +59,22 @@
           </div>
         </div>
         <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
+          <span class="text-[var(--color-text-secondary)]">Terminal</span>
+          <div class="flex items-center gap-0.5">
+            <kbd class="kbd-mac">⌘</kbd>
+            <kbd class="kbd-other">ctrl</kbd>
+            <kbd>k</kbd>
+          </div>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded-xs bg-[var(--color-bg)] border border-[var(--color-border-subtle)]">
           <span class="text-[var(--color-text-secondary)]">Help</span>
           <kbd>?</kbd>
         </div>
       </div>
     </div>
 
-    <div class="mt-5 pt-3 border-t border-[var(--color-border)] flex items-center justify-between text-[11px] text-[var(--color-text-secondary)] font-mono">
+    <div class="mt-5 pt-3 border-t border-[var(--color-border)] text-[11px] text-[var(--color-text-secondary)] font-mono">
       <span>Tip: Press ESC or click outside to dismiss</span>
-      <span class="text-[var(--color-accent)]">● live</span>
     </div>
   </div>
 </dialog>
@@ -84,6 +91,7 @@
   import { navigate } from 'astro:transitions/client';
   import { toggleThemeWithRipple } from '../utils/theme';
   import { registerModalAnimation } from '../utils/modal';
+  import { isMacPlatform } from '../utils/platform';
 
   let toastTimeout: number;
 
@@ -198,10 +206,35 @@
         return;
       }
 
-      // If Wordle or Chat modal is currently open, do not intercept keys for site navigation
+      // ⌘ + K (macOS) / Ctrl + K (Windows & Linux): toggle the interactive terminal
+      if ((e.key === 'k' || e.key === 'K') && (e.ctrlKey || (isMacPlatform() && e.metaKey))) {
+        e.preventDefault();
+        showToast('> terminal --interactive');
+        const terminal = document.getElementById('terminal-modal') as HTMLDialogElement | null;
+        if (terminal) {
+          if (terminal.open) terminal.close();
+          else terminal.showModal();
+        }
+        return;
+      }
+
+      // Backtick (`): toggle the interactive terminal
+      if (e.code === 'Backquote' && !e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        showToast('> terminal --interactive');
+        const terminal = document.getElementById('terminal-modal') as HTMLDialogElement | null;
+        if (terminal) {
+          if (terminal.open) terminal.close();
+          else terminal.showModal();
+        }
+        return;
+      }
+
+      // If a modal is currently open, do not intercept keys for site navigation
       const wordleModal = document.getElementById('wordle-modal') as HTMLDialogElement | null;
       const chatModal = document.getElementById('chat-modal') as HTMLDialogElement | null;
-      if (wordleModal?.open || chatModal?.open) {
+      const terminalModal = document.getElementById('terminal-modal') as HTMLDialogElement | null;
+      if (wordleModal?.open || chatModal?.open || terminalModal?.open) {
         return;
       }
 

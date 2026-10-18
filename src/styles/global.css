@@ -203,6 +203,19 @@ kbd:active {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 
+/* Platform-aware shortcut keycaps (⌘ on Apple, ctrl elsewhere) */
+.kbd-mac {
+  display: none;
+}
+
+html[data-os="mac"] .kbd-mac {
+  display: inline-block;
+}
+
+html[data-os="mac"] .kbd-other {
+  display: none;
+}
+
 /* Terminal Prompt Utilities */
 .terminal-prompt {
   font-family: var(--font-family-mono);
@@ -557,6 +570,185 @@ html.theme-transition *::after {
     opacity: 0.95;
     transform: scale(1.03);
   }
+}
+
+/* ==========================================================================
+   Accent Presets (driven by the terminal `theme` command)
+   ========================================================================== */
+
+html[data-accent="phosphor"] {
+  --color-accent: #10b981;
+  --color-accent-hover: #34d399;
+  --color-accent-secondary: #059669;
+  --color-prompt: #10b981;
+  --shadow-accent: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+html[data-accent="phosphor"][data-theme="light"] {
+  --color-accent: #059669;
+  --color-accent-hover: #047857;
+  --color-accent-secondary: #047857;
+  --color-prompt: #059669;
+  --shadow-accent: 0 0 16px rgba(5, 150, 105, 0.2);
+}
+
+html[data-accent="ice"] {
+  --color-accent: #22d3ee;
+  --color-accent-hover: #67e8f9;
+  --color-accent-secondary: #0891b2;
+  --color-prompt: #22d3ee;
+  --shadow-accent: 0 0 16px rgba(34, 211, 238, 0.25);
+}
+
+html[data-accent="ice"][data-theme="light"] {
+  --color-accent: #0891b2;
+  --color-accent-hover: #0e7490;
+  --color-accent-secondary: #0e7490;
+  --color-prompt: #0891b2;
+  --shadow-accent: 0 0 16px rgba(8, 145, 178, 0.2);
+}
+
+html[data-accent="magenta"] {
+  --color-accent: #e879f9;
+  --color-accent-hover: #f0abfc;
+  --color-accent-secondary: #c026d3;
+  --color-prompt: #e879f9;
+  --shadow-accent: 0 0 16px rgba(232, 121, 249, 0.25);
+}
+
+html[data-accent="magenta"][data-theme="light"] {
+  --color-accent: #c026d3;
+  --color-accent-hover: #a21caf;
+  --color-accent-secondary: #a21caf;
+  --color-prompt: #c026d3;
+  --shadow-accent: 0 0 16px rgba(192, 38, 211, 0.2);
+}
+
+/* ==========================================================================
+   Interactive Terminal (REPL) Overlay
+   ========================================================================== */
+
+.term-shell {
+  display: flex;
+  flex-direction: column;
+  height: min(78vh, 600px);
+  overflow: hidden;
+}
+
+.term-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.78rem;
+  line-height: 1.65;
+  scrollbar-width: thin;
+}
+
+@media (min-width: 640px) {
+  .term-body {
+    font-size: 0.82rem;
+  }
+}
+
+.term-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.term-body::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.term-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.term-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.term-tone-default { color: var(--color-text-primary); }
+.term-tone-secondary { color: var(--color-text-secondary); }
+.term-tone-muted { color: var(--color-text-muted); }
+.term-tone-accent { color: var(--color-accent); }
+.term-tone-success { color: #34d399; }
+.term-tone-error { color: #f87171; }
+.term-tone-warn { color: #fbbf24; }
+
+[data-theme="light"] .term-tone-success { color: #059669; }
+[data-theme="light"] .term-tone-error { color: #dc2626; }
+[data-theme="light"] .term-tone-warn { color: #b45309; }
+
+.term-user { color: var(--color-accent); font-weight: 700; }
+
+.term-path {
+  color: #22d3ee;
+}
+
+[data-theme="light"] .term-path {
+  color: #0891b2;
+}
+
+.term-cmd { color: var(--color-text-primary); }
+
+.term-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.term-link:hover {
+  color: var(--color-accent-hover);
+}
+
+.term-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem 0.8rem;
+  border-top: 1px solid var(--color-border-subtle);
+  font-family: var(--font-family-mono);
+  font-size: 0.78rem;
+  background: var(--color-surface);
+}
+
+@media (min-width: 640px) {
+  .term-input-row {
+    font-size: 0.82rem;
+  }
+}
+
+.term-prompt-part {
+  white-space: nowrap;
+}
+
+.term-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: inherit;
+  caret-color: var(--color-accent);
+}
+
+.term-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.term-matrix {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 40;
+  pointer-events: none;
+  border-radius: inherit;
 }
 
 /* Accessibility: Respect Reduced Motion */

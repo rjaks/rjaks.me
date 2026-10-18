@@ -1,0 +1,145 @@
+---
+// src/components/terminal/TerminalModal.astro
+// Interactive terminal (REPL) overlay. The virtual filesystem is generated from
+// the site's real data and passed to the client via a JSON bridge.
+import { projects } from '../../data/projects';
+import { skillCategories } from '../../data/skills';
+import { experiences } from '../../data/experience';
+import { contactLinks } from '../../data/contact';
+import { nowItems, hobbies } from '../../data/now';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => ({
+    id: post.id,
+    title: post.data.title,
+    description: post.data.description,
+    pubDate: post.data.pubDate.toISOString(),
+    tags: post.data.tags,
+  }));
+
+const payload = { projects, skillCategories, experiences, contactLinks, nowItems, hobbies, posts };
+---
+
+<dialog
+  id="terminal-modal"
+  class="modal-animated fixed inset-0 m-auto z-50 p-3 sm:p-4 bg-transparent border-none text-inherit open:flex items-center justify-center w-full h-full max-w-none max-h-none"
+  aria-label="Interactive terminal"
+>
+  <div class="modal-panel term-shell w-[calc(100%-0.5rem)] sm:w-full max-w-2xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl rounded-md overflow-hidden relative">
+    <!-- Terminal window chrome -->
+    <div class="flex items-center justify-between gap-2 px-3 py-2 border-b border-[var(--color-border)] bg-[var(--color-surface)] shrink-0">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444] opacity-75"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-[#F59E0B] opacity-75"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-[#10B981] opacity-75"></span>
+      </div>
+      <span class="flex-1 text-center font-mono text-[11px] text-[var(--color-text-muted)] truncate">
+        rjaks — interactive shell
+      </span>
+      <span class="w-[42px] shrink-0" aria-hidden="true"></span>
+    </div>
+
+    <!-- Scrollback buffer -->
+    <div id="term-scroll" class="term-body" role="log" aria-live="polite"></div>
+
+    <!-- Command input -->
+    <div class="term-input-row">
+      <span id="term-prompt" class="term-prompt-part shrink-0" aria-hidden="true">
+        <span class="term-user">guest@rjaks</span><span class="term-path">:~</span><span class="term-user">$</span>
+      </span>
+      <input
+        id="term-input"
+        type="text"
+        class="term-input"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        aria-label="Terminal command input"
+      />
+    </div>
+  </div>
+</dialog>
+
+<!-- Data bridge: real site data, consumed by the client shell -->
+<script type="application/json" id="term-fs-data" is:inline set:html={JSON.stringify(payload)} />
+
+<script>
+  import { registerModalAnimation } from '../../utils/modal';
+  import { createTerminal } from '../../utils/terminal/engine';
+  import type { FsPayload } from '../../utils/terminal/fs';
+  import { modifierLabel } from '../../utils/platform';
+
+  function initTerminal() {
+    const dialog = document.getElementById('terminal-modal') as HTMLDialogElement | null;
+    const dataEl = document.getElementById('term-fs-data');
+    if (!dialog || !dataEl) return;
+
+    registerModalAnimation(dialog);
+
+    if (dialog.dataset.initialized === 'true') return;
+    dialog.dataset.initialized = 'true';
+
+    const scrollback = dialog.querySelector<HTMLElement>('#term-scroll');
+    const input = dialog.querySelector<HTMLInputElement>('#term-input');
+    const prompt = dialog.querySelector<HTMLElement>('#term-prompt');
+    if (!scrollback || !input || !prompt) return;
+
+    let payload: FsPayload;
+    try {
+      payload = JSON.parse(dataEl.textContent || '{}') as FsPayload;
+    } catch {
+      return;
+    }
+
+    const term = createTerminal({ dialog, scrollback, input, prompt }, payload);
+
+    const nativeShow = dialog.showModal.bind(dialog);
+    dialog.showModal = function () {
+      document.body.style.overflow = 'hidden';
+      nativeShow();
+      term.boot();
+      window.setTimeout(() => term.focus(), 60);
+    };
+
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = '';
+    });
+
+    dialog.addEventListener('click', (event) => {
+      const panel = dialog.querySelector('.modal-panel');
+      if (panel) {
+        const rect = panel.getBoundingClientRect();
+        const outside =
+          event.clientX < rect.left ||
+          event.clientX > rect.right ||
+          event.clientY < rect.top ||
+          event.clientY > rect.bottom;
+        if (outside) dialog.close();
+      } else if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+
+    document.querySelectorAll<HTMLElement>('.open-terminal-trigger').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!dialog.open) dialog.showModal();
+      });
+    });
+
+    // Reflect the correct modifier key (⌘ on Apple, Ctrl elsewhere) in tooltips
+    const shortcutTitle = `Interactive Terminal (${modifierLabel()}+k)`;
+    document.querySelectorAll<HTMLElement>('[data-terminal-title]').forEach((btn) => {
+      btn.title = shortcutTitle;
+    });
+
+    if (window.location.hash === '#terminal' && !dialog.open) {
+      dialog.showModal();
+    }
+  }
+
+  initTerminal();
+  document.addEventListener('astro:page-load', initTerminal);
+</script>
