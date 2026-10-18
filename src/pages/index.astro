@@ -91,7 +91,8 @@ const recentPosts = allPosts
       <div class="flex items-center gap-2 min-w-0">
         <span class="font-mono text-xs text-[var(--color-accent)] font-bold shrink-0">~/projects $</span>
         <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)] truncate">
-          Selected Projects
+          <span class="sm:hidden">Projects</span>
+          <span class="hidden sm:inline">Selected Projects</span>
         </h2>
       </div>
 
@@ -276,7 +277,8 @@ const recentPosts = allPosts
       <div class="flex items-center gap-2">
         <span class="font-mono text-xs text-[var(--color-prompt)] font-bold">~/stack $</span>
         <h2 class="font-heading text-base sm:text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
-          Technologies & Tools
+          <span class="sm:hidden">Tech & Tools</span>
+          <span class="hidden sm:inline">Technologies & Tools</span>
         </h2>
       </div>
       <a href="/skills" class="font-mono text-xs text-[var(--color-accent)] hover:underline inline-flex items-center gap-1">
