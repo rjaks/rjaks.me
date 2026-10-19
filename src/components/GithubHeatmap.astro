@@ -273,28 +273,28 @@ const lastDate = days[days.length - 1]?.date ?? '';
   #heatmap-container rect.contribution-cell:focus {
     stroke: var(--color-accent);
     stroke-width: 1.5px;
-    filter: brightness(1.35) drop-shadow(0 0 3px rgba(245, 158, 11, 0.4));
+    filter: brightness(1.35) drop-shadow(0 0 3px var(--color-heat-glow));
   }
 
   #heatmap-container .contribution-cell.level-0 {
-    fill: var(--color-border-subtle);
-    background-color: var(--color-border-subtle);
+    fill: var(--color-heat-0);
+    background-color: var(--color-heat-0);
   }
   #heatmap-container .contribution-cell.level-1 {
-    fill: #78350f;
-    background-color: #78350f;
+    fill: var(--color-heat-1);
+    background-color: var(--color-heat-1);
   }
   #heatmap-container .contribution-cell.level-2 {
-    fill: #b45309;
-    background-color: #b45309;
+    fill: var(--color-heat-2);
+    background-color: var(--color-heat-2);
   }
   #heatmap-container .contribution-cell.level-3 {
-    fill: #d97706;
-    background-color: #d97706;
+    fill: var(--color-heat-3);
+    background-color: var(--color-heat-3);
   }
   #heatmap-container .contribution-cell.level-4 {
-    fill: #f59e0b;
-    background-color: #f59e0b;
+    fill: var(--color-heat-4);
+    background-color: var(--color-heat-4);
   }
 
   #heatmap-container text.month-label {
@@ -307,27 +307,6 @@ const lastDate = days[days.length - 1]?.date ?? '';
   [data-theme="light"] #heatmap-container rect.contribution-cell:focus {
     stroke: var(--color-accent);
     stroke-width: 1.5px;
-    filter: drop-shadow(0 1px 3px rgba(217, 119, 6, 0.35));
-  }
-
-  [data-theme="light"] #heatmap-container .contribution-cell.level-0 {
-    fill: #e2e8f0;
-    background-color: #e2e8f0;
-  }
-  [data-theme="light"] #heatmap-container .contribution-cell.level-1 {
-    fill: #fcd34d;
-    background-color: #fcd34d;
-  }
-  [data-theme="light"] #heatmap-container .contribution-cell.level-2 {
-    fill: #f59e0b;
-    background-color: #f59e0b;
-  }
-  [data-theme="light"] #heatmap-container .contribution-cell.level-3 {
-    fill: #b45309;
-    background-color: #b45309;
-  }
-  [data-theme="light"] #heatmap-container .contribution-cell.level-4 {
-    fill: #78350f;
-    background-color: #78350f;
+    filter: drop-shadow(0 1px 3px var(--color-heat-glow));
   }
 </style>

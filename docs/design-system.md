@@ -35,6 +35,15 @@ This site merges the ultra-clean, readable editorial structure of developer port
 | `--color-accent-secondary` | Deep Amber | `#D97706` | Secondary accent, subtle badges |
 | `--color-prompt` | Warm Amber Prompt | `#F59E0B` | Command prompt symbol |
 
+### Heatmap Scale (Dark / `:root`)
+
+| CSS Variable | Level 0 | Level 1 | Level 2 | Level 3 | Level 4 |
+|---|---|---|---|---|---|
+| `--color-heat-N` | `#21262D` | `#78350F` | `#B45309` | `#D97706` | `#F59E0B` |
+| `--color-heat-glow` | — | — | — | — | `rgba(245,158,11,0.4)` |
+
+Level 0 mirrors `--color-border-subtle`. Each accent preset (`phosphor`, `ice`, `magenta`) redefines the full 0–4 scale plus its glow for both modes.
+
 ### Light Mode (`[data-theme="light"]`)
 
 | CSS Variable | Name | Hex | Usage |
@@ -106,6 +115,7 @@ This site merges the ultra-clean, readable editorial structure of developer port
 ### 4. GitHub Contribution Heatmap
 - Live contribution grid styled to match the dark/light palette.
 - Displays yearly total badge (`[XXX this year]`) and kavin.me inspired subtext.
+- Cell fills use theme tokens (`--color-heat-0` … `--color-heat-4`) so the chart follows both the active light/dark mode and the accent preset (`amber`, `phosphor`, `ice`, `magenta`). Never hardcode hex values in `GithubHeatmap.astro`.
 
 ### 5. Terminal Panels & Cards
 - Minimalist borders (`1px solid var(--color-border)`), crisp corners (`border-radius: var(--radius-md)`), with subtle amber border glow on hover.
