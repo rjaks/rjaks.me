@@ -592,6 +592,21 @@ html.theme-transition *::after {
   }
 }
 
+/* Hero avatar stays mono in dark mode (terminal aesthetic) and colored in light */
+.hero-avatar {
+  transition: filter 300ms;
+}
+
+[data-theme="dark"] .hero-avatar {
+  filter: grayscale(1) contrast(1.05);
+}
+
+/* Hover must come last so it wins the specificity tie with the dark rule */
+[data-theme="dark"] .hero-avatar:hover,
+[data-theme="light"] .hero-avatar {
+  filter: none;
+}
+
 /* ==========================================================================
    Accent Presets (driven by the terminal `theme` command)
    ========================================================================== */
