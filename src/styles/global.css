@@ -547,8 +547,10 @@ html.theme-transition *::after {
   -webkit-mask-image: radial-gradient(ellipse 80% 65% at 50% 15%, #000 50%, transparent 100%);
 }
 
+/* Light mode: --color-border dots vanish on the near-white bg, so darken the dot instead */
 [data-theme="light"] .terminal-bg-grid {
-  opacity: 0.16;
+  background-image: radial-gradient(var(--color-text-muted) 1px, transparent 1px);
+  opacity: 0.28;
 }
 
 /* Hero Ambient Breathing Amber Glow */
