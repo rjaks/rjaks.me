@@ -6,6 +6,7 @@ import KeyboardShortcuts from '../components/KeyboardShortcuts.astro';
 import WordleModal from '../components/game/WordleModal.astro';
 import ChatModal from '../components/chat/ChatModal.astro';
 import TerminalModal from '../components/terminal/TerminalModal.astro';
+import SiteDog from '../components/SiteDog.astro';
 
 interface Props {
   title?: string;
@@ -205,6 +206,10 @@ const jsonLd = {
         // Platform flag so shortcut hints render as ⌘ on Apple, ctrl elsewhere
         const platform = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent || '';
         document.documentElement.setAttribute('data-os', /mac|iphone|ipad|ipod/i.test(platform) ? 'mac' : 'other');
+        // Site dog dismissal, applied before first paint so it never flashes back
+        if (localStorage.getItem('dog') === 'off') {
+          document.documentElement.setAttribute('data-dog', 'off');
+        }
       }
       applyTheme();
       document.addEventListener('astro:after-swap', applyTheme);
@@ -241,6 +246,7 @@ const jsonLd = {
     <WordleModal />
     <ChatModal />
     <TerminalModal />
+    <SiteDog class="fixed right-3 bottom-3 z-30 w-16 h-16 lg:hidden" />
 
     <!-- Route Progress Bar Controller -->
     <script>

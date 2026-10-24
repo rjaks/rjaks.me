@@ -48,6 +48,7 @@ export interface FsPayload {
     github?: string;
   }[];
   skillCategories: { name: string; skills: string[] }[];
+  uses: { group: string; name: string; note: string; link?: string }[];
   experiences: {
     company: string;
     role: string;
@@ -146,6 +147,18 @@ function nowFile(p: FsPayload): string {
   return lines.join('\n');
 }
 
+function usesFile(p: FsPayload): string {
+  const lines = ['# Uses', '', 'Models, tooling, editor and stack — no wishlist.', ''];
+  for (const group of [...new Set(p.uses.map((u) => u.group))]) {
+    lines.push(`## ${group}`);
+    for (const u of p.uses.filter((i) => i.group === group)) {
+      lines.push(`- ${u.name}${u.note ? ` — ${u.note}` : ''}${u.link ? ` (${u.link})` : ''}`);
+    }
+    lines.push('');
+  }
+  return lines.join('\n');
+}
+
 function postFile(post: FsPayload['posts'][number]): string {
   const date = new Date(post.pubDate).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -167,6 +180,7 @@ export function buildFs(payload: FsPayload): DirNode {
   home.children['README.md'] = file(README_MD);
   home.children['contact.md'] = file(contactFile(payload.contactLinks));
   home.children['now.md'] = file(nowFile(payload));
+  home.children['uses.md'] = file(usesFile(payload));
 
   const projects = dir();
   for (const p of payload.projects) {

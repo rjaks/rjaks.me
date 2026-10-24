@@ -1,0 +1,56 @@
+---
+// src/components/SiteDog.astro
+// Accent-aware dancing dog sticker. Click to dismiss for good.
+// Rendered inline in the desktop sidebar and as a fixed corner sticker below lg.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={['site-dog', className]}
+  data-site-dog
+  aria-label="Hide the dancing dog"
+  title="dancing dog by @theboogley"
+>
+  <img src="/images/dog/amber.gif" alt="" width="600" height="600" decoding="async" data-site-dog-img />
+</button>
+
+<script>
+  function syncDogAccent() {
+    const accent = document.documentElement.getAttribute('data-accent') || 'amber';
+    document.querySelectorAll<HTMLImageElement>('[data-site-dog-img]').forEach((img) => {
+      const next = `/images/dog/${accent}.gif`;
+      if (!img.src.endsWith(next)) img.src = next;
+    });
+  }
+
+  function initSiteDog() {
+    document.querySelectorAll<HTMLElement>('[data-site-dog]').forEach((el) => {
+      if (el.dataset.bound === 'true') return;
+      el.dataset.bound = 'true';
+      el.addEventListener('click', () => {
+        try {
+          localStorage.setItem('dog', 'off');
+        } catch {
+          /* private mode — dismiss for this page only */
+        }
+        document.documentElement.setAttribute('data-dog', 'off');
+      });
+    });
+
+    syncDogAccent();
+
+    // One observer for the whole session; accent only changes from the terminal.
+    const store = window as Window & { __siteDogObserver?: MutationObserver };
+    if (!store.__siteDogObserver) {
+      store.__siteDogObserver = new MutationObserver(syncDogAccent);
+      store.__siteDogObserver.observe(document.documentElement, { attributeFilter: ['data-accent'] });
+    }
+  }
+
+  initSiteDog();
+  document.addEventListener('astro:page-load', initSiteDog);
+</script>

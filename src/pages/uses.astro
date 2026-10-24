@@ -1,0 +1,112 @@
+---
+// src/pages/uses.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { uses, useGroups, groupNotes } from '../data/uses';
+
+const grouped = useGroups
+  .map((group) => ({ group, items: uses.filter((item) => item.group === group) }))
+  .filter((entry) => entry.items.length > 0);
+---
+
+<BaseLayout
+  title="Uses — Adrian Reforsado (rjaks)"
+  description="The AI models, agent tooling, editor, and stack Adrian Reforsado actually runs day to day."
+>
+  <div class="space-y-6">
+    <!-- Terminal Prompt Breadcrumb -->
+    <div class="reveal-on-scroll stagger-1 space-y-4">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-prompt)] font-bold">
+        <span>rjaks:~$</span>
+        <span class="text-[var(--color-text-primary)]">cat ~/uses.md</span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[var(--color-border-subtle)] pb-4">
+        <div>
+          <h1 class="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+            Uses
+          </h1>
+          <p class="font-sans text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1.5">
+            The models, tooling, and setup behind the work — not a wishlist.
+          </p>
+        </div>
+        <div class="font-mono text-xs text-[var(--color-text-muted)] shrink-0">
+          [{uses.length} entries]
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-5 mt-6">
+      {grouped.map(({ group, items }) => (
+        <section>
+          <div class="flex items-center justify-between gap-2 mb-2.5 pb-2 border-b border-[var(--color-border-subtle)]">
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--color-accent)] font-mono text-xs font-bold">&gt;</span>
+              <h2 class="font-heading text-sm font-extrabold text-[var(--color-text-primary)]">
+                {group}
+              </h2>
+            </div>
+            <span class="font-mono text-[9px] sm:text-[10px] text-[var(--color-text-muted)]">
+              {items.length}
+            </span>
+          </div>
+
+          {groupNotes[group] && (
+            <p class="font-mono text-[10px] leading-relaxed text-[var(--color-text-muted)] mb-2.5">
+              {groupNotes[group]}
+            </p>
+          )}
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {items.map((item) => {
+              const Tag = item.link ? 'a' : 'div';
+              return (
+                <Tag
+                  {...(item.link ? { href: item.link, target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  class:list={[
+                    'group flex items-start gap-2.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md p-2.5 transition-colors',
+                    item.link && 'hover:border-[var(--color-accent)]'
+                  ]}
+                >
+                  {item.icon ? (
+                    <span
+                      class="uses-logo mt-0.5 shrink-0 text-[var(--color-text-secondary)] group-hover:text-[var(--color-accent)]"
+                      style={`--logo: url("/logos/${item.icon}")`}
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <span class="font-mono text-xs text-[var(--color-accent)] w-[18px] text-center shrink-0 mt-0.5" aria-hidden="true">
+                      &gt;
+                    </span>
+                  )}
+                  <div class="min-w-0">
+                    <div class="font-mono text-[11px] font-bold text-[var(--color-text-primary)]">
+                      {item.name}
+                    </div>
+                    <p class="font-sans text-[11px] leading-snug text-[var(--color-text-secondary)] mt-0.5">
+                      {item.note}
+                    </p>
+                  </div>
+                </Tag>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Back to Index link / shortcut hint -->
+    <div class="pt-4 flex items-center justify-between font-mono text-xs text-[var(--color-text-secondary)]">
+      <div class="flex items-center gap-4">
+        <a href="/skills" class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-1">
+          <span>← skills</span>
+        </a>
+        <a href="/" class="hover:text-[var(--color-accent)] transition-colors inline-flex items-center gap-1">
+          <span>cd ~</span>
+        </a>
+      </div>
+      <span class="text-[var(--color-text-muted)] text-[11px]">
+        Press <kbd>h</kbd> for home, <kbd>s</kbd> for skills
+      </span>
+    </div>
+  </div>
+</BaseLayout>

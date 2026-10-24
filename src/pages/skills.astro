@@ -27,8 +27,9 @@ const totalSkills = skillCategories.reduce((acc, cat) => acc + cat.skills.length
             Languages, frameworks, databases, and tooling I use across frontend, backend, and DevOps.
           </p>
         </div>
-        <div class="font-mono text-xs text-[var(--color-text-muted)] shrink-0">
-          [{totalSkills} technologies tracked]
+        <div class="flex items-center gap-3 font-mono text-xs shrink-0">
+          <span class="text-[var(--color-text-muted)]">[{totalSkills} technologies tracked]</span>
+          <a href="/uses" class="text-[var(--color-accent)] hover:underline">~/uses</a>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ export const HELP: HelpEntry[] = [
   { group: 'Read', name: 'about', desc: 'who is rjaks?' },
   { group: 'Read', name: 'projects', desc: 'list selected projects' },
   { group: 'Read', name: 'skills', desc: 'languages, frameworks & tools' },
+  { group: 'Read', name: 'uses', desc: 'models, tooling & my setup' },
   { group: 'Read', name: 'experience', desc: 'work history' },
   { group: 'Read', name: 'writing', desc: 'recent blog posts' },
   { group: 'Read', name: 'now', desc: 'what I am up to lately' },

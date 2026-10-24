@@ -1,4 +1,5 @@
 ---
+import SiteDog from './SiteDog.astro';
 const pathname = Astro.url.pathname;
 const navItems = [
   { href: '/work', label: 'Work', path: '~/work', key: 'w', active: pathname.startsWith('/work') || pathname.startsWith('/experience'), mobile: true },
@@ -332,16 +333,19 @@ const navItems = [
       </button>
     </div>
 
-    <div class="pt-2 font-mono space-y-0.5">
-      <div class="text-xs text-[var(--color-text-secondary)]">
-        get in touch:
+    <div class="pt-2 font-mono flex items-end justify-between gap-2">
+      <div class="min-w-0 space-y-0.5">
+        <div class="text-xs text-[var(--color-text-secondary)]">
+          get in touch:
+        </div>
+        <a 
+          href="mailto:contact@rjaks.me" 
+          class="text-sm font-bold text-[var(--color-accent)] hover:underline block truncate"
+        >
+          contact@rjaks.me
+        </a>
       </div>
-      <a 
-        href="mailto:contact@rjaks.me" 
-        class="text-sm font-bold text-[var(--color-accent)] hover:underline block truncate"
-      >
-        contact@rjaks.me
-      </a>
+      <SiteDog class="w-12 h-12 shrink-0" />
     </div>
   </div>
 </aside>

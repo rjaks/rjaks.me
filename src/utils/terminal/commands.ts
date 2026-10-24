@@ -420,6 +420,19 @@ export const commands: Record<string, CommandFn> = {
     return out;
   },
 
+  uses(ctx) {
+    const out: TermLine[] = [{ text: 'uses & setup', tone: 'accent' }, { text: '' }];
+    for (const group of [...new Set(ctx.payload.uses.map((u) => u.group))]) {
+      out.push({ text: `${group}:`, tone: 'secondary' });
+      for (const u of ctx.payload.uses.filter((i) => i.group === group)) {
+        out.push({ text: `  ${u.name}${u.note ? ` — ${u.note}` : ''}`, href: u.link, external: true });
+      }
+      out.push({ text: '' });
+    }
+    out.push({ text: "'cat ~/uses.md' for the same list in the virtual fs", tone: 'muted' });
+    return out;
+  },
+
   experience(ctx) {
     const out: TermLine[] = [{ text: 'experience', tone: 'accent' }, { text: '' }];
     for (const e of ctx.payload.experiences) {
