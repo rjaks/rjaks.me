@@ -191,6 +191,16 @@ export function createTerminal(els: TerminalElements, payload: FsPayload): Termi
       }
       return startMatrix();
     },
+    dog: (visible) => {
+      try {
+        if (visible) localStorage.removeItem('dog');
+        else localStorage.setItem('dog', 'off');
+      } catch {
+        /* noop */
+      }
+      document.documentElement.setAttribute('data-dog', visible ? 'on' : 'off');
+      return visible;
+    },
     history: () => history,
   };
 

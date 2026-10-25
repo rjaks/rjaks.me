@@ -46,6 +46,7 @@ const { class: className } = Astro.props;
   }
 
   function dismissSiteDog() {
+    closeDogCredits();
     try {
       localStorage.setItem('dog', 'off');
     } catch {

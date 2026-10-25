@@ -51,6 +51,20 @@ const daily = getDailyWord();
             <path d="M12 17h.01"></path>
           </svg>
         </button>
+
+        <!-- Close (mobile full-screen only: no backdrop or Escape key available) -->
+        <button 
+          type="button"
+          id="modal-btn-close"
+          class="sm:hidden p-1 rounded-xs border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+          title="Close"
+          aria-label="Close Wordle"
+        >
+          <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
       </div>
     </div>
 
@@ -252,7 +266,7 @@ const daily = getDailyWord();
 
     /* Toast would sit off-screen above a full-height dialog */
     #m-wordle-toast {
-      top: 5.5rem;
+      top: 5.5rem !important;
     }
 
     #m-wordle-keyboard {
@@ -347,6 +361,7 @@ const daily = getDailyWord();
     const helpPanel = document.getElementById('m-help-panel');
     const btnHelp = document.getElementById('modal-btn-help');
     const btnHelpGotIt = document.getElementById('m-help-gotit');
+    const btnClose = document.getElementById('modal-btn-close');
 
     // Action and Mode elements
     const modeDaily = document.getElementById('modal-mode-daily');
@@ -417,6 +432,8 @@ const daily = getDailyWord();
     helpPanel?.addEventListener('click', (e) => {
       e.stopPropagation();
     });
+
+    btnClose?.addEventListener('click', () => modal.close());
 
     // State Variables
     let currentMode: 'daily' | 'practice' = 'daily';

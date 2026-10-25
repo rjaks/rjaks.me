@@ -51,6 +51,8 @@ export interface CmdCtx {
   theme: { current: () => string; set: (name: string) => string };
   /** Toggle the matrix easter egg; returns whether it is now active. */
   toggleMatrix: () => boolean;
+  /** Show or hide the dancing dog sticker; returns whether it is now visible. */
+  dog: (visible: boolean) => boolean;
   /** Command history, oldest → newest. */
   history: () => string[];
 }
@@ -492,6 +494,16 @@ export const commands: Record<string, CommandFn> = {
 
   cowsay(_ctx, args) {
     return cowsay(args.join(' '));
+  },
+
+  dog(ctx, args) {
+    const off = ['off', 'hide', 'no'].includes((args[0] || '').toLowerCase());
+    ctx.dog(!off);
+    return [
+      off
+        ? { text: 'dancing dog hidden. type \'dog\' to bring it back.', tone: 'muted' }
+        : { text: 'dancing dog is back. type \'dog off\' to hide it.', tone: 'muted' },
+    ];
   },
 
   sudo(_ctx, args) {
