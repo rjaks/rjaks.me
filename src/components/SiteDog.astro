@@ -1,6 +1,6 @@
 ---
 // src/components/SiteDog.astro
-// Accent-aware dancing dog sticker. Click to dismiss for good.
+// Accent-aware dancing dog sticker with a custom credit popover.
 // Rendered inline in the desktop sidebar and as a fixed corner sticker below lg.
 interface Props {
   class?: string;
@@ -8,15 +8,22 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<button
-  type="button"
-  class:list={['site-dog', className]}
-  data-site-dog
-  aria-label="Hide the dancing dog"
-  title="dancing dog by @theboogley"
->
-  <img src="/images/dog/amber.gif" alt="" width="600" height="600" decoding="async" data-site-dog-img />
-</button>
+<div class:list={['site-dog', className]} data-site-dog>
+  <button
+    type="button"
+    class="site-dog-btn"
+    aria-label="Credit for the dancing dog"
+    aria-expanded="false"
+    data-site-dog-btn
+  >
+    <img src="/images/dog/amber.gif" alt="" width="600" height="600" decoding="async" data-site-dog-img />
+  </button>
+
+  <div class="site-dog-credit" data-site-dog-credit hidden>
+    <span>dancing dog by @theboogley</span>
+    <button type="button" class="site-dog-hide" data-site-dog-hide>hide</button>
+  </div>
+</div>
 
 <script>
   function syncDogAccent() {
@@ -27,27 +34,73 @@ const { class: className } = Astro.props;
     });
   }
 
+  function closeDogCredits() {
+    document.querySelectorAll<HTMLElement>('[data-site-dog]').forEach((root) => {
+      const pop = root.querySelector<HTMLElement>('[data-site-dog-credit]');
+      const btn = root.querySelector<HTMLElement>('[data-site-dog-btn]');
+      if (pop && !pop.hidden) {
+        pop.hidden = true;
+        btn?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function dismissSiteDog() {
+    try {
+      localStorage.setItem('dog', 'off');
+    } catch {
+      /* private mode — dismiss for this page only */
+    }
+    document.documentElement.setAttribute('data-dog', 'off');
+  }
+
   function initSiteDog() {
-    document.querySelectorAll<HTMLElement>('[data-site-dog]').forEach((el) => {
-      if (el.dataset.bound === 'true') return;
-      el.dataset.bound = 'true';
-      el.addEventListener('click', () => {
-        try {
-          localStorage.setItem('dog', 'off');
-        } catch {
-          /* private mode — dismiss for this page only */
-        }
-        document.documentElement.setAttribute('data-dog', 'off');
+    document.querySelectorAll<HTMLElement>('[data-site-dog]').forEach((root) => {
+      if (root.dataset.bound === 'true') return;
+      root.dataset.bound = 'true';
+
+      const btn = root.querySelector<HTMLButtonElement>('[data-site-dog-btn]');
+      const pop = root.querySelector<HTMLElement>('[data-site-dog-credit]');
+      if (!btn || !pop) return;
+
+      btn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const open = pop.hidden;
+        pop.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
       });
+
+      root.querySelector('[data-site-dog-hide]')?.addEventListener('click', dismissSiteDog);
     });
 
     syncDogAccent();
 
-    // One observer for the whole session; accent only changes from the terminal.
-    const store = window as Window & { __siteDogObserver?: MutationObserver };
+    // Listeners and the accent observer live for the whole session, not per page.
+    const store = window as Window & {
+      __siteDogObserver?: MutationObserver;
+      __siteDogGlobal?: boolean;
+    };
     if (!store.__siteDogObserver) {
       store.__siteDogObserver = new MutationObserver(syncDogAccent);
       store.__siteDogObserver.observe(document.documentElement, { attributeFilter: ['data-accent'] });
+    }
+    if (!store.__siteDogGlobal) {
+      store.__siteDogGlobal = true;
+      document.addEventListener('click', (event) => {
+        const target = event.target as Node;
+        document.querySelectorAll<HTMLElement>('[data-site-dog]').forEach((root) => {
+          if (!root.contains(target)) {
+            const pop = root.querySelector<HTMLElement>('[data-site-dog-credit]');
+            if (pop && !pop.hidden) {
+              pop.hidden = true;
+              root.querySelector('[data-site-dog-btn]')?.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeDogCredits();
+      });
     }
   }
 

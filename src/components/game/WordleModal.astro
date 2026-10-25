@@ -221,6 +221,45 @@ const daily = getDailyWord();
     overflow: hidden !important;
   }
 
+  /* Mobile: edge-to-edge full-screen game */
+  @media (max-width: 639px) {
+    dialog#wordle-modal {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    dialog#wordle-modal .modal-panel {
+      max-width: 100%;
+      height: 100%;
+    }
+
+    dialog#wordle-modal .terminal-panel {
+      max-width: 100% !important;
+      height: 100% !important;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* Center the board in the free space without stretching its rows */
+    #m-wordle-board {
+      margin-block: auto;
+    }
+
+    /* Toast would sit off-screen above a full-height dialog */
+    #m-wordle-toast {
+      top: 5.5rem;
+    }
+
+    #m-wordle-keyboard {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+
   .m-key-btn {
     min-width: 0 !important;
     touch-action: manipulation;

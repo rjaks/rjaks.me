@@ -563,8 +563,12 @@ html.theme-transition *::after {
   transition: background-color 150ms ease;
 }
 
-/* Site Dog — accent-aware sticker, click to dismiss */
-.site-dog {
+/* Site Dog — accent-aware sticker with a custom credit popover */
+/* No position/display here: the caller sets `relative`/`fixed` and `lg:hidden`. */
+.site-dog-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
   padding: 0;
   background: none;
   border: none;
@@ -573,12 +577,11 @@ html.theme-transition *::after {
   transition: opacity 150ms ease, transform 150ms ease;
 }
 
-.site-dog:hover {
+.site-dog-btn:hover {
   opacity: 1;
-  transform: translateY(-2px);
 }
 
-.site-dog:active {
+.site-dog-btn:active {
   transform: scale(0.94);
 }
 
@@ -587,6 +590,45 @@ html.theme-transition *::after {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.site-dog-credit {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: 220px;
+  padding: 5px 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.site-dog-credit[hidden] {
+  display: none;
+}
+
+.site-dog-hide {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-dog-hide:hover {
+  text-decoration-thickness: 2px;
 }
 
 html[data-dog="off"] .site-dog {
