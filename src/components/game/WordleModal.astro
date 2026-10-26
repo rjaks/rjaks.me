@@ -153,30 +153,30 @@ const daily = getDailyWord();
       <div class="flex justify-center gap-0.5 sm:gap-1.5 w-full">
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((k) => (
           <button 
-            class="m-key-btn flex-1 aspect-auto h-13 sm:h-auto sm:aspect-square max-w-none sm:max-w-[44px] flex items-center justify-center font-mono font-bold text-sm md:text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+            class="m-key-btn flex-1 aspect-auto h-14 sm:h-auto sm:aspect-square max-w-none sm:max-w-[44px] flex items-center justify-center font-mono font-bold text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-all cursor-pointer shadow-xs" 
             data-key={k}
           >
             {k}
           </button>
         ))}
       </div>
-      <!-- Row 2: 9 Keys (half-key spacers only on desktop) -->
+      <!-- Row 2: 9 Keys + half-key spacers for the typewriter offset -->
       <div class="flex justify-center gap-0.5 sm:gap-1.5 w-full">
-        <div class="hidden sm:block flex-[0.5] max-w-[22px] pointer-events-none"></div>
+        <div class="flex-[0.5] max-w-[22px] pointer-events-none"></div>
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((k) => (
           <button 
-            class="m-key-btn flex-1 aspect-auto h-13 sm:h-auto sm:aspect-square max-w-none sm:max-w-[44px] flex items-center justify-center font-mono font-bold text-sm md:text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+            class="m-key-btn flex-1 aspect-auto h-14 sm:h-auto sm:aspect-square max-w-none sm:max-w-[44px] flex items-center justify-center font-mono font-bold text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-all cursor-pointer shadow-xs" 
             data-key={k}
           >
             {k}
           </button>
         ))}
-        <div class="hidden sm:block flex-[0.5] max-w-[22px] pointer-events-none"></div>
+        <div class="flex-[0.5] max-w-[22px] pointer-events-none"></div>
       </div>
       <!-- Row 3: Enter + 7 Keys + Backspace -->
       <div class="flex justify-center gap-0.5 sm:gap-1.5 w-full">
         <button 
-          class="m-key-btn flex-[1.4] max-w-none sm:flex-[1.3] sm:max-w-[58px] self-stretch flex items-center justify-center gap-1 font-mono font-bold text-[10px] sm:text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+          class="m-key-btn flex-[1.3] max-w-[58px] self-stretch flex items-center justify-center gap-1 font-mono font-bold text-[10px] sm:text-xs rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-all cursor-pointer shadow-xs" 
           data-key="ENTER"
           aria-label="Enter"
         >
@@ -188,14 +188,14 @@ const daily = getDailyWord();
         </button>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((k) => (
           <button 
-            class="m-key-btn flex-1 aspect-auto h-13 sm:h-auto sm:aspect-square max-w-none sm:max-w-[44px] flex items-center justify-center font-mono font-bold text-sm md:text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+            class="m-key-btn flex-1 aspect-auto h-14 sm:h-auto sm:aspect-square max-w-none sm:max-w-[44px] flex items-center justify-center font-mono font-bold text-base rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-all cursor-pointer shadow-xs" 
             data-key={k}
           >
             {k}
           </button>
         ))}
         <button 
-          class="m-key-btn flex-[1.4] max-w-none sm:flex-[1.3] sm:max-w-[58px] self-stretch flex items-center justify-center rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] active:scale-95 transition-all cursor-pointer shadow-xs" 
+          class="m-key-btn flex-[1.3] max-w-[58px] self-stretch flex items-center justify-center rounded-xs border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-accent)] transition-all cursor-pointer shadow-xs" 
           data-key="BACKSPACE" 
           aria-label="Backspace"
         >
@@ -257,6 +257,8 @@ const daily = getDailyWord();
       height: 100% !important;
       border: none;
       border-radius: 0;
+      /* Reclaim side padding so the 10-key rows get wider tap targets */
+      padding-inline: 0.5rem;
     }
 
     /* Center the board in the free space without stretching its rows */
@@ -281,7 +283,7 @@ const daily = getDailyWord();
   }
 
   .m-key-btn:active {
-    transform: scale(0.92);
+    transform: scale(0.97);
   }
 
   /* Tiles/rows are built at runtime, so they miss Astro's scope attribute */
