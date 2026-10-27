@@ -51,7 +51,7 @@ export interface CmdCtx {
   theme: { current: () => string; set: (name: string) => string };
   /** Toggle the matrix easter egg; returns whether it is now active. */
   toggleMatrix: () => boolean;
-  /** Show or hide the dancing dog sticker; returns whether it is now visible. */
+  /** Show or hide the sticker gifs; returns whether they are now visible. */
   dog: (visible: boolean) => boolean;
   /** Command history, oldest → newest. */
   history: () => string[];
@@ -496,13 +496,13 @@ export const commands: Record<string, CommandFn> = {
     return cowsay(args.join(' '));
   },
 
-  dog(ctx, args) {
+  boogley(ctx, args) {
     const off = ['off', 'hide', 'no'].includes((args[0] || '').toLowerCase());
     ctx.dog(!off);
     return [
       off
-        ? { text: 'dancing dog hidden. type \'dog\' to bring it back.', tone: 'muted' }
-        : { text: 'dancing dog is back. type \'dog off\' to hide it.', tone: 'muted' },
+        ? { text: 'sticker gifs hidden. type \'boogley\' to bring them back.', tone: 'muted' }
+        : { text: 'sticker gifs are back. type \'boogley off\' to hide them.', tone: 'muted' },
     ];
   },
 
@@ -596,3 +596,5 @@ commands['email'] = commands['contact'];
 commands['chat'] = commands['guestbook'];
 commands['gb'] = commands['guestbook'];
 commands['play'] = commands['wordle'];
+commands['dog'] = commands['boogley'];
+commands['sticker'] = commands['boogley'];

@@ -48,7 +48,7 @@ export const HELP: HelpEntry[] = [
   { group: 'Play', name: 'cowsay', args: '<text>', desc: 'a cow says something' },
   { group: 'Play', name: 'sudo', args: '<cmd>', desc: 'with great power…' },
   { group: 'Play', name: 'coffee', desc: 'brew a fresh cup' },
-  { group: 'Play', name: 'dog', args: '[on|off]', desc: 'show or hide the dancing dog' },
+  { group: 'Play', name: 'boogley', args: '[on|off]', desc: 'show or hide the sticker gifs' },
 ];
 
 /** Banner printed once per session when the shell boots. */

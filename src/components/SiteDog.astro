@@ -1,6 +1,6 @@
 ---
 // src/components/SiteDog.astro
-// Accent-aware dancing dog sticker with a custom credit popover.
+// Accent-aware sticker gif with a custom credit popover.
 // Rendered inline in the desktop sidebar and as a fixed corner sticker below lg.
 interface Props {
   class?: string;
@@ -12,7 +12,7 @@ const { class: className } = Astro.props;
   <button
     type="button"
     class="site-dog-btn"
-    aria-label="Credit for the dancing dog"
+    aria-label="Credit for the sticker gifs"
     aria-expanded="false"
     data-site-dog-btn
   >
@@ -20,7 +20,7 @@ const { class: className } = Astro.props;
   </button>
 
   <div class="site-dog-credit" data-site-dog-credit hidden>
-    <span>dancing dog by @theboogley</span>
+    <span>sticker gifs by @theboogley</span>
     <button type="button" class="site-dog-hide" data-site-dog-hide>hide</button>
   </div>
 </div>
